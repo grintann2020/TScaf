@@ -31,7 +31,7 @@ namespace T {
         }
 
         private static System.Random _rndm = new System.Random();
-        private static SCntr[] _sCntrArry = null; // array of counter structs
+        private static Cntr[] _sCntrArry = null; // array of counter structs
         private static float _strtTm = float.NaN;  // start time
         private static float _psTm = float.NaN; // pause time
         private static float _psDrtn = 0.0f; // pause duration
@@ -39,7 +39,7 @@ namespace T {
 
         public static void Strt() { // start
             Zr();
-            _sCntrArry = new SCntr[0];
+            _sCntrArry = new Cntr[0];
             _strtTm = Time.time;
         }
 
@@ -67,7 +67,7 @@ namespace T {
             do {
                 _tmpId = _rndm.Next();
             } while (CntrIndx(_tmpId) >= 0);
-            _sCntrArry = Arry.Add<SCntr>(_sCntrArry, new SCntr(_tmpId, strtCnt, fnlCnt, intrTm, lstCnt, echCnt));
+            _sCntrArry = Arry.Add<Cntr>(_sCntrArry, new Cntr(_tmpId, strtCnt, fnlCnt, intrTm, lstCnt, echCnt));
             return _tmpId;
         }
 
@@ -75,7 +75,7 @@ namespace T {
             if (CntrIndx(id) < 0) {
                 return;
             }
-            _sCntrArry = Arry.Rmv<SCntr>(_sCntrArry, (ushort)CntrIndx(id));
+            _sCntrArry = Arry.Rmv<Cntr>(_sCntrArry, (ushort)CntrIndx(id));
         }
 
         public static void StrtCntr(int id) { // start counter

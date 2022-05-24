@@ -2,20 +2,20 @@ namespace T {
 
     public struct SCmrPrjc {
 
-        public bool Orthgrph; // orthographic - Is the camera orthographic (true) or perspective (false)?
-        public float Sz;  // orthographicSize - Camera's half-size when in orthographic mode.
-        // public float FOV; // fieldOfView - The field of view of the camera in degrees.
-        // public bool PhyCam; // usePhysicalProperties - Enable [UsePhysicalProperties] to use physical camera properties to compute the field of view and the frustum.
-        public float Nr; // nearClipPlane - The distance of the near clipping plane from the the Camera, in world units.
-        public float Fr; // farClipPlane - The distance of the far clipping plane from the Camera, in world units.
-        // public bool FOVAxis; // FieldOfViewAxis
+        public bool Orthgrph; // Orthographic - Is the camera orthographic (true) or perspective (false)?
+        public float OrthgrphSz;  // OrthographicSize - Camera's half-size when in orthographic mode.
+        public float FOV; // FieldOfView - The field of view of the camera in degrees.
+        public float Nr; // NearClipPlane - The distance of the near clipping plane from the the Camera, in world units.
+        public float Fr; // FarClipPlane - The distance of the far clipping plane from the Camera, in world units.
+        public bool PhyCmr; // UsePhysicalProperties - Enable [UsePhysicalProperties] to use physical camera properties to compute the field of view and the frustum.
 
-        // public SCmrPrjc(bool op, float opSize, float fov, bool phyCam, float near, float far /*, bool fovAxis */) {
-        public SCmrPrjc(bool orthgrph, float sz, float nr, float fr) {
+        public SCmrPrjc(bool orthgrph, float orthgrphSz, float fov, float nr, float fr, bool phyCmr) {
             Orthgrph = orthgrph;
-            Sz =  orthgrph ? sz : float.NaN;
+            OrthgrphSz =  orthgrph ? orthgrphSz : float.NaN;
+            FOV = fov;
             Nr = nr;
             Fr = fr;
+            PhyCmr = phyCmr;
         }
     }
 }

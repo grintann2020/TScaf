@@ -1,6 +1,6 @@
 namespace T {
 
-    public struct SCntr { // counter struct
+    public class Cntr { // counter struct
 
         public int Id { get { return _id; } } // get identity
 
@@ -15,32 +15,28 @@ namespace T {
             }
         }
 
-        private DActn<int> _dEchCnt; // each count
-        private DActn _dLstCnt; // final count
-        private float _strtTm; // begin time
-        private float _psTm; // pause time
-        private float _psDrtn; // pause duration
-        private float _intrTm; // interval time
-        private float _updtTm; // step time
-        private int _stpCnt; // step count
-        private int _strtCnt; // start count
-        private int _fnlCnt; // last count
-        private int _crrnCnt; // current count
-        private int _id; // index
-
-        public SCntr(int id, int strtCnt, int fnlCnt, float intrTm, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
+        private DActn<int> _dEchCnt = null; // each count
+        private DActn _dLstCnt = null; // final count
+        private float _strtTm = float.NaN; // begin time
+        private float _psTm = float.NaN; // pause time
+        private float _psDrtn = 0.0f; // pause duration
+        private float _updtTm = float.NaN; // updt time
+        private float _intrTm = float.NaN; // interval time
+        private int _id = -1; // identity
+        private int _strtCnt = 0; // start count
+        private int _fnlCnt = 0; // last count
+        private int _crrnCnt = 0; // current count
+        private int _stpVl = 0; // step value
+        
+        public Cntr(int id, int strtCnt, int fnlCnt, float intrTm, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
             _id = id;
             _strtCnt = strtCnt;
             _fnlCnt = fnlCnt;
             _intrTm = intrTm;
             _dLstCnt = dLstCnt;
             _dEchCnt = dEchCnt;
-            _strtTm = float.NaN;
-            _psTm = float.NaN;
-            _psDrtn = 0.0f;
-            _updtTm = float.NaN;
-            _stpCnt = (fnlCnt - strtCnt >= 0) ? 1 : -1;
             _crrnCnt = 0;
+            _stpVl = (fnlCnt - strtCnt >= 0) ? 1 : -1;
         }
 
         public void Strt(float tm) { // start
@@ -72,16 +68,14 @@ namespace T {
             if (!IsCntng) {
                 return;
             }
-
             if ((CrrnTm(tm) - _updtTm) >= _intrTm) {
-                // Debug.Log("crrnTm --> " + CrrnTm(tm) + ", updtTm --> " + _updtTm);
                 _dEchCnt?.Invoke(_crrnCnt);
                 if (_fnlCnt == _crrnCnt) {
                     _dLstCnt?.Invoke();
                     Zr();
                 } else {
                     _updtTm = CrrnTm(tm);
-                    _crrnCnt += _stpCnt;
+                    _crrnCnt += _stpVl;
                 }
             }
         }

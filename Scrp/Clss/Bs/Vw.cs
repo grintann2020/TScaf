@@ -106,9 +106,9 @@ namespace T {
             CmrOrnt(_cmrArry[eCmr], ornt);
         }
 
-        public void Set(byte eSet) {
-            Prjc(_stArry[eSet][0], _stArry[eSet][1]);
-            Ornt(_stArry[eSet][0], _stArry[eSet][2]);
+        public void St(byte eSt) {
+            Prjc(_stArry[eSt][0], _stArry[eSt][1]);
+            Ornt(_stArry[eSt][0], _stArry[eSt][2]);
         }
 
         // public void Mov(byte eMov) {
@@ -122,11 +122,11 @@ namespace T {
 
         private void CmrPrjc(Camera cmr, SCmrPrjc prjc) {
             cmr.orthographic = prjc.Orthgrph;
-            cmr.orthographicSize = prjc.Sz;
+            cmr.orthographicSize = prjc.OrthgrphSz;
+            cmr.fieldOfView = prjc.FOV;
             cmr.nearClipPlane = prjc.Nr;
             cmr.farClipPlane = prjc.Fr;
-            // _cmr.fieldOfView = prj.FOV;
-            // _cmr.usePhysicalProperties = prj.PhyCmr;
+            cmr.usePhysicalProperties = prjc.PhyCmr;
         }
 
         private void CmrOrnt(Camera cmr, SOrnt3 ornt) {

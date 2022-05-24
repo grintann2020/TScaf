@@ -28,21 +28,21 @@ namespace T {
         //     _iSpcArr[eSpc].Alt(eAlt);
         // }
 
-        public void Cnstr(byte eSpc, SCrdn3 ctr) {
-            _iSpcArr[eSpc].Cnstr(ctr);
-        }
+        // public void Cnst(byte eSpc, SCrdn3 ctr) {
+        //     _iSpcArr[eSpc].Cnst(ctr);
+        // }
 
 
-        public void Dcstr(byte eSpc) {
-            _iSpcArr[eSpc].Dcstr();
-        }
+        // public void Dcnst(byte eSpc) {
+        //     _iSpcArr[eSpc].Dcnst();
+        // }
 
-        public ISpc Spc(byte eSpc) {
-            return _iSpcArr[eSpc];
-        }
+        // public ISpc Spc(byte eSpc) {
+        //     return _iSpcArr[eSpc];
+        // }
 
-        public bool IsCnstr(byte eSpc) {
-            return _iSpcArr[eSpc].IsCnstr;
-        }
+        // public bool IsCnst(byte eSpc) {
+        //     return _iSpcArr[eSpc].IsCnst;
+        // }
     }
 }

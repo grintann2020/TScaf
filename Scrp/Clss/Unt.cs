@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 namespace T {
 
-    public class Blck {
+    public class Unt { // unit
         
         public SGrd3 Grd { get { return _grid; } }
         public SCrdn3 Crdn { get { return _crdn; } }
@@ -14,30 +13,29 @@ namespace T {
         public float X { get { return _crdn.X; } }
         public float Z { get { return _crdn.Z; } }
         public float Y { get { return _crdn.Y; } }
-        public byte EUnt { get; set; }
         private SGrd3 _grid;
         private SCrdn3 _crdn;
         private GameObject[] _gmObjcArry;
 
-        public Blck(SGrd3 grid, SCrdn3 crdn) {
+        public Unt(SGrd3 grid, SCrdn3 crdn) { // unit
             _grid = grid;
             _crdn = crdn;
             _gmObjcArry = new GameObject[0];
         }
 
-        public void MvIn(GameObject gmObjc) {
+        public void Admt(GameObject gmObjc) {
             _gmObjcArry = Arry.Add<GameObject>(_gmObjcArry, gmObjc);
         }
 
-        public void MvOt(GameObject gmObjc) {
+        public void Omt(GameObject gmObjc) {
             _gmObjcArry = Arry.Rmv<GameObject>(_gmObjcArry, (ushort)Arry.Indx<GameObject>(_gmObjcArry, gmObjc));
         }
 
-        public void MvOt(byte indx) {
+        public void Omt(byte indx) {
             _gmObjcArry = Arry.Rmv<GameObject>(_gmObjcArry, (ushort)indx);
         }
 
-        public void MvOt() {
+        public void Omt() {
             _gmObjcArry = new GameObject[0];
         }
     }
