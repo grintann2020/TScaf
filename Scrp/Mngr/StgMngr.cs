@@ -3,10 +3,10 @@
     public class StgMngr : Sngltn<StgMngr>, IMngr { // stage manager
 
         public bool IsIntl { get { return _isIntl; } }
-        private StgPrm _stgPrm = null;  // prime of stg
-        private IStg[] _iStgArry = null;
-        private byte _eStg = 0;
-        private bool _isIntl = false;
+        private StgPrm _stgPrm = null;  // prime of stage
+        private IStg[] _iStgArry = null; // array of stage
+        private byte _eStg = 0; // enum of stage
+        private bool _isIntl = false; // is initialized or not
 
         public void Rst() { // reset
             if (!_isIntl) {
