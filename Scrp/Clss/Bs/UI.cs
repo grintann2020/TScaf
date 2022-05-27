@@ -20,11 +20,11 @@ namespace T {
         protected UIMngr _mngr = null; // registered UI manager
         protected Canvas _cnvs; // canvas
         protected object[][][] _grpArry = null; // array of groups
-        private GameObject[][] _instArry = null; // array of instances
-        private GameObject[][] _gmObjcArry = null; // array of GameObjects
         protected object[][] _cmpnArry = null; // array of components
         protected DActn<byte>[][][] _dBhvrArry; //delegate of behavior method
         protected DActn[] _dAftrGnrtArry = null; // array of after generating delegate
+        private GameObject[][] _instArry = null; // array of instances
+        private GameObject[][] _gmObjcArry = null; // array of GameObjects
         private bool[] _isAttcArry = null; // array of bool as is atached or not
 
         public void Attc(Canvas cnvs, DActn dAftrAttc = null) { // attach UI by generating all objects group, dAftrAttc = after attached

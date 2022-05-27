@@ -4,22 +4,22 @@ namespace T {
 
     public class Unt { // unit
         
-        public SGrd3 Grd { get { return _grid; } }
-        public SCrdn3 Crdn { get { return _crdn; } }
-        public GameObject[] GmObjcArry { get { return _gmObjcArry; } }
-        public ushort Rw { get { return _grid.Rw; } }
-        public ushort Clmn { get { return _grid.Clmn; } }
-        public ushort Lyr { get { return _grid.Lyr; } }
-        public float X { get { return _crdn.X; } }
-        public float Z { get { return _crdn.Z; } }
-        public float Y { get { return _crdn.Y; } }
-        private SGrd3 _grid;
-        private SCrdn3 _crdn;
-        private GameObject[] _gmObjcArry;
+        public GameObject[] GmObjcArry { get { return _gmObjcArry; } } // get the array of GameObjects in unit
+        public SGrd3 SPstn { get { return _sPstn; } } // get position
+        public SVctr3 SCrdn { get { return _sCrdn; } } // get coordinate
+        public float X { get { return _sCrdn.X; } } // get x axis
+        public float Z { get { return _sCrdn.Z; } } // get z axis
+        public float Y { get { return _sCrdn.Y; } } // get y axis
+        public ushort Rw { get { return _sPstn.Rw; } } // get row
+        public ushort Clmn { get { return _sPstn.Clmn; } } //get column
+        public ushort Lyr { get { return _sPstn.Lyr; } } // get layer
+        private GameObject[] _gmObjcArry; // an array of admitted GameObjects
+        private SGrd3 _sPstn; // grid3 struct for position 
+        private SVctr3 _sCrdn; // vector3 struct for coordinate 
 
-        public Unt(SGrd3 grid, SCrdn3 crdn) { // unit
-            _grid = grid;
-            _crdn = crdn;
+        public Unt(SGrd3 sPstn, SVctr3 sCrdn) { // unit
+            _sPstn = sPstn;
+            _sCrdn = sCrdn;
             _gmObjcArry = new GameObject[0];
         }
 

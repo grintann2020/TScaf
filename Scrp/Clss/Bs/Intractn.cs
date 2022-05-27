@@ -18,13 +18,14 @@ namespace T {
         public IntractnMngr Mngr { set { _mgr = value; } }
         public bool IsInstl { get { return _isInstl; } }  // return is installed or not
         protected IntractnMngr _mgr = null;
-        protected IInpt[] _iInptArry = null; // array of input
-        protected DActns<object>[] _dActnsArry; // array of actions delegate
+        protected DFnct<IInpt>[] _dInptArry = null; // an array of input delegate
+        protected DActns<object>[] _dActnsArry = null; // an array of actions delegate
+        protected IInpt[] _iInptArry = null; // an array of input interface
         protected byte[][] _evntArry; // array of event
         private bool _isInstl = false;  // is installed or not
 
-        public Intractn(IInpt[] iInptArry) {
-            _iInptArry = iInptArry;
+        public Intractn(DFnct<IInpt>[] dInptArry) {
+            _dInptArry = dInptArry;
         }
 
         public void Instl() { // install

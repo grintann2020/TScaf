@@ -2,12 +2,12 @@ namespace T {
 
     public class ScnPrm { // scene prime
 
-        public IMngr IMngr { set { _mngr = (ScnMngr)value; } }
-        public IScn[] IScnArry { get { return _iScnArry; } }
-        public DActn[] DPrmArry { get { return _dPrmArry; } }
-        protected ScnMngr _mngr;
-        protected IScn[] _iScnArry;
-        protected DActn[] _dPrmArry;
+        public IMngr IMngr { set { _mngr = (ScnMngr)value; } } // get interaction manager
+        public IScn[] IScnArry { get { return _iScnArry; } } // get the array of scene interface
+        public DActn[] DPrmArry { get { return _dPrmArry; } } // get the array of primes
+        protected ScnMngr _mngr; // interaction manager
+        protected IScn[] _iScnArry; // an array of scene interfaces
+        protected DActn[] _dPrmArry; // an array  of prime delegates
 
         public void Prm(byte ePrm) { // prime
             if (_dPrmArry[ePrm] != null) {

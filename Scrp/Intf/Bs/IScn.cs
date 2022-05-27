@@ -6,8 +6,8 @@ namespace T {
 
         ScnMngr Mngr { set; }
         bool IsEstb { get; } // is established or not
-        void Estb(Transform _trnf, DActn dAftrEstb = null); // establish scene by generating all objects group
-        void Estb(Transform _trnf, byte eGrp, DActn dAftrEstb = null); // establish scene by generating specific objects group by enum, dBE = before established, dAE = after established
+        void Estb(Transform _trnf, DActn dAftrEstb = null, byte eExst = 0); // establish scene by generating all objects group
+        void Estb(Transform _trnf, byte eGrp, DActn dAftrEstb = null, byte eExst = 0); // establish scene by generating specific objects group by enum, dBE = before established, dAE = after established
         void Elmn(); // eliminate scene by release all object groups
         void Elmn(byte eGrp); // eliminate scene by release specific object group by enum
         bool IsGrpEstb(byte eGrp); // return is group established or not

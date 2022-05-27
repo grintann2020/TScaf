@@ -2,13 +2,13 @@ namespace T {
 
     public class IntractnPrm { // interaction prime
 
-        public IMngr IMngr { set { _mngr = (IntractnMngr)value; } }
-        public IIntractn[] IIntractnArry { get { return _iIntractnArry; } } // return array of interaction interface
-        public DActn[] DPrmArry { get { return _dPrmArry; } }
-        protected IntractnMngr _mngr;
-        protected IIntractn[] _iIntractnArry; // array of interaction interface
-        protected IInpt[] _iInptArry; // array of input interface
-        protected DActn[] _dPrmArry;
+        public IMngr IMngr { set { _mngr = (IntractnMngr)value; } } // get interaction manager
+        public IIntractn[] IIntractnArry { get { return _iIntractnArry; } } // get the array of interaction interface
+        public DActn[] DPrmArry { get { return _dPrmArry; } } // get the array of primes
+        protected IntractnMngr _mngr; // interaction manager
+        protected IIntractn[] _iIntractnArry; // an array of interaction interfaces
+        protected DFnct<IInpt>[] _dIInptArry; 
+        protected DActn[] _dPrmArry; // an array  of prime delegates
         
         public void Prm(byte ePrm) { // prime
             if (_dPrmArry[ePrm] != null) {

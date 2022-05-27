@@ -2,21 +2,21 @@ namespace T {
 
     public struct SGrd2 {
 
-        public ushort Rw, Clmn;
+        public byte Clmn, Rw;
 
-        public SGrd2(ushort rw, ushort clmn) {
-            Rw = rw;
+        public SGrd2(byte clmn, byte rw) {
             Clmn = clmn;
+            Rw = rw;
         }
     }
 
     public struct SGrd3 {
 
-        public ushort Rw, Clmn, Lyr;
+        public byte Clmn, Rw, Lyr;
 
-        public SGrd3(ushort rw, ushort clmn, ushort lyr) {
-            Rw = rw;
+        public SGrd3(byte clmn, byte rw, byte lyr) {
             Clmn = clmn;
+            Rw = rw;
             Lyr = lyr;
         }
     }

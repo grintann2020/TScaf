@@ -1,69 +1,98 @@
+using UnityEngine;
+
 namespace T {
 
     public static class HxClcl {
 
-        private const float ASPC_RT = 1.732050807568877f; // aspect ratio
+        public static float Sqrt3 { get { return 1.732050807568877f; } }
 
-        private static int[,][] drctArry = {
-            {new int[]{0, +1}, new int[]{-1,  0}, new int[]{-1, -1}, new int[]{0, -1}, new int[]{+1, -1}, new int[]{+1,  0}},
-            {new int[]{0, +1}, new int[]{-1, +1}, new int[]{-1,  0}, new int[]{0, -1}, new int[]{+1,  0}, new int[]{+1, +1}}
+        private static int[][][] drctPArry = new int[][][] {
+            new int[][] {
+                new int[] {+1,  0}, new int[] { 0, +1}, new int[] {-1, +1},
+                new int[] {-1,  0}, new int[] {-1, -1}, new int[] { 0, -1},
+            },
+            new int[][] {
+                new int[] {+1,  0}, new int[] {+1, +1}, new int[] { 0, +1},
+                new int[] {-1,  0}, new int[] { 0, -1}, new int[] {+1, -1},
+            }
         };
 
-        public static int[] Adjc(int rw, int drct) {
-            int prty = rw & 1;
-            return drctArry[prty, drct]; // parity, direction
+        private static int[][][] drctFArry = new int[][][] {
+            new int[][] {
+                new int[] {+1,  0}, new int[] {+1, +1}, new int[] { 0, -1},
+                new int[] {-1, +1}, new int[] {-1,  0}, new int[] { 0, +1},
+            },
+            new int[][] {
+                new int[] {+1, -1}, new int[] {+1,  0}, new int[] { 0, +1},
+                new int[] {-1,  0}, new int[] {-1, -1}, new int[] { 0, -1},
+            }
+        };
+
+        public static int[] AdjcP(int rw, int drct) {
+            return drctPArry[rw & 1][drct]; // parity, direction
         }
 
-        // public Hex Adjc(Hex[,] hexs, Hex hex, int hexDirection)
-        // {
+        public static int[] AdjcF(int clmn, int drct) {
+            return drctPArry[clmn & 1][drct]; // parity, direction
+        }
 
-        // if (hex.Row <= 0 || hex.Col <= 0 || hex.Row >= hexs.GetLength(0) - 1 || hex.Col >= hexs.GetLength(1) - 1)
-        // {
-        //     return null;
+        // public static (float hrznDist, float vrtcDist) DstrDstn(float sz) { // return distribute distance
+        //     return (HrznDstn(sz), VrtcDstn(sz));
         // }
-        //     int parity = hex.Row & 1;
-        //     int[] direct = this.drctArry[parity, hexDirection];
-        //     Debug.Log(
-        //         " direct = "+ hexDirection + ", " +
-        //         " rw = " + hex.Row + ", rw + direct[0] = " + (hex.Row + direct[0]) + " || " +
-        //         " col = " + hex.Col + ", col + direct[1] = " + (hex.Col + direct[1])
-        //     );
-        //     return hexs[hex.Row + direct[0], hex.Col + direct[1]];
-        // }
 
-        public static (float hrznDist, float vrtcDist) DstrDstn(float sz) { // return distribute distance
-            return (HrznDstn(sz), VrtcDstn(sz));
+        public static float HrznDstnP(float crcmrds) { // horizontal distance
+            return SctnWdthP(HxWdthP(crcmrds)) * 2;
         }
 
-        public static float HrznDstn(float size) { // horizontal distance
-            return UntWdth(HxWdth(size)) * 2;
+        public static float VrtcDstnP(float crcmrds) { // vertical distance
+            return SctnHghtP(HxHghtP(crcmrds)) * 3;
         }
 
-        public static float VrtcDstn(float size) { // vertical distance
-            return UntHght(HxHght(size)) * 3;
+        public static float HrznDstnF(float crcmrds) { // horizontal distance
+            return SctnWdthP(HxWdthF(crcmrds)) * 3;
         }
 
-        public static float UntWdth(float hxWdth) { // unit width
+        public static float VrtcDstnF(float crcmrds) { // vertical distance
+            return SctnHghtP(HxHghtF(crcmrds)) * 2;
+        }
+
+        public static float SctnWdthP(float hxWdth) { // return section width when point topped
             return hxWdth / 2;
         }
 
-        public static float UntHght(float hxHght) { // unit height
+        public static float SctnHghtP(float hxHght) { // return section height when point topped
             return hxHght / 4;
         }
 
-        public static float HxWdth(float sz) { // hexagon width
-            return sz * ASPC_RT;
+        public static float SctnWdthF(float hxWdth) { // return section width when flat topped
+            return hxWdth / 4;
         }
 
-        public static float HxHght(float sz) { // hexagon height
-            return sz * 2;
+        public static float SctnHghtF(float hxHght) { // return section height when flat topped
+            return hxHght / 2;
         }
 
-        public static SCrdn3 CntrPstn(int hrznUnts, int vrtcUnts, float hrznUntSpcn, float vrtcUntSpcn) { // return center position, spcn = spacing
-            return new SCrdn3(
-                -((hrznUntSpcn * (float)hrznUnts) / 2) + (hrznUntSpcn / 2),
+        public static float HxWdthP(float crcmrds) { // return hexagon width by circumradius
+            return crcmrds * Sqrt3;
+        }
+
+        public static float HxHghtP(float crcmrds) { // return hexagon height by circumradius
+            return crcmrds * 2;
+        }
+
+        public static float HxWdthF(float crcmrds) { // hexagon width
+            return crcmrds * 2;
+        }
+
+        public static float HxHghtF(float crcmrds) { // hexagon height
+            return crcmrds * Sqrt3;
+        }
+
+        public static SVctr3 CntrCrdnP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+            return new SVctr3(
+                -((HrznDstnP(crcmrds) * (float)hrznUnts) / 2) + SctnWdthP(HxWdthP(crcmrds)),
                 0.0f,
-                ((vrtcUntSpcn * (float)vrtcUnts) / 2) - (vrtcUntSpcn / 2)
+                -((VrtcDstnP(crcmrds) * (float)vrtcUnts) / 2) + SctnHghtP(HxHghtP(crcmrds)) + (SctnHghtP(HxHghtP(crcmrds)) / 2)
             );
         }
     }

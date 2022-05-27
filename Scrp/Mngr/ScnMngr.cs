@@ -29,23 +29,23 @@ namespace T {
             _isIntl = true;
         }
 
-        public void Estb(Transform trnf, byte eScn, DActn dAE = null) { // establish scene by generating all object groups, dAE = after established
+        public void Estb(Transform trnf, byte eScn, DActn dAE = null, byte eExst = 0) { // establish scene by generating all object groups, dAE = after established
             if (_iScnArry[_eScn] != null) {
                 _iScnArry[_eScn].Elmn();
                 _scnPrm.Omt(_eScn);
             }
             _eScn = eScn;
             _scnPrm.Prm(_eScn);
-            _iScnArry[_eScn].Estb(trnf, dAE);
+            _iScnArry[_eScn].Estb(trnf, dAE, eExst);
         }
 
-        public void Estb(Transform trnf, byte eScn, byte eGrp, DActn dAE = null) { // establish scene by generating specific object group by enum, dAE = after established
+        public void Estb(Transform trnf, byte eScn, byte eGrp, DActn dAE = null, byte eExst = 0) { // establish scene by generating specific object group by enum, dAE = after established
             if (_iScnArry[_eScn] != null) {
                 if (_eScn == eScn) {
                     if (_iScnArry[_eScn].IsGrpEstb(eGrp)) {
                         return;
                     } else {
-                        _iScnArry[_eScn].Estb(trnf, eGrp, dAE);
+                        _iScnArry[_eScn].Estb(trnf, eGrp, dAE, eExst);
                         return;
                     }
                 } else {
@@ -55,8 +55,7 @@ namespace T {
             }
             _eScn = eScn;
             _scnPrm.Prm(_eScn);
-            _iScnArry[_eScn].Estb(trnf, eGrp, dAE);
-            
+            _iScnArry[_eScn].Estb(trnf, eGrp, dAE, eExst);
         }
 
         public void Elmn() { // eliminate scene by release all object groups

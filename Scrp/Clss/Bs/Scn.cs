@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace T {
 
-    public class Scn {
+    public class Scn { // scene
 
-        public ScnMngr Mngr { set { _mngr = value; } }
-        public bool IsEstb {
+        public ScnMngr Mngr { set { _mngr = value; } } // set manager
+        public bool IsEstb { // get is established or not
             get {
                 if (_isEstbArry != null) {
                     for (byte i = 0; i < _isEstbArry.Length; i++) {
@@ -17,15 +17,21 @@ namespace T {
                 return false;
             }
         }
+        protected DActn[] _dAftrGnrtArry = null; // an array of after generating delegate
         protected ScnMngr _mngr = null; // registered scene manager
-        private Transform _trnsfrm = null;
-        protected object[][][] _grpArry = null;
-        private GameObject[][] _instArry = null;
-        private GameObject[][] _gmObjcArry = null;
-        protected DActn[] _dAftrGnrtArry = null; // array of after generating delegate
-        private bool[] _isEstbArry = null;
+        protected ISpc _iSpc = null; // space interface
+        protected object[][][] _grpArry = null; // an array of object groups
+        private Transform _trnsfrm = null; // transform
+        private GameObject[][] _instArry = null; // an array of instances
+        private GameObject[][] _gmObjcArry = null; // an array of GameObjects
+        private bool[] _isEstbArry = null; // is established or not
+        
+        public Scn(ISpc iSpc = null) {
+            _iSpc = iSpc;
+        }
 
-        public void Estb(Transform trnsfrm, DActn dAftrEstb = null) { // establish scene by generating all objects group, dAftrEstb = after established
+        public void Estb(Transform trnsfrm, DActn dAftrEstb = null, byte eExst = 0) { // establish scene by generating all objects group, dAftrEstb = after established
+            _iSpc?.Cnst(eExst);
             if (_isEstbArry == null) {
                 _isEstbArry = new bool[_grpArry.Length];
             }
@@ -54,7 +60,8 @@ namespace T {
             }
         }
 
-        public void Estb(Transform trnsfrm, byte eGrp, DActn dAftrEstb = null) { // establish scene by generating specific objects group by enum, dAftrEstb = after established
+        public void Estb(Transform trnsfrm, byte eGrp, DActn dAftrEstb = null, byte eExst = 0) { // establish scene by generating specific objects group by enum, dAftrEstb = after established
+            _iSpc?.Cnst(eExst);
             if (_isEstbArry == null) {
                 _isEstbArry = new bool[_grpArry.Length];
             } else if (_isEstbArry[eGrp]) {
@@ -92,6 +99,7 @@ namespace T {
             _instArry = null;
             _gmObjcArry = null;
             _isEstbArry = null;
+            _iSpc?.Dcnst();
         }
 
         public void Elmn(byte eGrp) { // eliminate scene by release specific object group by enum
@@ -111,6 +119,7 @@ namespace T {
                 _gmObjcArry = null;
                 _isEstbArry = null;
             }
+            _iSpc?.Dcnst();
         }
 
         public bool IsGrpEstb(byte eGrp) { // return is group established or not

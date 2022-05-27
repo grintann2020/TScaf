@@ -68,23 +68,19 @@ namespace T {
         }
 
         public void Prmp(byte eEvt) { // prompt specific event by enum
-            if (_iIntractnArry[_eIntractn] != null) {
-                _iIntractnArry[_eIntractn].Prmp(eEvt);
-            }
+            _iIntractnArry[_eIntractn]?.Prmp(eEvt);
         }
 
         public void Dssd(byte eEvt) { // dissuade  specific event by enum
-            if (_iIntractnArry[_eIntractn] != null) {
-                _iIntractnArry[_eIntractn].Dssd(eEvt);
-            }
+            _iIntractnArry[_eIntractn].Dssd(eEvt);
         }
 
         public void Prmp(byte eIntractn, byte eEvt) { // prompt specific event in specific interaction by enum
-            _iIntractnArry[eIntractn].Prmp(eEvt);
+            _iIntractnArry[eIntractn]?.Prmp(eEvt);
         }
 
         public void Dssd(byte eIntractn,byte eEvt) { // dissuade specific event in specific interaction by enum
-            _iIntractnArry[eIntractn].Dssd(eEvt);
+            _iIntractnArry[eIntractn]?.Dssd(eEvt);
         }
     }
 }

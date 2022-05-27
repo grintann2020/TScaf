@@ -130,8 +130,8 @@ namespace T {
         }
 
         private void CmrOrnt(Camera cmr, SOrnt3 ornt) {
-            cmr.transform.position = new Vector3(ornt.A.X, ornt.A.Y, ornt.A.Z);
-            cmr.transform.LookAt(new Vector3(ornt.B.X, ornt.B.Y, ornt.B.Z));
+            cmr.transform.position = new Vector3(ornt.P0.X, ornt.P0.Y, ornt.P0.Z);
+            cmr.transform.LookAt(new Vector3(ornt.P1.X, ornt.P1.Y, ornt.P1.Z));
         }
     }
 }

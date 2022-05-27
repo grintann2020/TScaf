@@ -4,15 +4,16 @@ namespace T {
 
     public interface IUnt {
 
-        GameObject[] GmObjcArry { get; } // get GameObject in unit
-        SGrd3 Grd { get; } // get grid
-        SCrdn3 Crdn { get; } // get coordinate
-        ushort Rw { get; } // row
-        ushort Clmn { get; } // column
-        ushort Lyr { get; } // layer
-        float X { get; }
-        float Z { get; }
-        float Y { get; }
+        GameObject[] GmObjcArry { get; } // get the array of GameObjects in unit
+        SGrd3 SPstn { get; } // get position
+        SVctr3 SCrdn { get; } // get coordinate
+        float X { get; } // get x axis
+        float Z { get; } // get z axis
+        float Y { get; } // get y axis
+        ushort Rw { get; } // get row
+        ushort Clmn { get; } // get column
+        ushort Lyr { get; } // get layer
+        void StAdjc(byte indx, IUnt iUnt);
         void Admt(GameObject gmObjc); // move in
         void Omt(GameObject gmObjc); // move out
         void Omt(byte indx); // move out
