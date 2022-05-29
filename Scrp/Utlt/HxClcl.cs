@@ -88,7 +88,7 @@ namespace T {
             return crcmrds * Sqrt3;
         }
 
-        public static SVctr3 CntrCrdnP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+        public static SVctr3 CntrCrdP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
             return new SVctr3(
                 -((HrznDstnP(crcmrds) * (float)hrznUnts) / 2) + SctnWdthP(HxWdthP(crcmrds)),
                 0.0f,

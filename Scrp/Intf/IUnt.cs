@@ -6,7 +6,7 @@ namespace T {
 
         GameObject[] GmObjcArry { get; } // get the array of GameObjects in unit
         SGrd3 SPstn { get; } // get position
-        SVctr3 SCrdn { get; } // get coordinate
+        SVctr3 SCrd { get; } // get coordinate
         float X { get; } // get x axis
         float Z { get; } // get z axis
         float Y { get; } // get y axis

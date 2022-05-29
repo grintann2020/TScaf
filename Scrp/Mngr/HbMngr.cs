@@ -2,12 +2,11 @@ using UnityEngine;
 
 namespace T {
 
-    public class HbMngr : Sngltn<HbMngr> {
+    public class HbMngr : Sngltn<HbMngr>, IMngr { // hub manager
 
         public bool IsIntl { get { return _isIntl; } }
-        private HbPrm _hbPrm = null;
         private IHb[] _iHbArry = null;
-        // private IHb _iCurHb;
+        private HbPrm _hbPrm = null;
         private byte _eHb = 0;
         private bool _isIntl = false;
 
@@ -15,14 +14,11 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            Dscnnc();
             _hbPrm = null;
             _iHbArry = null;
             _isIntl = false;
         }
-
-        // public void Bind(HbPrm hubPrm) {
-        //     _iHbArry = hubPrm.IHbArry;
-        // }
 
         public void Intl(IPrm iPrm) { // inithublize
             if (_isIntl) {
@@ -33,23 +29,12 @@ namespace T {
             _isIntl = true;
         }
 
-        // public void Cnnc(byte eHb) { // excute specific program by Enum
-        //     if (_iCurHb != null) {
-        //         if (_iHbArry[eHb] == _iCurHb) {
-        //             return;
-        //         }
-        //         _iCurHb.Dscn();
-        //     }
-        //     _iCurHb = _iHbArry[eHb]; 
-        //     _iCurHb.Cnnc();
-        // }
-
         public void Cnnc(byte eHb) { // connect
             if (_iHbArry[_eHb] != null) {
                 if (_eHb == eHb) {
                     return;
                 }
-                _iHbArry[_eHb].Dscn();
+                _iHbArry[_eHb].Dscnnc();
                 _hbPrm.Omt(_eHb);
             }
             _eHb = eHb;
@@ -57,9 +42,9 @@ namespace T {
             _iHbArry[_eHb].Cnnc();
         }
  
-        public void Dscn(byte eHb) { // disconnect
+        public void Dscnnc() { // disconnect
             if (_iHbArry[_eHb] != null) {
-                _iHbArry[_eHb].Dscn();
+                _iHbArry[_eHb].Dscnnc();
                 _hbPrm.Omt(_eHb);
             }
         }
@@ -68,68 +53,76 @@ namespace T {
             _iHbArry[_eHb]?.PrpUpdt();
         }
 
-        public bool IsCnnc() { // return current hub is installed or not
-            return _iHbArry[_eHb] == null ? false : true;
-        }
-
-        public bool IsCnnc(byte eIa) { // return specific hub is installed or not
-            return _iHbArry[eIa] == null ? false : true;
+        public bool IsCnnc(byte eHb) { // return is specific hub connected or not
+            return _iHbArry[eHb] == null ? false : true;
         }
 
         public IHb Hb() {
             return _iHbArry[_eHb];
         }
-
-        public IHb Hb(byte eHb) {
-            return _iHbArry[eHb];
+        
+        public void Ract(byte eRact, object vl) {
+            _iHbArry[_eHb].Ract(eRact, vl);
         }
 
-        // public void Act(byte eAct) {
-        //     _iCurHb.Act(eAct);
-        // }
-
-        // public void Act(byte eHb, byte eAct) {
-        //     _iHbArry[eHb].Act(eAct);
-        // }
-
-        // public void Mot(byte eAct) {
-        //     _iCurHb.Mot(eAct);
-        // }
-
-        // public void Mot(byte eHb, byte eAct) {
-        //     _iHbArry[eHb].Mot(eAct);
-        // }
-
-        public void StGO(byte eGO, GameObject go) {
-            // _iCurHb.StGO(eGO, go);
+        public void Act(byte eAct) {
+            _iHbArry[_eHb].Act(eAct);
         }
 
-        public void StGO(byte eHb, byte eGO, GameObject go) {
-            _iHbArry[eHb].StGO(eGO, go);
+        public void Oprt(byte eOprt) {
+            _iHbArry[_eHb].Oprt(eOprt);
         }
 
-        // public GameObject GtGO(byte eGO) {
-            // return _iCurHb.GtGO(eGO);
-        // }
-
-        public GameObject GtGO(byte eHb, byte eGO) {
-            return _iHbArry[eHb].GtGO(eGO);
+        public void Abst(byte eOprt) {
+            _iHbArry[_eHb].Abst(eOprt);
         }
 
-        public void StVal<T>(byte eVal, T val) {
-            // _iCurHb.StVal<T>(eVal, val);
+        public void StTrnsfrm(byte eTrnsfrm, Transform vl) {
+            _iHbArry[_eHb].StTrnsfrm(eTrnsfrm, vl);
         }
 
-        public void StVal<T>(byte eHb, byte eVal, T val) {
-            _iHbArry[eHb].StVal<T>(eVal, val);
+        public Transform GtTrnsfrm(byte eTrnsfrm) {
+            return _iHbArry[_eHb].GtTrnsfrm(eTrnsfrm);
         }
 
-        // public T GtVal<T>(byte eVal) {
-            // return _iCurHb.GtVal<T>(eVal);
-        // }
+        public void St<T>(byte eVl, T vl) {
+            _iHbArry[_eHb].St<T>(eVl, vl);
+        }
 
-        public T GtVal<T>(byte eHb, byte eVal) {
-            return _iHbArry[eHb].GtVal<T>(eVal);
+        public T Gt<T>(byte eVl) {
+            return _iHbArry[_eHb].Gt<T>(eVl);
+        }
+
+        public void StStrn(byte eStrn, string vl){
+            _iHbArry[_eHb].StStrn(eStrn, vl);
+        }
+
+        public string GtStrn(byte eStrn) {
+            return _iHbArry[_eHb].GtStrn(eStrn);
+        }
+
+        public void StFlt(byte eFlt, float vl) {
+            _iHbArry[_eHb].StFlt(eFlt, vl);
+        }
+
+        public float GtFlt(byte eFlt) {
+            return _iHbArry[_eHb].GtFlt(eFlt);
+        }
+
+        public void StInt(byte eInt, int vl) {
+            _iHbArry[_eHb].StInt(eInt, vl);
+        }
+
+        public int GtInt(byte eInt) {
+            return _iHbArry[_eHb].GtInt(eInt);
+        }
+
+        public void StBln(byte eBln, bool vl) {
+            _iHbArry[_eHb].StBln(eBln, vl);
+        }
+
+        public bool GtBln(byte eBln) {
+            return _iHbArry[_eHb].GtBln(eBln);
         }
     }
 }

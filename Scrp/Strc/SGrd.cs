@@ -14,10 +14,10 @@ namespace T {
 
         public byte Clmn, Rw, Lyr;
 
-        public SGrd3(byte clmn, byte rw, byte lyr) {
+        public SGrd3(byte lyr, byte clmn, byte rw) {
+            Lyr = lyr;
             Clmn = clmn;
             Rw = rw;
-            Lyr = lyr;
         }
     }
 }

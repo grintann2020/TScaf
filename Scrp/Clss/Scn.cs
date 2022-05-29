@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace T {
 
-    public class Scn { // scene
+    public abstract class Scn { // scene
 
         public ScnMngr Mngr { set { _mngr = value; } } // set manager
         public bool IsEstb { // get is established or not
@@ -21,13 +21,16 @@ namespace T {
         protected ScnMngr _mngr = null; // registered scene manager
         protected ISpc _iSpc = null; // space interface
         protected object[][][] _grpArry = null; // an array of object groups
-        private Transform _trnsfrm = null; // transform
         private GameObject[][] _instArry = null; // an array of instances
         private GameObject[][] _gmObjcArry = null; // an array of GameObjects
+        private Transform _trnsfrm = null; // transform
         private bool[] _isEstbArry = null; // is established or not
-        
+
         public Scn(ISpc iSpc = null) {
-            _iSpc = iSpc;
+            if (iSpc != null) {
+                _iSpc = iSpc;
+                _iSpc.IScn = (IScn)this;
+            }
         }
 
         public void Estb(Transform trnsfrm, DActn dAftrEstb = null, byte eExst = 0) { // establish scene by generating all objects group, dAftrEstb = after established
@@ -50,6 +53,9 @@ namespace T {
                     g,
                     () => {
                         _dAftrGnrtArry[tg]?.Invoke();
+                        if (_iSpc != null) {
+                            Dsps();
+                        };
                         _isEstbArry[tg] = true;
                         if (tg == _grpArry.Length - 1) {
                             dAftrEstb?.Invoke();
@@ -80,6 +86,9 @@ namespace T {
                 eGrp,
                 () => {
                     _dAftrGnrtArry[eGrp]?.Invoke();
+                    if (_iSpc != null) {
+                        Dsps();
+                    };
                     _isEstbArry[eGrp] = true;
                     dAftrEstb?.Invoke();
                 }
@@ -164,6 +173,8 @@ namespace T {
             }
             _gmObjcArry[eGrp][eObjc].SetActive(false);
         }
+
+        protected abstract void Dsps();
 
         private void Gnrt(byte eGrp, DActn dAftrGnrt) { // generate scene by instantiate objects from addressable asset
             object[][] qryArry = new object[_grpArry[eGrp].Length][];
