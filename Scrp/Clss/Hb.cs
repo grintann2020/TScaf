@@ -7,35 +7,48 @@ namespace T {
 
         public HbMngr Mngr { set { _mngr = value; } } // set manager
         public bool IsCnnc { get { return _isCnnc; } } // get is connected or not
-        protected DActn<object>[] _dRactArry; // an array of react delegate
-        protected DActn[] _dActArry; // an array of act delegate
-        protected DActn[] _dGrtOprtArry;
+        protected DActn<object>[] _dRactArry = null; // an array of react delegate
+        protected DActn[] _dActArry = null; // an array of act delegate
+        protected DActn[] _dCrtOprtArry = null; // an array of create operate delegate
         protected DActn[] _dOprtArry; // an array of operate delegate
-        protected Transform[] _trnsfrmArry;
+        protected Transform[] _trnsfrmArry = null;
         protected HbMngr _mngr = null;
-        protected object[] _objcArry;
-        protected string[] _strnArry;
-        protected float[] _fltArry;
-        protected int[] _intArry;
-        protected bool[] _blnArry;
-        private bool _isCnnc;
+        protected object[] _objcArry = null;
+        protected string[] _strnArry = null;
+        protected float[] _fltArry = null;
+        protected int[] _intArry = null;
+        protected byte[] _bytArry = null;
+        protected bool[] _blnArry = null;
+        private bool _isCnnc = false;
 
-        public virtual void Cnnc() { // connect
+        public void Cnnc() { // connect
             if (_isCnnc) {
                 return;
             }
             _isCnnc = true;
         }
 
-        public virtual void Dscnnc() { // disconnect
+        public void Dscnnc() { // disconnect
             if (!_isCnnc) {
                 return;
             }
             _isCnnc = false;
+            _mngr = null;
+            _dRactArry = null;
+            _dActArry = null;
+            _dCrtOprtArry = null;
+            _dOprtArry = null;
+            _trnsfrmArry = null;
+            _objcArry = null;
+            _strnArry = null;
+            _fltArry = null;
+            _intArry = null;
+            _bytArry = null;
+            _blnArry = null;
         }
 
         public void PrpUpdt() { // prop update
-            if (!_isCnnc) {
+            if (!_isCnnc || _dOprtArry == null) {
                 return;
             }
             for (byte e = 0; e < _dOprtArry.Length; e++) {
@@ -47,13 +60,13 @@ namespace T {
             _dRactArry[eRact]?.Invoke(vl);
         }
 
-        public void Act(byte eAct) { //act
+        public void Act(byte eAct) { // act
             _dActArry[eAct]?.Invoke();
         }
 
         public void Oprt(byte eOprt) { // operate
             if (_dOprtArry[eOprt] == null) {
-                _dGrtOprtArry[eOprt]?.Invoke();
+                _dCrtOprtArry[eOprt]?.Invoke();
             }
         }
 
@@ -101,6 +114,14 @@ namespace T {
 
         public int GtInt(byte eInt) {
             return _intArry[eInt];
+        }
+
+        public void StByt(byte eByt, byte vl) {
+            _bytArry[eByt] = vl;
+        }
+
+        public byte GtByt(byte eByt) {
+            return _bytArry[eByt];
         }
 
         public void StBln(byte eBln, bool vl) {

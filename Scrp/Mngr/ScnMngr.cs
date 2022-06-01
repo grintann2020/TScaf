@@ -14,38 +14,38 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Elmn();
             _scnPrm = null;
             _iScnArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // initialize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _scnPrm = (ScnPrm)iPrm;
             _iScnArry = _scnPrm.IScnArry;
-            _isIntl = true;
         }
 
-        public void Estb(Transform trnf, byte eScn, DActn dAE = null, byte eExst = 0) { // establish scene by generating all object groups, dAE = after established
+        public void Estb(Transform trnf, byte eScn, DActn dAE = null) { // establish scene by generating all object groups, dAE = after established
             if (_iScnArry[_eScn] != null) {
                 _iScnArry[_eScn].Elmn();
                 _scnPrm.Omt(_eScn);
             }
             _eScn = eScn;
             _scnPrm.Prm(_eScn);
-            _iScnArry[_eScn].Estb(trnf, dAE, eExst);
+            _iScnArry[_eScn].Estb(trnf, dAE);
         }
 
-        public void Estb(Transform trnf, byte eScn, byte eGrp, DActn dAE = null, byte eExst = 0) { // establish scene by generating specific object group by enum, dAE = after established
+        public void Estb(Transform trnf, byte eScn, byte eGrp, DActn dAE = null) { // establish scene by generating specific object group by enum, dAE = after established
             if (_iScnArry[_eScn] != null) {
                 if (_eScn == eScn) {
                     if (_iScnArry[_eScn].IsGrpEstb(eGrp)) {
                         return;
                     } else {
-                        _iScnArry[_eScn].Estb(trnf, eGrp, dAE, eExst);
+                        _iScnArry[_eScn].Estb(trnf, eGrp, dAE);
                         return;
                     }
                 } else {
@@ -55,7 +55,7 @@ namespace T {
             }
             _eScn = eScn;
             _scnPrm.Prm(_eScn);
-            _iScnArry[_eScn].Estb(trnf, eGrp, dAE, eExst);
+            _iScnArry[_eScn].Estb(trnf, eGrp, dAE);
         }
 
         public void Elmn() { // eliminate scene by release all object groups
@@ -74,8 +74,12 @@ namespace T {
             };
         }
 
-        public bool IsEstb() { // return current scene is established or not
-            return _iScnArry[_eScn] == null ? false : true;
+        public GameObject GmObjc(byte eGrp, byte eObjc) { // return specific GameObject in specific group by enum
+            return _iScnArry[_eScn].GmObjc(eGrp, eObjc);
+        }
+
+        public IScn IScn() { // return current scene 
+            return _iScnArry[_eScn];
         }
 
         public bool IsEstb(byte eScn) { // return secific scene is established or not
@@ -87,32 +91,6 @@ namespace T {
                 return false;
             }
             return _iScnArry[_eScn].IsGrpEstb(eGrp);
-        }
-
-        public bool IsGrpEstb(byte eScn, byte eGrp) {
-            if (_iScnArry[eScn] == null) {
-                return false;
-            }
-            return _iScnArry[eScn].IsGrpEstb(eGrp);
-        }
-
-        public IScn Scn() { // return current scene 
-            return _iScnArry[_eScn];
-        }
-
-        public IScn Scn(byte eScn) { // return specific scene by enum
-            return _iScnArry[eScn];
-        }
-
-        public GameObject GmObjc(byte eGrp, byte eObjc) { // return specific GameObject in specific group by enum
-            return _iScnArry[_eScn].GmObjc(eGrp, eObjc);
-        }
-
-        public GameObject GmObjc(byte eScn, byte eGrp, byte eObjc) { // return specific GameObject in specific group by enum
-            if (_iScnArry[eScn] == null) {
-                return null;
-            }
-            return _iScnArry[eScn].GmObjc(eGrp, eObjc);
         }
 
         public void Enbl(byte eGrp) { // enable specific object group by enum

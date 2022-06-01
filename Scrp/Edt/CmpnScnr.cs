@@ -18,8 +18,8 @@ namespace T {
 
         private string Code(Transform root) {
             //---------- objects ----------
-            _enmStrn = "public enum E" + Rt.name + " : byte {\n";
-            _objcStrn = "public static object[][] " + Rt.name + "Arry = new object[][] {\n";
+            _enmStrn = "public enum E" + ArryNm + " : byte {\n";
+            _objcStrn = "public static object[][] " + ArryNm + "Arry = new object[][] {\n";
             Admt[] admtArry = root.GetComponentsInChildren<Admt>(); // admit element array
             for (int a = 0; a < admtArry.Length; a++) {
                 _enmStrn += CodeObjEnum(admtArry[a].transform);
@@ -34,7 +34,7 @@ namespace T {
             _objcStrn += "};\n";
 
             //---------- components enum ----------
-            _enmStrn += "public enum E" + Rt.name + "Comp : byte {\n";
+            _enmStrn += "public enum E" + ArryNm + "Comp : byte {\n";
             _enmStrn += CodeCompEnum();
             _enmStrn += "}\n";
             return _enmStrn + _objcStrn;
@@ -75,7 +75,7 @@ namespace T {
             strn += "new object[3]{";
             strn += "\"" + trnsfrm.name.Split(new[] { "_c" }, StringSplitOptions.RemoveEmptyEntries)[0] + "\", ";
             strn += "new short[2]{" + trnsfrm.transform.position.x + ", " + trnsfrm.transform.position.y + "}, ";
-            strn += "E" + Rt.name + "." + trnsfrm.name;
+            strn += "E" + ArryNm + "." + trnsfrm.name;
             strn += "},\n";
             return strn;
         }

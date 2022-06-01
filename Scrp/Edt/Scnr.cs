@@ -11,6 +11,7 @@ namespace T {
         public string PrjcNm;
         public string FlNm;
         public string ClssNm;
+        public string ArryNm;
         public Transform Rt; // root
         protected  string _pth;
         protected string _enmStrn;

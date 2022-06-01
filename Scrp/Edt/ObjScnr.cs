@@ -15,8 +15,8 @@ namespace T {
         }
 
         private string Code(Transform root) {
-            _enmStrn = "public enum E" + Rt.name + " : byte {\n";
-            _objcStrn = "public static object[][] " + Rt.name + "Arr = new object[][] {\n";
+            _enmStrn = "public enum E" + ArryNm + " : byte {\n";
+            _objcStrn = "public static object[][] " + ArryNm + "Arry = new object[][] {\n";
             Admt[] admtArr = root.GetComponentsInChildren<Admt>(); // admit object array
             for (int a = 0; a < admtArr.Length; a++) {
                 _enmStrn += CodeObjEnum(admtArr[a].transform);
@@ -56,7 +56,7 @@ namespace T {
             str += "\"" + trnf.name.Split(new[] { "_c" }, StringSplitOptions.RemoveEmptyEntries)[0] + "\", ";
             str += "new float[3]{" + trnf.transform.position.x + "f, " + trnf.transform.position.y + "f, " + trnf.transform.position.z + "f}, ";
             str += "new float[4]{" + trnf.transform.rotation.x + "f, " + trnf.transform.rotation.y + "f, " + trnf.transform.rotation.z + "f, " + trnf.transform.rotation.w + "f}, ";
-            str += "E" + Rt.name + "." + trnf.name;
+            str += "E" + ArryNm + "." + trnf.name;
             str += "},\n";
             return str;
         }

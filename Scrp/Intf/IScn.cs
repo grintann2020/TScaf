@@ -4,7 +4,10 @@ namespace T {
 
     public interface IScn {
 
+        // IUnt[][][] IUntArry { get; }
+        // IUnt[] IUntPrArry { get; }
         ScnMngr Mngr { set; }
+        // ISpc ISpc { get; }
         bool IsEstb { get; } // is established or not
         void Estb(Transform _trnf, DActn dAftrEstb = null, byte eExst = 0); // establish scene by generating all objects group
         void Estb(Transform _trnf, byte eGrp, DActn dAftrEstb = null, byte eExst = 0); // establish scene by generating specific objects group by enum, dBE = before established, dAE = after established

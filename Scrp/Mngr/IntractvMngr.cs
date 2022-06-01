@@ -12,19 +12,19 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Unnstl();
             _iaPrm = null;
             _iIntractnArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // initialize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _iaPrm = (IntractnPrm)iPrm;
             _iIntractnArry = _iaPrm.IIntractnArry;
-            _isIntl = true;
         }
 
         public void Instl(byte eIntractn) { // install
@@ -51,20 +51,12 @@ namespace T {
             _iIntractnArry[_eIntractn]?.PrpUpdt();
         }
 
-        public bool IsInst() { // return current interaction is installed or not
-            return _iIntractnArry[_eIntractn] == null ? false : true;
+        public IIntractn IIntractn() { // return current interaction
+            return _iIntractnArry[_eIntractn];
         }
 
         public bool IsInst(byte eIntractn) { // return specific interaction is installed or not
             return _iIntractnArry[eIntractn] == null ? false : true;
-        }
-
-        public IIntractn Intractn() { // return current interaction
-            return _iIntractnArry[_eIntractn];
-        }
-
-        public IIntractn Intractn(byte eIntractn) { // return specific interaction by enum
-            return _iIntractnArry[eIntractn];
         }
 
         public void Prmp(byte eEvt) { // prompt specific event by enum

@@ -2,12 +2,12 @@ namespace T {
 
     public class UIPrm { // UI prime
 
-        public IMngr IMngr { set { _mngr = (UIMngr)value; } }
         public IUI[] IUIArry { get { return _iUIArry; } }
         public DActn[] DPrmArry { get { return _dPrmArry; } }
-        protected UIMngr _mngr;
+        public IMngr IMngr { set { _mngr = (UIMngr)value; } }
         protected IUI[] _iUIArry;
         protected DActn[] _dPrmArry;
+        protected UIMngr _mngr;
 
         public void Prm(byte ePrm) { // prime
             if (_dPrmArry[ePrm] != null) {

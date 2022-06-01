@@ -2,97 +2,83 @@ namespace T {
 
     public static class Arry {
 
-        public static T[] Add<T>(T[] orgn, T itm) { // add
-            if (orgn == null) {
+        public static T[] Add<T>(T[] orgnArry, T itm) { // add
+            if (orgnArry == null) {
                 return new T[] { itm };
             }
-            T[] rslt = new T[orgn.Length + 1];
-            for (ushort i = 0; i < orgn.Length; i++) {
-                rslt[i] = orgn[i];
+            T[] rsltArry = new T[orgnArry.Length + 1];
+            for (ushort i = 0; i < orgnArry.Length; i++) {
+                rsltArry[i] = orgnArry[i];
             }
-            rslt[orgn.Length] = itm;
-            return rslt;
+            rsltArry[orgnArry.Length] = itm;
+            return rsltArry;
         }
 
-        public static T[] CntnAdd<T>(T[] orgn, T itm, T[] tmp) { // continuous add
-            if (orgn == null) {
-                return new T[] { itm };
-            }
-            tmp = new T[orgn.Length + 1];
-            for (ushort i = 0; i < orgn.Length; i++) {
-                tmp[i] = orgn[i];
-            }
-            tmp[orgn.Length] = itm;
-            return tmp;
-        }
-
-        public static T[] Rmv<T>(T[] orgn, ushort indx) { // remove
-            if (orgn == null) {
+        public static T[] Rmv<T>(T[] orgnArry, ushort indx) { // remove
+            if (orgnArry == null) {
                 return null;
-            } else if (orgn.Length == 0) {
-                return orgn;
+            } else if (orgnArry.Length == 0) {
+                return orgnArry;
             }
-            T[] rslt = new T[orgn.Length - 1];
+            T[] rsltArry = new T[orgnArry.Length - 1];
             ushort r = 0;
-            for (ushort i = 0; i < orgn.Length; i++) {
+            for (ushort i = 0; i < orgnArry.Length; i++) {
                 if (i != indx) {
-                    rslt[r] = orgn[i];
+                    rsltArry[r] = orgnArry[i];
                     r++;
                 }
             }
-            return rslt;
+            return rsltArry;
         }
 
-        public static T[] Apnd<T>(T[] orgnA, T[] orgnB) { // append
-            if (orgnA == null && orgnB == null) {
+        public static T[] Apnd<T>(T[] orgnArryA, T[] orgnArryB) { // append
+            if (orgnArryA == null && orgnArryB == null) {
                 return null;
-            } else if (orgnB == null) {
-                return orgnA;
-            } else if (orgnA == null) {
-                return orgnB;
+            } else if (orgnArryB == null) {
+                return orgnArryA;
+            } else if (orgnArryA == null) {
+                return orgnArryB;
             }
-            T[] rslt = new T[orgnA.Length + orgnB.Length];
-            for (ushort i = 0; i < rslt.Length; i++) {
-                if (i < orgnA.Length) {
-                    rslt[i] = orgnA[i];
+            T[] rsltArry = new T[orgnArryA.Length + orgnArryB.Length];
+            for (ushort i = 0; i < rsltArry.Length; i++) {
+                if (i < orgnArryA.Length) {
+                    rsltArry[i] = orgnArryA[i];
                 } else {
-                    rslt[i] = orgnB[i - orgnA.Length];
+                    rsltArry[i] = orgnArryB[i - orgnArryA.Length];
                 }
             }
-            return rslt;
+            return rsltArry;
         }
 
-        public static int Indx<T>(T[] orgn, T itm) { // return index
-            if (orgn == null) {
+        public static int Indx<T>(T[] orgnArry, T itm) { // return index
+            if (orgnArry == null) {
                 return -1;
             }
-            for (ushort i = 0; i < orgn.Length; i++) {
-                if (orgn[i].Equals(itm)) {
+            for (ushort i = 0; i < orgnArry.Length; i++) {
+                if (orgnArry[i].Equals(itm)) {
                     return (int)i;
                 }
             }
             return -1;
         }
 
-        public static T[] Clmn<T>(T[][] orgn, ushort indx) { // return column
-            if (orgn == null || orgn.Length == 0) {
+        public static T[] Clmn<T>(T[][] orgnArry, ushort indx) { // return column
+            if (orgnArry == null || orgnArry.Length == 0) {
                 return null;
             }
-            T[] rslt = new T[orgn.Length];
-            for (ushort i = 0; i < orgn.Length; i++) {
-                rslt[i] = (T)orgn[i][indx];
+            T[] rsltArry = new T[orgnArry.Length];
+            for (ushort i = 0; i < orgnArry.Length; i++) {
+                rsltArry[i] = orgnArry[i][indx];
             }
-            return rslt;
+            return rsltArry;
         }
 
-        // dismiss need to rewrite 
-
-        // public static T[] Dim<T>(object[][] orgn, ushort indx) { // dismiss 
-        //     T[] rslt = new T[orgn.Length];
-        //     for (ushort i = 0; i < orgn.Length; i++) {
-        //         rslt[i] = (T)orgn[i][indx];
-        //     }
-        //     return rslt;
-        // }
+        public static T[] Ct<T>(T[] orgnArry, ushort indx, bool hlf = false) { // cut at indx and keep second half or not
+            T[] rsltArry = new T[hlf ? orgnArry.Length - indx : indx];
+            for (ushort i = 0; i < rsltArry.Length; i++) {
+                rsltArry[i] = orgnArry[i + (hlf ? indx : 0)];
+            }
+            return rsltArry;
+        }
     }
 }

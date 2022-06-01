@@ -15,21 +15,21 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             _txtPrm = null;
             _iTxtArry = null;
             _lnggArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) {
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _txtPrm = (TxtPrm)iPrm;
             _iTxtArry = _txtPrm.ITxtArry;
             _lnggArry = _txtPrm.ELnggArry;
             _eLngg = LnggIndx(0);
-            _isIntl = true;
         }
 
         public void Appl(byte eTxt) {

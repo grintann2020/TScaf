@@ -10,7 +10,7 @@ namespace T {
         private bool _isAppl = false;
 
         public void Appl() { // apply
-            if (_isAppl) {
+            if (_isAppl || _strnArry == null) {
                 return;
             }
             _isAppl = false;

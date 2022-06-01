@@ -9,7 +9,6 @@ namespace T {
         [SerializeField] private SttngsSO _sttngs;
 
         private void Awake() {
-            Debug.Log(GmMngr.Inst);
             GmMngr.Inst.Intl((IPrm)Activator.CreateInstance(Type.GetType(GmPrmNm)));
             GmMngr.Inst.Sttngs(_sttngs);
         }

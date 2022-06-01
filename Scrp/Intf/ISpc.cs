@@ -2,8 +2,9 @@ namespace T {
 
     public interface ISpc {
 
-        IUnt[][][] IUntArry { get; }
-        IScn IScn { set; }
+        IUnt[][][] IUntArry { get; } // get the array of unit
+        IUnt[] IUntPrArry { get; } // get the pure array of unit interfaces
+        SpcMngr Mngr { set; } // set manager
         float UntWdth { get; } // get unit width
         float UntLngt { get; } // get unit length
         float UntHght { get; } // get unit height

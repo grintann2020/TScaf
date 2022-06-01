@@ -13,7 +13,7 @@ namespace T {
             };
         }
 
-        public static async void Ld<TObj>(string[] kyArr, DActns<TObj> dLded = null) {
+        public static async void Ld<TObj>(string[] kyArr, DActn<TObj[]> dLded = null) {
             TObj[] tObjArr = new TObj[kyArr.Length];
             Task[] taskArr = new Task[kyArr.Length];
             AsyncOperationHandle<TObj>[] hdlArr = new AsyncOperationHandle<TObj>[kyArr.Length];
@@ -40,7 +40,7 @@ namespace T {
             };
         }
 
-        public static async void Inst(string[] kyArr,  Transform prnt = null, DActns<GameObject> dInsted = null) { // Addressables.InstantiateAsync will clone asset directlty
+        public static async void Inst(string[] kyArr,  Transform prnt = null, DActn<GameObject[]> dInsted = null) { // Addressables.InstantiateAsync will clone asset directlty
             GameObject[] goArr = new GameObject[kyArr.Length];
             Task[] taskArr = new Task[kyArr.Length];
             AsyncOperationHandle<GameObject>[] hdlArr = new AsyncOperationHandle<GameObject>[kyArr.Length];
@@ -55,7 +55,7 @@ namespace T {
             dInsted?.Invoke(goArr);
         }
 
-        public static async void Inst(object[][] objArr, Transform prnt = null, DActns<GameObject> dInsted = null) {
+        public static async void Inst(object[][] objArr, Transform prnt = null, DActn<GameObject[]> dInsted = null) {
             GameObject[] goArr = new GameObject[objArr.Length];
             Task[] taskArr = new Task[objArr.Length];
             AsyncOperationHandle<GameObject>[] hdlArr = new AsyncOperationHandle<GameObject>[objArr.Length];

@@ -23,19 +23,19 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Dtch();
             _uIPrm = null;
             _iUIArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // initialize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _uIPrm = (UIPrm)iPrm;
             _iUIArry = _uIPrm.IUIArry;
-            _isIntl = true;
         }
 
         public void Attc(Canvas cnvs, byte eUI, DActn dAftrAttc = null) {  // attach UI by generating all object groups, dAE = after attached
@@ -87,8 +87,16 @@ namespace T {
             _iUIArry[_eUI]?.PrpUpdt();
         }
 
-        public bool IsAttc() { // return current UI is attached or not
-            return _iUIArry[_eUI] == null ? false : true;
+        public IUI IUI() { // return specific UI by enum
+            return _iUIArry[_eUI];
+        }
+
+        public GameObject GmObjc(byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
+            return _iUIArry[_eUI].GmObjc(eGrp, eObj);
+        }
+
+        public T Cmpn<T>(byte eGrp, byte eCmpn) { // return specific component bye enum
+            return _iUIArry[_eUI].Cmpn<T>(eGrp, eCmpn);
         }
 
         public bool IsAttc(byte eUI) { // return specific UI is attached or not
@@ -100,36 +108,6 @@ namespace T {
                 return false;
             }
             return _iUIArry[_eUI].IsGrpAttc(eGrp);
-        }
-
-        public bool IsGrpAttc(byte eUI, byte eGrp) {
-            if (_iUIArry[eUI] == null) {
-                return false;
-            }
-            return _iUIArry[eUI].IsGrpAttc(eGrp);
-        }
-
-        public IUI UI() { // return specific UI by enum
-            return _iUIArry[_eUI];
-        }
-
-        public IUI UI(byte eUI) { // return specific UI by enum
-            return _iUIArry[eUI];
-        }
-
-        public GameObject GmObjc(byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
-            return _iUIArry[_eUI].GmObjc(eGrp, eObj);
-        }
-
-        public GameObject GmObjc(byte eUI, byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
-            if (_iUIArry[eUI] == null) {
-                return null;
-            }
-            return _iUIArry[eUI].GmObjc(eGrp, eObj);
-        }
-
-        public T Cmpn<T>(byte eGrp, byte eCmpn) { // return specific component bye enum
-            return _iUIArry[_eUI].Cmpn<T>(eGrp, eCmpn);
         }
 
         public void Actv(byte eGrp) { // activate specific behavior group by enum

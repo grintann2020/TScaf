@@ -4,46 +4,45 @@ namespace T {
 
     public class Vw {
 
-        public VwMngr Mngr { set { _mngr = value; } }
-        public bool IsStup { get { return _isStup; } }
+        public VwMngr Mngr { set { _mngr = value; } } // set manager
+        public bool IsStup { get { return _isStup; } } // get is setuped or not
         public bool IsMv { get { return _isMv; } }
-        protected VwMngr _mngr = null;
-        protected Camera[] _cmrArry = null;
-        protected SCmrPrjc[] _prjcArry = null;
-        protected SOrnt3[] _orntArry = null;
-        protected byte[][] _stArry = null;
-        private bool _isStup = false;
+        protected Camera[] _cmrArry = null; // the array of cameras
+        protected SCmrPrjc[] _prjcArry = null; // the array of projections
+        protected SOrnt3[] _orntArry = null; // the array of orients
+        protected VwMngr _mngr = null; // view manager
+        protected byte[][] _stArry = null; // the array of sets
+        private bool _isStup = false; // is setuped or not
 
-        // protected ushort[] _stpArry;
         // protected SCoord3[][][] _trkArry;
         // protected byte[][] _movArry;
-
         // private byte _eMov = 0;
-
         private bool _isMv = false;
 
         public void Stup(Camera[] cmrArry) {
-            if (_isStup || _isMv) {
+            if (_isStup || _isMv || cmrArry == null || _stArry == null) {
                 return;
             }
+            _isStup = true;
+            _isMv = false;
             // _eMov = 0;
             _cmrArry = cmrArry;
             Dflt();
-            _isStup = true;
-            _isMv = false;
         }
 
         public void Stdwn() {
             if (!_isStup || _isMv) {
                 return;
             }
+            _isStup = false;
+            _isMv = false;
             // _eMov = 0;
             _cmrArry = null;
             _prjcArry = null;
             _orntArry = null;
+            _mngr = null;
             _stArry = null;
-            _isStup = false;
-            _isMv = false;
+            
             // for (byte s = 0; s < _stpArry.Length; s++) {
             //     _stpArry[s] = 0;
             // }

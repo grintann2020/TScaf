@@ -2,8 +2,8 @@
 
     public class StgMngr : Sngltn<StgMngr>, IMngr { // stage manager
 
-        public bool IsIntl { get { return _isIntl; } }
-        private IStg[] _iStgArry = null; // array of stage
+        public bool IsIntl { get { return _isIntl; } } // get is initialized or not
+        private IStg[] _iStgArry = null; // an array of stage
         private StgPrm _stgPrm = null;  // prime of stage
         private byte _eStg = 0; // enum of stage
         private bool _isIntl = false; // is initialized or not
@@ -12,19 +12,19 @@
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Abrt();
             _stgPrm = null;
             _iStgArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // initialize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _stgPrm = (StgPrm)iPrm;
             _iStgArry = _stgPrm.IStgArry;
-            _isIntl = true;
         }
 
         public void Impl(byte eStg) { // implement specific stage by enum
@@ -51,20 +51,12 @@
             _iStgArry[_eStg]?.PrpUpdt();
         }
 
-        public bool IsImp() { // return current stage is implemented or not
-            return _iStgArry[_eStg] == null ? false : true;
+        public IStg IStg() { // return current stage
+            return _iStgArry[_eStg];
         }
 
         public bool IsImp(byte eStg) { // return specific stage is implemented or not
             return _iStgArry[eStg] == null ? false : true;
-        }
-
-        public IStg Stg() { // return current stage
-            return _iStgArry[_eStg];
-        }
-
-        public IStg Stg(byte eStg) { // return specific stage by enum
-            return _iStgArry[eStg];
         }
 
         public void DlgtRn(byte eStg, byte ePrgs, DActn rn) { // delegate, add method to delegate run

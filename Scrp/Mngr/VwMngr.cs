@@ -14,19 +14,19 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Stdn();
             _vwPrm = null;
             _iVwArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // initialize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _vwPrm = (VwPrm)iPrm;
             _iVwArry = _vwPrm.IVwArry;
-            _isIntl = true;
         }
 
         public void Stup(Camera[] cmrArry, byte eVw) { // setup 
@@ -53,20 +53,12 @@ namespace T {
             _iVwArry[_eVw]?.PrpUpdt();
         }
 
-        public bool IsStup() { // return current UI is attached or not
-            return _iVwArry[_eVw] == null ? false : true;
+        public IVw IVw() { // return current view
+            return _iVwArry[_eVw];
         }
 
         public bool IsStup(byte eVw) { // return specific UI is attached or not
             return _iVwArry[eVw] == null ? false : true;
-        }
-
-        public IVw Vw() { // return current view
-            return _iVwArry[_eVw];
-        }
-
-        public IVw Vw(byte eVw) { // return specific view by enum
-            return _iVwArry[eVw];
         }
 
         public void Prjc(byte ePrj) { // set projection

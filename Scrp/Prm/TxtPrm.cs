@@ -1,15 +1,15 @@
 ﻿namespace T {
 
     public class TxtPrm { // text prime
-
-        public IMngr IMngr { set { _mngr = (TxtMngr)value; } }
+        
         public ITxt[] ITxtArry { get { return _iTxtArry; } }
-        public byte[] ELnggArry { get { return _eLnggArry; } }
         public DActn[] DPrmArry { get { return _dPrmArry; } }
-        protected TxtMngr _mngr;
+        public IMngr IMngr { set { _mngr = (TxtMngr)value; } }
+        public byte[] ELnggArry { get { return _eLnggArry; } }
         protected ITxt[] _iTxtArry;
-        protected byte[] _eLnggArry;
         protected DActn[] _dPrmArry;
+        protected TxtMngr _mngr;
+        protected byte[] _eLnggArry;
 
         public void Prm(byte ePrm) { // prime
             if (_dPrmArry[ePrm] != null) {

@@ -14,19 +14,19 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Dscnnc();
             _hbPrm = null;
             _iHbArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // inithublize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _hbPrm = (HbPrm)iPrm;
             _iHbArry = _hbPrm.IHbArry;
-            _isIntl = true;
         }
 
         public void Cnnc(byte eHb) { // connect
@@ -53,14 +53,14 @@ namespace T {
             _iHbArry[_eHb]?.PrpUpdt();
         }
 
+        public IHb IHb() {
+            return _iHbArry[_eHb];
+        }
+
         public bool IsCnnc(byte eHb) { // return is specific hub connected or not
             return _iHbArry[eHb] == null ? false : true;
         }
 
-        public IHb Hb() {
-            return _iHbArry[_eHb];
-        }
-        
         public void Ract(byte eRact, object vl) {
             _iHbArry[_eHb].Ract(eRact, vl);
         }

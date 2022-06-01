@@ -2,14 +2,14 @@
 
     public enum EPrm : byte {
         Gm, // game
-        Prgm, // program
-        Stg,  // stage
-        Scn, // scene
-        Vw, // view
-        UI, // user interface
+        Hb, // hub
         Intractn, // interactive
+        Prgm, // program
+        Scn, // scene
+        Stg,  // stage
+        Spc, // space
         Txt, // text
-
-        Hb,
+        UI, // user interface
+        Vw, // view
     }
 }

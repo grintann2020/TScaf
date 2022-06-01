@@ -3,7 +3,8 @@ using UnityEngine;
 namespace T {
 
     public interface IUnt {
-
+        
+        IUnt[] AdjcArry { get; }
         GameObject[] GmObjcArry { get; } // get the array of GameObjects in unit
         SGrd3 SPstn { get; } // get position
         SVctr3 SCrd { get; } // get coordinate

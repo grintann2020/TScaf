@@ -1,23 +1,25 @@
+using UnityEngine;
+
 namespace T {
 
-    public class StgPrm { // stage prime
+    public class SpcPrm { // stage prime
         
-        public IStg[] IStgArry { get { return _iStgArry; } }
+        public ISpc[] ISpcArry { get { return _iSpcArry; } }
         public DActn[] DPrmArry { get { return _dPrmArry; } }
-        public IMngr IMngr { set { _mngr = (StgMngr)value; } }
-        protected IStg[] _iStgArry;
+        public IMngr IMngr { set { _mngr = (SpcMngr)value; } }
+        protected ISpc[] _iSpcArry;
         protected DActn[] _dPrmArry;
-        protected StgMngr _mngr;
+        protected SpcMngr _mngr;
         
         public void Prm(byte ePrm) { // prime
             if (_dPrmArry[ePrm] != null) {
                 _dPrmArry[ePrm].Invoke();
-                _iStgArry[ePrm].Mngr = _mngr;
+                _iSpcArry[ePrm].Mngr = _mngr;
             }
         }
 
         public void Omt(byte ePrm) { // omit
-            _iStgArry[ePrm] = null;
+            _iSpcArry[ePrm] = null;
         }
     }
 }

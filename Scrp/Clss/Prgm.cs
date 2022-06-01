@@ -16,20 +16,20 @@ namespace T {
         private bool _isExct = false; // is executed or not
 
         public void Exct() { // execute
-            if (_isExct) {
+            if (_isExct || _dPrcsArry == null) {
                 return;
             }
-            _ePrcs = 0;
             _isExct = true;
+            _ePrcs = 0;
             _dPrcsArry[_ePrcs][(byte)ESqnc.Bgn]?.Invoke();
         }
 
         public void Exct(byte ePrcs) { // execute specific process by enum
-            if (_isExct) {
+            if (_isExct || _dPrcsArry == null || _dPrcsArry[ePrcs] == null) {
                 return;
             }
-            _ePrcs = ePrcs;
             _isExct = true;
+            _ePrcs = ePrcs;
             _dPrcsArry[_ePrcs][(byte)ESqnc.Bgn]?.Invoke();
         }
 
@@ -38,9 +38,10 @@ namespace T {
                 return;
             }
             _dPrcsArry[_ePrcs][(byte)ESqnc.End]?.Invoke();
+            _isExct = false;
             _mngr = null;
             _ePrcs = 0;
-            _isExct = false;
+            _dPrcsArry = null;
         }
 
         public void PrpUpdt() { // prop update

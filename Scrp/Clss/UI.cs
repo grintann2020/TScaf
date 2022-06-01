@@ -17,17 +17,29 @@ namespace T {
                 return false;
             }
         }
-        protected UIMngr _mngr = null; // registered UI manager
-        protected Canvas _cnvs; // canvas
-        protected object[][][] _grpArry = null; // array of groups
-        protected object[][] _cmpnArry = null; // array of components
-        protected DActn<byte>[][][] _dBhvrArry; //delegate of behavior method
+        protected DActn<byte>[][][] _dBhvrArry = null; //delegate of behavior method
         protected DActn[] _dAftrGnrtArry = null; // array of after generating delegate
-        private GameObject[][] _instArry = null; // array of instances
-        private GameObject[][] _gmObjcArry = null; // array of GameObjects
-        private bool[] _isAttcArry = null; // array of bool as is atached or not
+        protected UIMngr _mngr = null; // registered UI manager
+        protected Canvas _cnvs = null; // the main canvas
+        protected object[][][] _grpArry = null; // the array of groups
+        protected object[][] _cmpnArry = null; // the array of components
+        private GameObject[][] _instArry = null; // the array of instances
+        private GameObject[][] _gmObjcArry = null; // the array of GameObjects
+        private Transform[][] _tmpTrnsfrmArry = null; // the array for temp storage of Transform
+        private GameObject[] _tmpSbinstArry = null; // the array for temp storage of sub GameObject
+        private bool[] _isAttcArry = null; // the array of bool as is atached or not
+        private ushort _tmpIndx = 0; // temp index;
 
         public void Attc(Canvas cnvs, DActn dAftrAttc = null) { // attach UI by generating all objects group, dAftrAttc = after attached
+            if (_grpArry == null) {
+                return;
+            } else {
+                for (byte g = 0; g < _grpArry.Length; g++) {
+                    if (_grpArry[g] == null) {
+                        return;
+                    }
+                }
+            }
             if (_isAttcArry == null) {
                 _isAttcArry = new bool[_grpArry.Length];
             }
@@ -39,6 +51,9 @@ namespace T {
             _cnvs = cnvs;
             byte tg = 0;
             for (byte g = 0; g < _grpArry.Length; g++) {
+                if (_grpArry[g] == null) {
+                    continue;
+                }
                 if (_instArry[g] == null) {
                     _instArry[g] = new GameObject[_grpArry[g].Length];
                     _gmObjcArry[g] = new GameObject[_grpArry[g].Length];
@@ -47,7 +62,9 @@ namespace T {
                 Gnr(
                     g,
                     () => {
-                        _dAftrGnrtArry[tg]?.Invoke();
+                        if (_dAftrGnrtArry != null) {
+                            _dAftrGnrtArry[tg]?.Invoke();
+                        }
                         _isAttcArry[tg] = true;
                         if (tg == _grpArry.Length - 1) {
                             dAftrAttc?.Invoke();
@@ -59,6 +76,9 @@ namespace T {
         }
 
         public void Attc(Canvas cnvs, byte eGrp, DActn dAftrAttc = null) { // attach UI by generating specific objects group by enum, dAftrAttc = after attached
+            if (_grpArry == null || _grpArry[eGrp] == null) {
+                return;
+            }
             if (_isAttcArry == null) {
                 _isAttcArry = new bool[_grpArry.Length];
             } else if (_isAttcArry[eGrp]) {
@@ -94,7 +114,12 @@ namespace T {
                     Rsrc.Rls(_instArry[g]);
                 }
             }
+            _dBhvrArry = null;
+            _dAftrGnrtArry = null;
+            _mngr = null;
             _cnvs = null;
+            _grpArry = null;
+            _cmpnArry = null;
             _instArry = null;
             _gmObjcArry = null;
             _isAttcArry = null;
@@ -112,7 +137,12 @@ namespace T {
             _gmObjcArry[eGrp] = null;
             _isAttcArry[eGrp] = false;
             if (!IsAttc) { // if any group is not attached
+                _dBhvrArry = null;
+                _dAftrGnrtArry = null;
+                _mngr = null;
                 _cnvs = null;
+                _grpArry = null;
+                _cmpnArry = null;
                 _instArry = null;
                 _gmObjcArry = null;
                 _isAttcArry = null;
@@ -250,25 +280,28 @@ namespace T {
                     Quaternion.identity
                 };
             }
-            Rsrc.Inst(qryArry, _cnvs.transform, (rslArry) => {
+            Rsrc.Inst(qryArry, _cnvs.transform, (rsltArry) => {
                 for (byte r = 0; r < _grpArry[eGrp].Length; r++) {
-                    rslArry[r].name = _grpArry[eGrp][r][2].ToString();
-                    _instArry[eGrp][r] = rslArry[r];
+                    rsltArry[r].name = _grpArry[eGrp][r][2].ToString();
+                    _instArry[eGrp][r] = rsltArry[r];
                 }
-                Transform[][] trnsfrmArry = new Transform[_instArry[eGrp].Length][];
-                GameObject[] sbinstArry = new GameObject[0]; // array of subinstances
-                for (byte t1 = 0; t1 < trnsfrmArry.Length; t1++) {
-                    trnsfrmArry[t1] = _instArry[eGrp][t1].GetComponentsInChildren<Transform>();
-                    for (byte t2 = 1; t2 < trnsfrmArry[t1].Length; t2++) {
-                        sbinstArry = Arry.Add<GameObject>(sbinstArry, trnsfrmArry[t1][t2].gameObject);
+                _tmpTrnsfrmArry = new Transform[_instArry[eGrp].Length][];
+                _tmpSbinstArry = new GameObject[_instArry[eGrp].Length * 32]; // array of subinstances
+                _tmpIndx = 0;
+                for (byte t1 = 0; t1 < _tmpTrnsfrmArry.Length; t1++) {
+                    _tmpTrnsfrmArry[t1] = _instArry[eGrp][t1].GetComponentsInChildren<Transform>();
+                    for (byte t2 = 1; t2 < _tmpTrnsfrmArry[t1].Length; t2++) {
+                        _tmpSbinstArry[_tmpIndx] = _tmpTrnsfrmArry[t1][t2].gameObject;
+                        _tmpIndx += 1;
                     }
                 }
-                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_instArry[eGrp], sbinstArry);
+                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_instArry[eGrp], Arry.Ct<GameObject>(_tmpSbinstArry, _tmpIndx));
                 _cmpnArry[eGrp] = Ftch(_gmObjcArry[eGrp]);
                 qryArry = null;
-                rslArry = null;
-                trnsfrmArry = null;
-                sbinstArry = null;
+                rsltArry = null;
+                _tmpTrnsfrmArry = null;
+                _tmpSbinstArry = null;
+                _tmpIndx = 0;
                 Actv(eGrp);
                 dAftrGnrt(); // after generate callback
             });

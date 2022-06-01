@@ -12,19 +12,19 @@
             if (!_isIntl) {
                 return;
             }
+            _isIntl = false;
             Trmn();
             _prgmPrm = null;
             _iPrgmArry = null;
-            _isIntl = false;
         }
 
         public void Intl(IPrm iPrm) { // initialize
             if (_isIntl) {
                 return;
             }
+            _isIntl = true;
             _prgmPrm = (PrgmPrm)iPrm;
             _iPrgmArry = _prgmPrm.IPrgmArry;
-            _isIntl = true;
         }
 
         public void Exct(byte ePrgm) { // excute specific program by enum
@@ -51,20 +51,12 @@
             _iPrgmArry[_ePrgm]?.PrpUpdt();
         }
 
-        public bool IsExct() { // return current stage is implemented or not
-            return _iPrgmArry[_ePrgm] == null ? false : true;
+        public IPrgm IPrgm() { // return current program
+            return _iPrgmArry[_ePrgm];
         }
 
         public bool IsExct(byte ePrgm) { // return specific stage is implemented or not
             return _iPrgmArry[ePrgm] == null ? false : true;
-        }
-
-        public IPrgm Prgm() { // return current program
-            return _iPrgmArry[_ePrgm];
-        }
-
-        public IPrgm Prgm(byte ePrgm) { // return specific program by enum
-            return _iPrgmArry[ePrgm];
         }
     }
 }

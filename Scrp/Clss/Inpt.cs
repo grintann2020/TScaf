@@ -2,7 +2,7 @@ namespace T {
 
     public class Inpt { // input
 
-        public DActn<DActns<object>>[] DDtctArry { get { return _dDtctArry; } }
-        protected DActn<DActns<object>>[] _dDtctArry; // array of detect delegate
+        public DActn<DActn<object[]>>[] DDtctArry { get { return _dDtctArry; } } // get the array of detect delegate
+        protected DActn<DActn<object[]>>[] _dDtctArry; // the array of detect delegate
     }
 }
