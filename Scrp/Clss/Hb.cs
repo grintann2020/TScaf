@@ -7,7 +7,7 @@ namespace T {
 
         public HbMngr Mngr { set { _mngr = value; } } // set manager
         public bool IsCnnc { get { return _isCnnc; } } // get is connected or not
-        protected DActn<object>[] _dRactArry = null; // an array of react delegate
+        protected DActn<object>[] _dActAArry = null; // an array of react delegate
         protected DActn[] _dActArry = null; // an array of act delegate
         protected DActn[] _dCrtOprtArry = null; // an array of create operate delegate
         protected DActn[] _dOprtArry; // an array of operate delegate
@@ -34,7 +34,7 @@ namespace T {
             }
             _isCnnc = false;
             _mngr = null;
-            _dRactArry = null;
+            _dActAArry = null;
             _dActArry = null;
             _dCrtOprtArry = null;
             _dOprtArry = null;
@@ -57,7 +57,7 @@ namespace T {
         }
 
         public void Ract(byte eRact, object vl) { // react
-            _dRactArry[eRact]?.Invoke(vl);
+            _dActAArry[eRact]?.Invoke(vl);
         }
 
         public void Act(byte eAct) { // act

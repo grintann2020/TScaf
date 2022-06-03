@@ -1,6 +1,6 @@
 namespace T {
 
-    public struct STmr { // counter struct
+    public struct SCntr { // counter struct
 
         public int Id { get { return _id; } } // get identity
 
@@ -21,24 +21,25 @@ namespace T {
         private float _psTm; // pause time
         private float _psDrtn; // pause duration
         private float _updtTm; // updt time
-        private float _intrTm; // interval time
+        private float _intrvlTm; // interval time
         private int _id; // identity
         private int _strtCnt; // start count
         private int _fnlCnt; // last count
         private int _crrnCnt; // current count
         private int _stpVl; // step value
         
-        public STmr(int id, int strtCnt, int fnlCnt, float intrTm, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
+        public SCntr(int id, int strtCnt, int fnlCnt, float intrvlTm, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
+            _id = id;
+            _strtCnt = strtCnt;
+            _fnlCnt = fnlCnt;
+            _intrvlTm = intrvlTm;
+            _dLstCnt = dLstCnt;
+            _dEchCnt = dEchCnt;
+            
             _strtTm = float.NaN;
             _psTm = float.NaN;
             _psDrtn = 0.0f;
             _updtTm = float.NaN; 
-            _id = id;
-            _strtCnt = strtCnt;
-            _fnlCnt = fnlCnt;
-            _intrTm = intrTm;
-            _dLstCnt = dLstCnt;
-            _dEchCnt = dEchCnt;
             _crrnCnt = 0;
             _stpVl = (fnlCnt - strtCnt >= 0) ? 1 : -1;
         }
@@ -72,7 +73,7 @@ namespace T {
             if (!IsCntng) {
                 return;
             }
-            if ((CrrnTm(tm) - _updtTm) >= _intrTm) {
+            if ((CrrnTm(tm) - _updtTm) >= _intrvlTm) {
                 _dEchCnt?.Invoke(_crrnCnt);
                 if (_fnlCnt == _crrnCnt) {
                     _dLstCnt?.Invoke();

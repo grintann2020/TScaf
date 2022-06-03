@@ -7,7 +7,7 @@ namespace T {
             Dtct = 1, // detect
             Actn = 2, // action
             DfltStts = 3, // default status
-            Stts = 4 // status
+            CrrnStts = 4 // status
         }
 
         public enum EStts : byte { // enum of switch
@@ -19,10 +19,9 @@ namespace T {
         public bool IsInstl { get { return _isInstl; } }  // return is installed or not
         protected IntractnMngr _mgr = null; // interaction manager
         protected DFnct<IInpt>[] _dIInptArry = null; // an array of input delegate
-        protected DFnct<DActn>[] _dActnClssArry = null;
-        protected DActn<object[]>[] _dActnsArry = null; // an array of actions delegate
+        protected DActn<object[]>[] _dRactnArry = null; // an array of actions delegate
         protected IInpt[] _iInptArry = null; // an array of input interface
-        protected byte[][] _evntArry = null; // array of event
+        protected byte[][] _bhvrArry = null; // array of event
         private bool _isInstl = false;  // is installed or not
 
         public Intractn(DFnct<IInpt>[] dIInptArry) {
@@ -30,12 +29,12 @@ namespace T {
         }
 
         public void Instl() { // install
-            if (_isInstl || _dIInptArry == null || _dActnsArry == null || _iInptArry == null || _evntArry == null) {
+            if (_isInstl || _dIInptArry == null || _dRactnArry == null || _iInptArry == null || _bhvrArry == null) {
                 return;
             }
             _isInstl = true;
-            for (byte e = 0; e < _evntArry.Length; e++) {
-                _evntArry[e][(byte)EPrpr.Stts] = _evntArry[e][(byte)EPrpr.DfltStts];
+            for (byte e = 0; e < _bhvrArry.Length; e++) {
+                _bhvrArry[e][(byte)EPrpr.CrrnStts] = _bhvrArry[e][(byte)EPrpr.DfltStts];
             }
         }
 
@@ -46,37 +45,37 @@ namespace T {
             _isInstl = false;
             _mgr = null;
             _dIInptArry = null;
-            _dActnsArry = null;
+            _dRactnArry = null;
             _iInptArry = null;
-            _evntArry = null;
+            _bhvrArry = null;
         }
 
         public void PrpUpdt() { // prop update
             if (!_isInstl) {
                 return;
             }
-            for (byte e = 0; e < _evntArry.Length; e++) {
-                if (_iInptArry[_evntArry[e][(byte)EPrpr.Inpt]] != null && _evntArry[e][(byte)EPrpr.Stts] != 0) {
-                    _iInptArry[_evntArry[e][(byte)EPrpr.Inpt]].DDtctArry[_evntArry[e][(byte)EPrpr.Dtct]]?.Invoke(_dActnsArry[_evntArry[e][(byte)EPrpr.Actn]]); // inputArryay[eInptut].DetectArryay[eDetect](actionArryay[eAction]);
+            for (byte e = 0; e < _bhvrArry.Length; e++) {
+                if (_iInptArry[_bhvrArry[e][(byte)EPrpr.Inpt]] != null && _bhvrArry[e][(byte)EPrpr.CrrnStts] != 0) {
+                    _iInptArry[_bhvrArry[e][(byte)EPrpr.Inpt]].DDtctArry[_bhvrArry[e][(byte)EPrpr.Dtct]]?.Invoke(_dRactnArry[_bhvrArry[e][(byte)EPrpr.Actn]]); // inputArryay[eInptut].DetectArryay[eDetect](actionArryay[eAction]);
                 }
             }
         }
 
         public void DfltStts() { // default
-            for (byte e = 0; e < _evntArry.Length; e++) {
-                _evntArry[e][(byte)EPrpr.Stts] = _evntArry[e][(byte)EPrpr.DfltStts];
+            for (byte e = 0; e < _bhvrArry.Length; e++) {
+                _bhvrArry[e][(byte)EPrpr.CrrnStts] = _bhvrArry[e][(byte)EPrpr.DfltStts];
             }
         }
 
         public void Prmp(byte eEvnt) { // prompt
-            if (_evntArry[eEvnt][(byte)EPrpr.Stts] == (byte)EStts.Cls) {
-                _evntArry[eEvnt][(byte)EPrpr.Stts] = (byte)EStts.Opn;
+            if (_bhvrArry[eEvnt][(byte)EPrpr.CrrnStts] == (byte)EStts.Cls) {
+                _bhvrArry[eEvnt][(byte)EPrpr.CrrnStts] = (byte)EStts.Opn;
             }
         }
 
         public void Dssd(byte eEvnt) { // dissuade
-            if (_evntArry[eEvnt][(byte)EPrpr.Stts] == (byte)EStts.Opn) {
-                _evntArry[eEvnt][(byte)EPrpr.Stts] = (byte)EStts.Cls;
+            if (_bhvrArry[eEvnt][(byte)EPrpr.CrrnStts] == (byte)EStts.Opn) {
+                _bhvrArry[eEvnt][(byte)EPrpr.CrrnStts] = (byte)EStts.Cls;
             }
         } 
     }

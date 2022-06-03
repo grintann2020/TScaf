@@ -1,10 +1,11 @@
-using UnityEngine;
+using System;
 
 namespace T {
 
     public static class HxClcl {
 
         public static float Sqrt3 { get { return 1.732050807568877f; } }
+        private static double _rdn = 0.0f; // radian 
 
         private static int[][][] drctPArry = new int[][][] {
             new int[][] {
@@ -94,6 +95,14 @@ namespace T {
                 0.0f,
                 -((VrtcDstnP(crcmrds) * (float)vrtcUnts) / 2) + SctnHghtP(HxHghtP(crcmrds)) + (SctnHghtP(HxHghtP(crcmrds)) / 2)
             );
+        }
+
+        public static byte HxPDrct(float distY, float distX) {
+            _rdn = Math.Atan2(distY, distX) + 0.523599; // + 30 degree
+            if (_rdn <= 0) {
+                _rdn = Math.PI * 2 + _rdn;
+            }
+            return (byte)Math.Floor(_rdn / (Math.PI * 2) * 6);
         }
     }
 }
