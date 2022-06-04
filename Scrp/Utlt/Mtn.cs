@@ -25,6 +25,7 @@ namespace T {
 
         private static System.Random _rndm = new System.Random();
         private static STwn[] _sTwnArry = null;
+        private static SSnglTwn[] _sSnglTwn = null;
         private static int _tmpId = 0; // temp identity for counter
 
         public static void DoTwn(Transform trnsfrm, byte ePrpr, SVctr3 sOrgn, SVctr3 sTrgt, int intrvls, float drnTm, float dlyTm = 0.0f) {
@@ -76,9 +77,9 @@ namespace T {
             }
         }
 
-        private static int TwnIndx(int id) { // find an index of the counter in the array by identity
-            for (int t = 0; t < _sTwnArry.Length; t++) {
-                if (id == _sTwnArry[t].Id) {
+        private static int TwnIndx<T>(int id) { // find an index of the counter in the array by identity
+            for (int t = 0; t < T.Length; t++) {
+                if (id == T[t].Id) {
                     return t;
                 }
             }
