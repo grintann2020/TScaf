@@ -2,11 +2,10 @@ using UnityEngine;
 
 namespace T {
 
-    public static class Tmr {
+    public static class Tmr { // timer
 
         public static float StrtTm { get { return _strtTm; } } // get start time
-
-        public static float DrtnTm { // get duration time
+        public static float Drtn { // get duration time
             get {
                 if (IsTmng) {
                     return Time.time - _strtTm - _psDrtn;
@@ -14,28 +13,24 @@ namespace T {
                 return _psTm - _psDrtn;
             }
         }
-
-        public static float ElpsTm { // get elapsed time
-            get {
-                return Time.time - _strtTm;
-            }
-        }
-
-        public static bool IsTmng { // get is timing or not
-            get {
-                if (!float.IsNaN(_strtTm) && float.IsNaN(_psTm)) {
-                    return true;
-                }
-                return false;
-            }
-        }
-
+        public static float Elps { get { return Time.time - _strtTm; } } // get elapsed time
+        public static bool IsTmng { get { return !float.IsNaN(_strtTm) && float.IsNaN(_psTm); } } // get is timing or not
         private static System.Random _rndm = new System.Random();
         private static SCntr[] _sCntrArry = null; // array of counter structs
         private static float _strtTm = float.NaN;  // start time
         private static float _psTm = float.NaN; // pause time
         private static float _psDrtn = 0.0f; // pause duration
         private static int _tmpId = 0; // temp identity for counter
+        private static int _tmpIndx = 0; // temp index for counter
+
+        public static void PrpUpdt() { // prop update
+            if (!IsTmng) {
+                return;
+            }
+            for (byte c = 0; c < _sCntrArry.Length; c++) {
+                _sCntrArry[c].PrpUpdt(Time.time);
+            }
+        }
 
         public static void Strt() { // start
             Zr();
@@ -63,65 +58,65 @@ namespace T {
             _psDrtn = 0.0f;
         }
 
-        public static int RgstTmr(int strtCnt, int fnlCnt, float intrTm, DActn lstCnt = null, DActn<int> echCnt = null) { // register counter struct
-            do {
-                _tmpId = _rndm.Next();
-            } while (TmrIndx(_tmpId) >= 0);
+        public static int RgstCntr(int strtCnt, int fnlCnt, float intrTm, DActn lstCnt = null, DActn<int> echCnt = null) { // register counter struct
+            RndmId();
             _sCntrArry = Arry.Add<SCntr>(_sCntrArry, new SCntr(_tmpId, strtCnt, fnlCnt, intrTm, lstCnt, echCnt));
             return _tmpId;
         }
 
-        public static void RmvTmr(int id) { // remove counter struct
-            if (TmrIndx(id) < 0) {
+        public static void RmvCntr(int id) { // remove counter struct
+            _tmpIndx = CntrIndx(id);
+            if (_tmpIndx < 0) {
                 return;
             }
-            _sCntrArry = Arry.Rmv<SCntr>(_sCntrArry, TmrIndx(id));
+            _sCntrArry = Arry.Rmv<SCntr>(_sCntrArry, _tmpIndx);
         }
 
-        public static void PrpUpdt() { // prop update
-            if (!IsTmng) {
+        public static void StrtCntr(int id) { // start counter
+            _tmpIndx = CntrIndx(id);
+            if (!IsTmng || _tmpIndx < 0) {
                 return;
             }
-            for (byte c = 0; c < _sCntrArry.Length; c++) {
-                _sCntrArry[c].PrpUpdt(Time.time);
-            }
+            _sCntrArry[_tmpIndx].Strt(Time.time);
         }
 
-        public static void StrtTmr(int id) { // start counter
-            if (!IsTmng || TmrIndx(id) < 0) {
+        public static void PsCntr(int id) { // pause counter
+            _tmpIndx = CntrIndx(id);
+            if (!IsTmng || _tmpIndx < 0) {
                 return;
             }
-            _sCntrArry[TmrIndx(id)].Strt(Time.time);
+            _sCntrArry[_tmpIndx].Ps(Time.time);
         }
 
-        public static void PsTmr(int id) { // pause counter
-            if (!IsTmng || TmrIndx(id) < 0) {
+        public static void RsmCntr(int id) { // resume counter
+            _tmpIndx = CntrIndx(id);
+            if (!IsTmng || _tmpIndx < 0) {
                 return;
             }
-            _sCntrArry[TmrIndx(id)].Ps(Time.time);
+            _sCntrArry[_tmpIndx].Rsm(Time.time);
         }
 
-        public static void RsmTmr(int id) { // resume counter
-            if (!IsTmng || TmrIndx(id) < 0) {
+        public static void ZrCntr(int id) { // zero counter
+            _tmpIndx = CntrIndx(id);
+            if (_tmpIndx < 0) {
                 return;
             }
-            _sCntrArry[TmrIndx(id)].Rsm(Time.time);
+            _sCntrArry[_tmpIndx].Zr();
         }
 
-        public static void ZrTmr(int id) { // zero counter
-            if (TmrIndx(id) < 0) {
-                return;
-            }
-            _sCntrArry[TmrIndx(id)].Zr();
-        }
-
-        private static int TmrIndx(int id) { // find an index of the counter in the array by identity
+        private static int CntrIndx(int id) { // find an index of the counter in the array by identity
             for (int c = 0; c < _sCntrArry.Length; c++) {
                 if (id == _sCntrArry[c].Id) {
                     return c;
                 }
             }
             return -1;
+        }
+
+        private static void RndmId() {
+            do {
+                _tmpId = _rndm.Next();
+            } while (CntrIndx(_tmpId) >= 0);
         }
     }
 }

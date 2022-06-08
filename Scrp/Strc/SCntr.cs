@@ -1,53 +1,50 @@
+using UnityEngine;
+using System;
+
 namespace T {
 
     public struct SCntr { // counter struct
 
+        // public float Drtn { get { return TtlCnt * _intrvl; } } // get duration
         public int Id { get { return _id; } } // get identity
-
-        public int CrrnCnt { get { return _crrnCnt; } } // get current count
-
-        public bool IsCntng { // get is counting or not
-            get {
-                if (!float.IsNaN(_strtTm) && float.IsNaN(_psTm)) {
-                    return true;
-                }
-                return false;
-            }
-        }
-
+        public int Cnt { get { return _cnt; } } // get current count
+        public bool IsCntng { get { return !float.IsNaN(_strtTm) && float.IsNaN(_psTm); } } // get is counting or not
+        public bool IsEnd { get { return _cnt == _fnlCnt; } } // get is end or not
         private DActn<int> _dEchCnt; // each count
         private DActn _dLstCnt; // final count
         private float _strtTm; // begin time
         private float _psTm; // pause time
         private float _psDrtn; // pause duration
         private float _updtTm; // updt time
-        private float _intrvlTm; // interval time
+        private float _intrvl; // interval
         private int _id; // identity
         private int _strtCnt; // start count
         private int _fnlCnt; // last count
-        private int _crrnCnt; // current count
+        private int _cnt; // current count
+        private int _tmpCnt; // temp count
         private int _stpVl; // step value
-        
-        public SCntr(int id, int strtCnt, int fnlCnt, float intrvlTm, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
+
+        public SCntr(int id, int strtCnt, int fnlCnt, float intrvl, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
             _id = id;
             _strtCnt = strtCnt;
             _fnlCnt = fnlCnt;
-            _intrvlTm = intrvlTm;
+            _intrvl = intrvl;
             _dLstCnt = dLstCnt;
             _dEchCnt = dEchCnt;
-            
+
             _strtTm = float.NaN;
             _psTm = float.NaN;
             _psDrtn = 0.0f;
-            _updtTm = float.NaN; 
-            _crrnCnt = 0;
+            _updtTm = float.NaN;
+            _cnt = 0;
             _stpVl = (fnlCnt - strtCnt >= 0) ? 1 : -1;
+            _tmpCnt = 0;
         }
 
         public void Strt(float tm) { // start
             _strtTm = tm;
-            _updtTm = 0.0f;
-            _crrnCnt = _strtCnt;
+            _updtTm = tm;
+            _cnt = _strtCnt;
         }
 
         public void Ps(float tm) { // pause
@@ -66,26 +63,28 @@ namespace T {
         public void Zr() { // zero
             _strtTm = float.NaN;
             _updtTm = float.NaN;
-            _crrnCnt = 0;
+            _psTm = float.NaN;
+            _psDrtn = 0.0f;
+            _cnt = 0;
         }
 
         public void PrpUpdt(float tm) { // prop update with current time
             if (!IsCntng) {
                 return;
             }
-            if ((CrrnTm(tm) - _updtTm) >= _intrvlTm) {
-                _dEchCnt?.Invoke(_crrnCnt);
-                if (_fnlCnt == _crrnCnt) {
+
+            if ((CrrnTm(tm) - _updtTm) >= _intrvl) {
+                _updtTm = CrrnTm(tm);
+                _cnt += _stpVl;
+                _dEchCnt?.Invoke(_cnt);
+                if (IsEnd) {
                     _dLstCnt?.Invoke();
                     Zr();
-                } else {
-                    _updtTm = CrrnTm(tm);
-                    _crrnCnt += _stpVl;
                 }
             }
         }
 
-        private float CrrnTm(float tm) {
+        private float CrrnTm(float tm) { // return current time
             return tm - _strtTm - _psDrtn;
         }
     }

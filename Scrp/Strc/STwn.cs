@@ -1,108 +1,92 @@
+using System;
 using UnityEngine;
 
 namespace T {
 
-    public struct STwn {
+    public struct STwn : ITwn {
 
         public int Id { get { return _id; } } // get identity
-
-        public bool IsTwnng { // get is tweening or not
-            get {
-                if (!float.IsNaN(_strtTm) && float.IsNaN(_psTm)) {
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        public bool IsEnd {
-            get {
-                return _stp == _trckArry.Length - 1;
-            }
-        }
-
-        private SVctr3[] _trckArry;
-        private Transform _trnsfrm;
-        private SVctr3 _sOrgn;
-        private SVctr3 _sTrgt;
-        private Vector3 _tmpVctr3;
-        private float _drnTm;
-        private float _dlyTm;
-        private float _mntdTm;
-        private float _strtTm;
+        public bool IsMntd { get { return !float.IsNaN(_mntdTm); } } // get is mounted or not
+        public bool IsStrt { get { return !float.IsNaN(_strtTm) && !float.IsNaN(_mntdTm); } } // get is mounted or not
+        public bool IsEnd { get { return _stp == _nmbrOfIntrvl; } } // get is end or not
+        public bool IsTwnng { get { return !float.IsNaN(_strtTm) && float.IsNaN(_psTm); } } // get is tweening or not
+        private ITrck[] _iTrckArry; // the array of track interface
+        private float _drtn; // duration
+        private float _dly; // dely
+        private float _mntdTm; // mounted time
+        private float _strtTm; // start time
         private float _psTm; // pause time
         private float _psDrtn; // pause duration
-        private float _updtTm; // updt time
-        private float _intrvlTm; // interval time
-        private float _mX, _mY, _mZ;
-        private int _nmbrOfIntrvl;
-        private int _stp;
-        private int _id;
-        private byte _ePrpr;
-        private bool _isAtDlt;
+        private int _id; // identity
+        private int _nmbrOfIntrvl; // number of interval
+        private int _stp; // step
+        private int _tmpStp; // temp step
+        private bool _isDpsb; // is deposable
 
-        public STwn(int id, Transform trnsfrm, byte ePrpr, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drnTm, float dlyTm, float mntdTm, bool isAtDlt = true) {
+        public STwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true) {
             _id = id;
-            _trnsfrm = trnsfrm;
-            _ePrpr = ePrpr;
-            _sOrgn = sOrgn;
-            _sTrgt = sTrgt;
+            _iTrckArry = iTrckArry;
             _nmbrOfIntrvl = nmbrOfIntrvl;
-            _drnTm = drnTm;
-            _dlyTm = dlyTm;
-            _mntdTm = mntdTm;
-            _isAtDlt = isAtDlt;
+            _drtn = drtn;
+            _dly = dly;
+            _isDpsb = isDpsb;
 
+            _mntdTm = float.NaN;
             _strtTm = float.NaN;
             _psTm = float.NaN;
             _psDrtn = 0.0f;
-            _updtTm = float.NaN;
-            _intrvlTm = drnTm / _nmbrOfIntrvl;
             _stp = 0;
-            _trckArry = new SVctr3[nmbrOfIntrvl];
-            _mX = (sTrgt.X - sOrgn.X) / nmbrOfIntrvl;
-            _mY = (sTrgt.Y - sOrgn.Y) / nmbrOfIntrvl;
-            _mZ = (sTrgt.Z - sOrgn.Z) / nmbrOfIntrvl;
-            for (int v = 0; v < _trckArry.Length; v++) {
-                _trckArry[v] = new SVctr3(_mX * v + sOrgn.X, _mY * v + sOrgn.Y, _mZ * v + sOrgn.Z);
+            _tmpStp = 0;
+            if (isExct) {
+                _mntdTm = tm;
             }
-            _tmpVctr3 = new Vector3();
         }
 
-        public void PrpUpdt(float tm) {
-            if (!IsTwnng) {
-                if (IsEnd) {
-                    return;
-                }
-                if (tm - _mntdTm >= _dlyTm) {
+        public void PrpUpdt(float tm) { // prop update
+            if (!IsMntd || IsEnd) {
+                return;
+            } else {
+                if (Elps(tm) >= _dly && !IsStrt) {
                     Strt(tm);
-                } else {
-                    return;
                 }
             }
-            if ((CrrnTm(tm) - _updtTm) >= _intrvlTm) {
+            if (!IsTwnng) {
+                return;
+            }
+            _tmpStp = CmltStp(tm);
+            if (_tmpStp > _stp) {
+                _stp = _tmpStp;
+                Trd(_stp);
                 if (IsEnd) {
+                    _mntdTm = float.NaN;
                     _strtTm = float.NaN;
-                    _updtTm = float.NaN;
-                    if (_isAtDlt) {
+                    _psTm = float.NaN;
+                    _psDrtn = 0.0f;
+                    if (_isDpsb) {
+                        _iTrckArry = null;
                         Mtn.RmvTwn(_id);
                     }
-                } else {
-                    Stp();
-                    _updtTm = tm;
-                    _stp += 1;
                 }
             }
         }
 
-        public void Strt(float tm) { // start
-            Stp();
-            _strtTm = tm;
-            _updtTm = 0.0f;
+        public void Strt(float tm, bool isDly = true) { // start
             _stp = 0;
+            if (!IsMntd) {
+                _mntdTm = tm;
+                if (isDly) {
+                    Trd(0);
+                    return;
+                }
+            }
+            _strtTm = tm;
+            Trd(_stp);
         }
 
         public void Ps(float tm) { // pause
+            if (!IsMntd) {
+                return;
+            }
             if (!float.IsNaN(_strtTm)) {
                 _psTm = tm;
             }
@@ -115,20 +99,21 @@ namespace T {
             }
         }
 
-        private float CrrnTm(float tm) {
+        private float Elps(float tm) { // elapsed time 
+            return tm - _mntdTm;
+        }
+
+        private float CrrnTm(float tm) { // current time
             return tm - _strtTm - _psDrtn;
         }
 
-        private void Stp() {
-            _tmpVctr3.x = _trckArry[_stp].X;
-            _tmpVctr3.y = _trckArry[_stp].Y;
-            _tmpVctr3.z = _trckArry[_stp].Z;
-            if (_ePrpr == 0) {
-                _trnsfrm.position = _tmpVctr3;
-            } else if (_ePrpr == 1) {
-                _trnsfrm.rotation = Quaternion.Euler(_tmpVctr3.x, _tmpVctr3.y, _tmpVctr3.z);
-            } else if (_ePrpr == 2) {
-                _trnsfrm.localScale = _tmpVctr3;
+        private int CmltStp(float tm) { // current cumulative 
+            return (int)Math.Floor(CrrnTm(tm) / _drtn * _nmbrOfIntrvl);
+        }
+
+        private void Trd(int stp) { // tread
+            for (int t = 0; t < _iTrckArry.Length; t++) {
+                _iTrckArry[t].Trd(stp);
             }
         }
     }

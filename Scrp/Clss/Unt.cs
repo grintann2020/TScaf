@@ -3,40 +3,39 @@ using UnityEngine;
 namespace T {
 
     public class Unt { // unit
-        
-        public GameObject[] GmObjcArry { get { return _gmObjcArry; } } // get the array of GameObjects in unit
-        public SGrd3 SPstn { get { return _sPstn; } } // get position
-        public SVctr3 SCrd { get { return _sCrd; } } // get coordinate
-        public float X { get { return _sCrd.X; } } // get x axis
-        public float Z { get { return _sCrd.Z; } } // get z axis
-        public float Y { get { return _sCrd.Y; } } // get y axis
-        public ushort Rw { get { return _sPstn.Rw; } } // get row
-        public ushort Clmn { get { return _sPstn.Clmn; } } //get column
-        public ushort Lyr { get { return _sPstn.Lyr; } } // get layer
-        private GameObject[] _gmObjcArry; // an array of admitted GameObjects
-        private SGrd3 _sPstn; // grid3 struct for position 
-        private SVctr3 _sCrd; // vector3 struct for coordinate 
 
-        public Unt(SGrd3 sPstn, SVctr3 sCrd) { // unit
+        public object[] CntnArry { get { return _cntnArry; } } // get the array of contents in unit
+        public SGrd3 SGrd { get { return _sGrd; } } // get position
+        public SVctr3 SPstn { get { return _sPstn; } } // get coordinate
+        public float X { get { return _sPstn.X; } } // get x axis
+        public float Z { get { return _sPstn.Z; } } // get z axis
+        public float Y { get { return _sPstn.Y; } } // get y axis
+        public int Rw { get { return _sGrd.Rw; } } // get row
+        public int Clmn { get { return _sGrd.Clmn; } } //get column
+        public int Lyr { get { return _sGrd.Lyr; } } // get layer
+        private object[] _cntnArry; // an array of admitted contents
+        private SGrd3 _sGrd; // grid3 struct for position 
+        private SVctr3 _sPstn; // vector3 struct for coordinate 
+
+        public Unt(SGrd3 sGrd, SVctr3 sPstn) { // unit
+            _sGrd = sGrd;
             _sPstn = sPstn;
-            _sCrd = sCrd;
-            _gmObjcArry = new GameObject[0];
         }
 
-        public void Admt(GameObject gmObjc) {
-            _gmObjcArry = Arry.Add<GameObject>(_gmObjcArry, gmObjc);
+        public void Admt<T>(T objc) {
+            _cntnArry = Arry.Add<object>(_cntnArry, objc);
         }
 
-        public void Omt(GameObject gmObjc) {
-            _gmObjcArry = Arry.Rmv<GameObject>(_gmObjcArry, (ushort)Arry.Indx<GameObject>(_gmObjcArry, gmObjc));
+        public void Omt(object objc) {
+            _cntnArry = Arry.Rmv<object>(_cntnArry, Arry.Indx<object>(_cntnArry, objc));
         }
 
         public void Omt(byte indx) {
-            _gmObjcArry = Arry.Rmv<GameObject>(_gmObjcArry, (ushort)indx);
+            _cntnArry = Arry.Rmv<object>(_cntnArry, indx);
         }
 
         public void Omt() {
-            _gmObjcArry = new GameObject[0];
+            _cntnArry = new object[0];
         }
     }
 }

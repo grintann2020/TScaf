@@ -56,7 +56,7 @@ namespace T {
             }
             for (int i = 0; i < orgnArry.Length; i++) {
                 if (orgnArry[i].Equals(itm)) {
-                    return (int)i;
+                    return i;
                 }
             }
             return -1;

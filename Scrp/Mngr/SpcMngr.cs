@@ -62,5 +62,13 @@
         public IUnt[] IUntPrArry() {
             return _iSpcArry[_eSpc].IUntPrArry;
         }
+
+        public IUnt IUnt(int eIndx) {
+            return _iSpcArry[_eSpc].IUntPrArry[eIndx];
+        }
+
+        public IUnt IUnt(byte lyr, byte clmn, byte rw) {
+            return _iSpcArry[_eSpc].IUntArry[lyr][clmn][rw];
+        }
     }
 }
