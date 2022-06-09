@@ -3,36 +3,36 @@ using UnityEngine;
 
 namespace T {
 
-    public class Hb { // hub
+    public class Dt { // data
 
-        public HbMngr Mngr { set { _mngr = value; } } // set manager
-        public bool IsCnnc { get { return _isCnnc; } } // get is connected or not
+        public DtMngr Mngr { set { _mngr = value; } } // set manager
+        public bool IsAppl { get { return _isAppl; } } // get is applied or not
         protected DActn<object>[] _dActAArry = null; // an array of react delegate
         protected DActn[] _dActArry = null; // an array of act delegate
         protected DActn[] _dCrtOprtArry = null; // an array of create operate delegate
         protected DActn[] _dOprtArry; // an array of operate delegate
         protected Transform[] _trnsfrmArry = null;
-        protected HbMngr _mngr = null;
+        protected DtMngr _mngr = null;
         protected object[] _objcArry = null;
         protected string[] _strnArry = null;
         protected float[] _fltArry = null;
         protected int[] _intArry = null;
         protected byte[] _bytArry = null;
         protected bool[] _blnArry = null;
-        private bool _isCnnc = false;
+        private bool _isAppl = false;
 
-        public void Cnnc() { // connect
-            if (_isCnnc) {
+        public void Appl() { // apply
+            if (_isAppl) {
                 return;
             }
-            _isCnnc = true;
+            _isAppl = true;
         }
 
-        public void Dscnnc() { // disconnect
-            if (!_isCnnc) {
+        public void Cs() { // cease
+            if (!_isAppl) {
                 return;
             }
-            _isCnnc = false;
+            _isAppl = false;
             _mngr = null;
             _dActAArry = null;
             _dActArry = null;
@@ -48,7 +48,7 @@ namespace T {
         }
 
         public void PrpUpdt() { // prop update
-            if (!_isCnnc || _dOprtArry == null) {
+            if (!_isAppl || _dOprtArry == null) {
                 return;
             }
             for (byte e = 0; e < _dOprtArry.Length; e++) {

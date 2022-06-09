@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace T {
 
-    public interface IHb { // hub interface
+    public interface IDt { // data interface
 
-        HbMngr Mngr { set; } // set hub manager
-        bool IsCnnc { get; } // return is connected or not
-        void Cnnc(); // connect
-        void Dscnnc(); // disconnect
+        DtMngr Mngr { set; } // set hub manager
+        bool IsAppl { get; } // return is applied or not
+        void Appl(); // apply
+        void Cs(); // cease
         void PrpUpdt(); // prop update
         void Ract(byte eRact, object vl); // react
         void Act(byte eAct); // act
@@ -25,7 +25,5 @@ namespace T {
         int GtInt(byte eInt);
         void StBln(byte eBln, bool vl);
         bool GtBln(byte eBln);
-
-        // void Mot(byte eMot);
     }
 }
