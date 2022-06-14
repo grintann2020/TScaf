@@ -9,10 +9,11 @@ namespace T {
         }
 
         public PrgmMngr Mngr { set { _mngr = value; } }
+        public byte ECrrnPrcs { get { return _eCrrnPrcs; } }
         public bool IsExct { get { return _isExct; } }
         protected DActn[][] _dPrcsArry = null; // an array of process
         protected PrgmMngr _mngr = null; // manager of program
-        private byte _ePrcs = 0; // current enum of process
+        private byte _eCrrnPrcs = 0; // current enum of process
         private bool _isExct = false; // is executed or not
 
         public void Exct() { // execute
@@ -20,8 +21,8 @@ namespace T {
                 return;
             }
             _isExct = true;
-            _ePrcs = 0;
-            _dPrcsArry[_ePrcs][(byte)ESqnc.Bgn]?.Invoke();
+            _eCrrnPrcs = 0;
+            _dPrcsArry[_eCrrnPrcs][(byte)ESqnc.Bgn]?.Invoke();
         }
 
         public void Exct(byte ePrcs) { // execute specific process by enum
@@ -29,18 +30,18 @@ namespace T {
                 return;
             }
             _isExct = true;
-            _ePrcs = ePrcs;
-            _dPrcsArry[_ePrcs][(byte)ESqnc.Bgn]?.Invoke();
+            _eCrrnPrcs = ePrcs;
+            _dPrcsArry[ePrcs][(byte)ESqnc.Bgn]?.Invoke();
         }
 
         public void Trmn() { // terminate
             if (!_isExct) {
                 return;
             }
-            _dPrcsArry[_ePrcs][(byte)ESqnc.End]?.Invoke();
             _isExct = false;
             _mngr = null;
-            _ePrcs = 0;
+            _dPrcsArry[_eCrrnPrcs][(byte)ESqnc.End]?.Invoke();
+            _eCrrnPrcs = 0;
             _dPrcsArry = null;
         }
 
@@ -48,16 +49,16 @@ namespace T {
             if (!_isExct) {
                 return;
             }
-            _dPrcsArry[_ePrcs][(byte)ESqnc.Updt]?.Invoke();
+            _dPrcsArry[_eCrrnPrcs][(byte)ESqnc.Updt]?.Invoke();
         }
 
         public void Altr(byte ePrcs) { // alter
-            if (!_isExct || _ePrcs == ePrcs) {
+            if (!_isExct || _eCrrnPrcs == ePrcs) {
                 return;
             }
-            _dPrcsArry[_ePrcs][(byte)ESqnc.End]?.Invoke();
-            _ePrcs = ePrcs;
-            _dPrcsArry[_ePrcs][(byte)ESqnc.Bgn]?.Invoke();
+            _dPrcsArry[_eCrrnPrcs][(byte)ESqnc.End]?.Invoke();
+            _eCrrnPrcs = ePrcs;
+            _dPrcsArry[_eCrrnPrcs][(byte)ESqnc.Bgn]?.Invoke();
         }
     }
 }

@@ -13,9 +13,9 @@ namespace T {
         public int Rw { get { return _sGrd.Rw; } } // get row
         public int Clmn { get { return _sGrd.Clmn; } } //get column
         public int Lyr { get { return _sGrd.Lyr; } } // get layer
-        private object[] _cntnArry; // an array of admitted contents
         private SGrd3 _sGrd; // grid3 struct for position 
         private SVctr3 _sPstn; // vector3 struct for coordinate 
+        private object[] _cntnArry; // an array of admitted contents
 
         public Unt(SGrd3 sGrd, SVctr3 sPstn) { // unit
             _sGrd = sGrd;

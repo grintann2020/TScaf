@@ -1,11 +1,7 @@
-using UnityEngine;
-using System;
-
 namespace T {
 
     public struct SCntr { // counter struct
 
-        // public float Drtn { get { return TtlCnt * _intrvl; } } // get duration
         public int Id { get { return _id; } } // get identity
         public int Cnt { get { return _cnt; } } // get current count
         public bool IsCntng { get { return !float.IsNaN(_strtTm) && float.IsNaN(_psTm); } } // get is counting or not
@@ -21,7 +17,6 @@ namespace T {
         private int _strtCnt; // start count
         private int _fnlCnt; // last count
         private int _cnt; // current count
-        private int _tmpCnt; // temp count
         private int _stpVl; // step value
 
         public SCntr(int id, int strtCnt, int fnlCnt, float intrvl, DActn dLstCnt = null, DActn<int> dEchCnt = null) {
@@ -38,7 +33,6 @@ namespace T {
             _updtTm = float.NaN;
             _cnt = 0;
             _stpVl = (fnlCnt - strtCnt >= 0) ? 1 : -1;
-            _tmpCnt = 0;
         }
 
         public void Strt(float tm) { // start

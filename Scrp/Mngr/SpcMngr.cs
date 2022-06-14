@@ -5,7 +5,7 @@
         public bool IsIntl { get { return _isIntl; } } // get is initialized or not
         private ISpc[] _iSpcArry = null; // an array of stage
         private SpcPrm _spcPrm = null;  // prime of stage
-        private byte _eSpc = 0; // enum of stage
+        private byte _eCrrnSpc = 0; // enum of stage
         private bool _isIntl = false; // is initialized or not
 
         public void Rst() { // reset
@@ -28,27 +28,27 @@
         }
 
         public void Cnst(byte eSpc) { // implement specific stage by enum
-            if (_iSpcArry[_eSpc] != null) {
-                if (_eSpc == eSpc) {
+            if (_iSpcArry[_eCrrnSpc] != null) {
+                if (_eCrrnSpc == eSpc) {
                     return;
                 }
-                _iSpcArry[_eSpc].Dcnst();
-                _spcPrm.Omt(_eSpc);
+                _iSpcArry[_eCrrnSpc].Dcnst();
+                _spcPrm.Omt(_eCrrnSpc);
             }
-            _eSpc = eSpc;
-            _spcPrm.Prm(_eSpc);
-            _iSpcArry[_eSpc].Cnst(0);
+            _eCrrnSpc = eSpc;
+            _spcPrm.Prm(_eCrrnSpc);
+            _iSpcArry[_eCrrnSpc].Cnst(0);
         }
 
         public void Dcnst() { // abort current stage
-            if (_iSpcArry[_eSpc] != null) {
-                _iSpcArry[_eSpc].Dcnst();
-                _spcPrm.Omt(_eSpc);
+            if (_iSpcArry[_eCrrnSpc] != null) {
+                _iSpcArry[_eCrrnSpc].Dcnst();
+                _spcPrm.Omt(_eCrrnSpc);
             }
         }
 
-        public ISpc ISpc() { // return current stage
-            return _iSpcArry[_eSpc];
+        public ISpc GtISpc() { // return current stage
+            return _iSpcArry[_eCrrnSpc];
         }
 
         public bool IsCnst(byte eSpc) { // return specific stage is implemented or not
@@ -56,19 +56,19 @@
         }
 
         public IUnt[][][] IUntArry() {
-            return _iSpcArry[_eSpc].IUntArry;
+            return _iSpcArry[_eCrrnSpc].IUntArry;
         }
 
         public IUnt[] IUntPrArry() {
-            return _iSpcArry[_eSpc].IUntPrArry;
+            return _iSpcArry[_eCrrnSpc].IUntPrArry;
         }
 
         public IUnt IUnt(int eIndx) {
-            return _iSpcArry[_eSpc].IUntPrArry[eIndx];
+            return _iSpcArry[_eCrrnSpc].IUntPrArry[eIndx];
         }
 
         public IUnt IUnt(byte lyr, byte clmn, byte rw) {
-            return _iSpcArry[_eSpc].IUntArry[lyr][clmn][rw];
+            return _iSpcArry[_eCrrnSpc].IUntArry[lyr][clmn][rw];
         }
     }
 }

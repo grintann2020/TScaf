@@ -16,7 +16,7 @@ namespace T {
         public bool IsIntl { get { return _isIntl; } }
         private UIPrm _uIPrm = null;
         private IUI[] _iUIArry = null;
-        private byte _eUI = 0;
+        private byte _eCrrnUI = 0;
         private bool _isIntl = false;
 
         public void Rst() { // reset
@@ -39,64 +39,64 @@ namespace T {
         }
 
         public void Attc(Canvas cnvs, byte eUI, DActn dAftrAttc = null) {  // attach UI by generating all object groups, dAE = after attached
-            if (_iUIArry[_eUI] != null) {
-                _iUIArry[_eUI].Dtch();
-                _uIPrm.Omt(_eUI);
+            if (_iUIArry[_eCrrnUI] != null) {
+                _iUIArry[_eCrrnUI].Dtch();
+                _uIPrm.Omt(_eCrrnUI);
             }
-            _eUI = eUI;
-            _uIPrm.Prm(_eUI);
-            _iUIArry[_eUI].Attc(cnvs, dAftrAttc);
+            _eCrrnUI = eUI;
+            _uIPrm.Prm(_eCrrnUI);
+            _iUIArry[_eCrrnUI].Attc(cnvs, dAftrAttc);
         }
 
         public void Attc(Canvas cnvs, byte eUI, byte eGrp, DActn dAftrAttc = null) {  // attach UI by generating specific object group by enum, dAE = after attached
-            if (_iUIArry[_eUI] != null) {
-                if (_eUI == eUI) {
-                    if (_iUIArry[_eUI].IsGrpAttc(eGrp)) {
+            if (_iUIArry[_eCrrnUI] != null) {
+                if (_eCrrnUI == eUI) {
+                    if (_iUIArry[_eCrrnUI].IsGrpAttc(eGrp)) {
                         return;
                     } else {
-                        _iUIArry[_eUI].Attc(cnvs, eGrp, dAftrAttc);
+                        _iUIArry[_eCrrnUI].Attc(cnvs, eGrp, dAftrAttc);
                         return;
                     }
                 } else {
-                    _iUIArry[_eUI].Dtch();
-                    _uIPrm.Omt(_eUI);
+                    _iUIArry[_eCrrnUI].Dtch();
+                    _uIPrm.Omt(_eCrrnUI);
                 }
             }
-            _eUI = eUI;
-            _uIPrm.Prm(_eUI);
-            _iUIArry[_eUI].Attc(cnvs, eGrp, dAftrAttc);
+            _eCrrnUI = eUI;
+            _uIPrm.Prm(_eCrrnUI);
+            _iUIArry[_eCrrnUI].Attc(cnvs, eGrp, dAftrAttc);
         }
 
         public void Dtch() {  // detach current UI from canvas
-            if (_iUIArry[_eUI] != null) {
-                _iUIArry[_eUI].Dtch();
-                _uIPrm.Omt(_eUI);
+            if (_iUIArry[_eCrrnUI] != null) {
+                _iUIArry[_eCrrnUI].Dtch();
+                _uIPrm.Omt(_eCrrnUI);
             };
         }
 
         public void Dtch(byte eGrp) {  // detach specific UI from canvas by enum
-            if (_iUIArry[_eUI] != null) {
-                _iUIArry[_eUI].Dtch(eGrp);
-                if (!_iUIArry[_eUI].IsAttc) {
-                    _uIPrm.Omt(_eUI);
+            if (_iUIArry[_eCrrnUI] != null) {
+                _iUIArry[_eCrrnUI].Dtch(eGrp);
+                if (!_iUIArry[_eCrrnUI].IsAttc) {
+                    _uIPrm.Omt(_eCrrnUI);
                 }
             };
         }
 
         public void PrpUpdt() { // prop update
-            _iUIArry[_eUI]?.PrpUpdt();
+            _iUIArry[_eCrrnUI]?.PrpUpdt();
         }
 
-        public IUI IUI() { // return specific UI by enum
-            return _iUIArry[_eUI];
+        public IUI GtIUI() { // return specific UI by enum
+            return _iUIArry[_eCrrnUI];
         }
 
-        public GameObject GmObjc(byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
-            return _iUIArry[_eUI].GmObjc(eGrp, eObj);
+        public GameObject GtGmObjc(byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
+            return _iUIArry[_eCrrnUI].GtGmObjc(eGrp, eObj);
         }
 
-        public T Cmpn<T>(byte eGrp, byte eCmpn) { // return specific component bye enum
-            return _iUIArry[_eUI].Cmpn<T>(eGrp, eCmpn);
+        public T GtCmpn<T>(byte eGrp, byte eCmpn) { // return specific component bye enum
+            return _iUIArry[_eCrrnUI].GtCmpn<T>(eGrp, eCmpn);
         }
 
         public bool IsAttc(byte eUI) { // return specific UI is attached or not
@@ -104,58 +104,58 @@ namespace T {
         }
 
         public bool IsGrpAttc(byte eGrp) {
-            if (_iUIArry[_eUI] == null) {
+            if (_iUIArry[_eCrrnUI] == null) {
                 return false;
             }
-            return _iUIArry[_eUI].IsGrpAttc(eGrp);
+            return _iUIArry[_eCrrnUI].IsGrpAttc(eGrp);
         }
 
         public void Actv(byte eGrp) { // activate specific behavior group by enum
-            _iUIArry[_eUI].Actv(eGrp);
+            _iUIArry[_eCrrnUI].Actv(eGrp);
         }
 
         public void Hlt(byte eGrp) { // halt specific behavior group by enum
-            _iUIArry[_eUI].Hlt(eGrp);
+            _iUIArry[_eCrrnUI].Hlt(eGrp);
         }
 
         public void Actv(byte eGrp, byte eBhvr) { // activate specific behavior in specific group by enum
-            _iUIArry[_eUI].Actv(eGrp, eBhvr);
+            _iUIArry[_eCrrnUI].Actv(eGrp, eBhvr);
         }
 
         public void Hlt(byte eGrp, byte eBhvr) { // halt specific behavior in specific group by enum
-            _iUIArry[_eUI].Hlt(eGrp, eBhvr); 
+            _iUIArry[_eCrrnUI].Hlt(eGrp, eBhvr); 
         }
 
         public void Enbl(byte eGrp) { // enable specific object group by enum
-            _iUIArry[_eUI].Enbl(eGrp);
+            _iUIArry[_eCrrnUI].Enbl(eGrp);
         }
 
         public void Dsbl(byte eGrp) { // disable specific object group by enum
-            _iUIArry[_eUI].Dsbl(eGrp);
+            _iUIArry[_eCrrnUI].Dsbl(eGrp);
         }
 
         public void Enbl(byte eGrp, byte eObj) { // enable specific object in specific group by enum
-            _iUIArry[_eUI].Enbl(eGrp, eObj);
+            _iUIArry[_eCrrnUI].Enbl(eGrp, eObj);
         }
 
         public void Dsbl(byte eGrp, byte eObj) { // disable specific object in specific group by enum
-            _iUIArry[_eUI].Dsbl(eGrp, eObj);
+            _iUIArry[_eCrrnUI].Dsbl(eGrp, eObj);
         }
 
         public void Frnt(byte eGrp) {
-            _iUIArry[_eUI].Frnt(eGrp);
+            _iUIArry[_eCrrnUI].Frnt(eGrp);
         }
 
         public void Bck(byte eGrp) {
-            _iUIArry[_eUI].Bck(eGrp);
+            _iUIArry[_eCrrnUI].Bck(eGrp);
         }
 
         public void Frnt(byte eGrp, byte eObj) {
-            _iUIArry[_eUI].Frnt(eGrp, eObj);
+            _iUIArry[_eCrrnUI].Frnt(eGrp, eObj);
         }
 
         public void Bck(byte eGrp, byte eObj) {
-            _iUIArry[_eUI].Bck(eGrp, eObj);
+            _iUIArry[_eCrrnUI].Bck(eGrp, eObj);
         }
     }
 }

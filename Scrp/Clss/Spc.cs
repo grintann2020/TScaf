@@ -41,7 +41,6 @@ namespace T {
             _isCnst = true;
             _dGnrtExstArry[eExst]?.Invoke(); // generate specific exist array by enum, _sScl and _isExstArry will be mount
             _sCntrCrd = CntrCrd(_sScl.Clmn, _sScl.Rw, _crcmrds); // find center coordinate
-            // IUnt[] tmpUntArry = new IUnt[0];
             _iUntArry = new IUnt[_sScl.Lyr][][];
             for (byte l = 0; l < _sScl.Lyr; l++) {
                 _iUntArry[l] = new IUnt[_sScl.Clmn][];
@@ -62,7 +61,6 @@ namespace T {
                                     _sCntrCrd.Z + r * _sUntSpcn.Z
                                 )
                             );
-                            // _iUntPrArry = Arry.CntnAdd<IUnt>(_iUntPrArry, _iUntArry[l][c][r], tmpUntArry);
                             _iUntPrArry = Arry.Add<IUnt>(_iUntPrArry, _iUntArry[l][c][r]);
                         }
                     }

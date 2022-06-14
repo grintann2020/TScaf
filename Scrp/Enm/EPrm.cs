@@ -1,9 +1,11 @@
 ﻿namespace T {
 
     public enum EPrm : byte {
+        Arch, // archive
+        Data, // data
         Gm, // game
-        Dt, // data
         Intractn, // interactive
+        Objcs, // objects
         Prgm, // program
         Scn, // scene
         Stg,  // stage

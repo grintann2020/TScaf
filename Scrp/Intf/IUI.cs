@@ -12,8 +12,8 @@ namespace T {
         void Dtch(byte eGrp); // detach UI by release specific object group by enum
         void PrpUpdt(); // prop update
         bool IsGrpAttc(byte eGrp); // return is group attached or not
-        GameObject GmObjc(byte eGrp, byte eObjc); // return specific gameObject in specific group by enum
-        T Cmpn<T>(byte eGrp, byte eCmpn); // return component
+        GameObject GtGmObjc(byte eGrp, byte eObjc); // return specific gameObject in specific group by enum
+        T GtCmpn<T>(byte eGrp, byte eCmpn); // return component
         void Actv(byte eGrp); // activate specific behavior group by enum
         void Hlt(byte eGrp); // halt specific behavior group by enum
         void Actv(byte eGrp, byte eBhvr); // activate specific behavior in specific group by enum

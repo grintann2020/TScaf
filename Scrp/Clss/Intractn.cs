@@ -38,7 +38,7 @@ namespace T {
             }
         }
 
-        public void Unnstl() { // uninstall
+        public void Uninstl() { // uninstall
             if (!_isInstl) {
                 return;
             }

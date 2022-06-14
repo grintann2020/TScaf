@@ -5,7 +5,7 @@
         public bool IsIntl { get { return _isIntl; } } // get is initialized or not
         private IStg[] _iStgArry = null; // an array of stage
         private StgPrm _stgPrm = null;  // prime of stage
-        private byte _eStg = 0; // enum of stage
+        private byte _eCrrnStg = 0; // enum of stage
         private bool _isIntl = false; // is initialized or not
 
         public void Rst() { // reset
@@ -28,31 +28,50 @@
         }
 
         public void Impl(byte eStg) { // implement specific stage by enum
-            if (_iStgArry[_eStg] != null) {
-                if (_eStg == eStg) {
+            if (_iStgArry[_eCrrnStg] != null) {
+                if (_eCrrnStg == eStg) {
                     return;
                 }
-                _iStgArry[_eStg].Abrt();
-                _stgPrm.Omt(_eStg);
+                _iStgArry[_eCrrnStg].Abrt();
+                _stgPrm.Omt(_eCrrnStg);
             }
-            _eStg = eStg;
-            _stgPrm.Prm(_eStg);
-            _iStgArry[_eStg].Impl();
+            _eCrrnStg = eStg;
+            _stgPrm.Prm(_eCrrnStg);
+            _iStgArry[_eCrrnStg].Impl();
+        }
+
+        public void Impl(byte eStg, byte ePrgs) { // implement specific stage by enum
+            if (_iStgArry[_eCrrnStg] != null) {
+                if (_eCrrnStg == eStg) {
+                    if (_iStgArry[_eCrrnStg].ECrrnPrgs == ePrgs) {
+                        return;
+                    } else {
+                        _iStgArry[_eCrrnStg].Impl(ePrgs);
+                        return;
+                    }
+                } else {
+                    _iStgArry[_eCrrnStg].Abrt();
+                    _stgPrm.Omt(_eCrrnStg);
+                }
+            }
+            _eCrrnStg = eStg;
+            _stgPrm.Prm(_eCrrnStg);
+            _iStgArry[_eCrrnStg].Impl(ePrgs);
         }
 
         public void Abrt() { // abort current stage
-            if (_iStgArry[_eStg] != null) {
-                _iStgArry[_eStg].Abrt();
-                _stgPrm.Omt(_eStg);
+            if (_iStgArry[_eCrrnStg] != null) {
+                _iStgArry[_eCrrnStg].Abrt();
+                _stgPrm.Omt(_eCrrnStg);
             }
         }
 
         public void PrpUpdt() { // prop update
-            _iStgArry[_eStg]?.PrpUpdt();
+            _iStgArry[_eCrrnStg]?.PrpUpdt();
         }
 
-        public IStg IStg() { // return current stage
-            return _iStgArry[_eStg];
+        public IStg GtIStg() { // return current stage
+            return _iStgArry[_eCrrnStg];
         }
 
         public bool IsImp(byte eStg) { // return specific stage is implemented or not

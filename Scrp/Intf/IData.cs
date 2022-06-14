@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace T {
 
-    public interface IDt { // data interface
+    public interface IData { // data interface
 
-        DtMngr Mngr { set; } // set hub manager
+        DataMngr Mngr { set; } // set data manager
         bool IsAppl { get; } // return is applied or not
         void Appl(); // apply
         void Cs(); // cease

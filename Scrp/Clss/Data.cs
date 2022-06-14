@@ -1,18 +1,17 @@
-using System;
 using UnityEngine;
 
 namespace T {
 
-    public class Dt { // data
+    public class Data { // data
 
-        public DtMngr Mngr { set { _mngr = value; } } // set manager
+        public DataMngr Mngr { set { _mngr = value; } } // set manager
         public bool IsAppl { get { return _isAppl; } } // get is applied or not
         protected DActn<object>[] _dActAArry = null; // an array of react delegate
         protected DActn[] _dActArry = null; // an array of act delegate
         protected DActn[] _dCrtOprtArry = null; // an array of create operate delegate
         protected DActn[] _dOprtArry; // an array of operate delegate
         protected Transform[] _trnsfrmArry = null;
-        protected DtMngr _mngr = null;
+        protected DataMngr _mngr = null;
         protected object[] _objcArry = null;
         protected string[] _strnArry = null;
         protected float[] _fltArry = null;

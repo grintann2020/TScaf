@@ -5,7 +5,7 @@ namespace T {
         public bool IsIntl { get { return _isIntl; } }
         private IntractnPrm _iaPrm = null; // prime of program
         private IIntractn[] _iIntractnArry = null;
-        private byte _eIntractn = 0;
+        private byte _eCrrnIntractn = 0;
         private bool _isIntl = false;
 
         public void Rst() { // reset
@@ -13,7 +13,7 @@ namespace T {
                 return;
             }
             _isIntl = false;
-            Unnstl();
+            Uninstl();
             _iaPrm = null;
             _iIntractnArry = null;
         }
@@ -28,31 +28,31 @@ namespace T {
         }
 
         public void Instl(byte eIntractn) { // install
-            if (_iIntractnArry[_eIntractn] != null) {
-                if (_eIntractn == eIntractn) {
+            if (_iIntractnArry[_eCrrnIntractn] != null) {
+                if (_eCrrnIntractn == eIntractn) {
                     return;
                 }
-                _iIntractnArry[_eIntractn].Unnstl();
-                _iaPrm.Omt(_eIntractn);
+                _iIntractnArry[_eCrrnIntractn].Uninstl();
+                _iaPrm.Omt(_eCrrnIntractn);
             }
-            _eIntractn = eIntractn;
-            _iaPrm.Prm(_eIntractn);
-            _iIntractnArry[_eIntractn].Instl();
+            _eCrrnIntractn = eIntractn;
+            _iaPrm.Prm(_eCrrnIntractn);
+            _iIntractnArry[_eCrrnIntractn].Instl();
         }
 
-        public void Unnstl() { // uninstall
-            if (_iIntractnArry[_eIntractn] != null) {
-                _iIntractnArry[_eIntractn].Unnstl();
-                _iaPrm.Omt(_eIntractn);
+        public void Uninstl() { // uninstall
+            if (_iIntractnArry[_eCrrnIntractn] != null) {
+                _iIntractnArry[_eCrrnIntractn].Uninstl();
+                _iaPrm.Omt(_eCrrnIntractn);
             }
         }
 
         public void PrpUpdt() { // prop update
-            _iIntractnArry[_eIntractn]?.PrpUpdt();
+            _iIntractnArry[_eCrrnIntractn]?.PrpUpdt();
         }
 
-        public IIntractn IIntractn() { // return current interaction
-            return _iIntractnArry[_eIntractn];
+        public IIntractn GtIIntractn() { // return current interaction
+            return _iIntractnArry[_eCrrnIntractn];
         }
 
         public bool IsInst(byte eIntractn) { // return specific interaction is installed or not
@@ -60,11 +60,11 @@ namespace T {
         }
 
         public void Prmp(byte eEvt) { // prompt specific event by enum
-            _iIntractnArry[_eIntractn]?.Prmp(eEvt);
+            _iIntractnArry[_eCrrnIntractn]?.Prmp(eEvt);
         }
 
         public void Dssd(byte eEvt) { // dissuade  specific event by enum
-            _iIntractnArry[_eIntractn].Dssd(eEvt);
+            _iIntractnArry[_eCrrnIntractn].Dssd(eEvt);
         }
 
         public void Prmp(byte eIntractn, byte eEvt) { // prompt specific event in specific interaction by enum

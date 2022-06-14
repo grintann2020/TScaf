@@ -8,7 +8,7 @@ namespace T {
         private TxtPrm _txtPrm = null;
         private ITxt[] _iTxtArry = null;
         private byte[] _lnggArry = null;
-        private byte _eLngg = 0;
+        private byte _eCrrnLngg = 0;
         private bool _isIntl = false;
 
         public void Rst() {
@@ -29,7 +29,7 @@ namespace T {
             _txtPrm = (TxtPrm)iPrm;
             _iTxtArry = _txtPrm.ITxtArry;
             _lnggArry = _txtPrm.ELnggArry;
-            _eLngg = LnggIndx(0);
+            _eCrrnLngg = LnggIndx(0);
         }
 
         public void Appl(byte eTxt) {
@@ -53,24 +53,24 @@ namespace T {
         }
 
         public void Chng(byte eLngg) { // change to specific language by enum
-            if (_eLngg == eLngg || Arry.Indx<byte>(_lnggArry, eLngg) == -1) {
+            if (_eCrrnLngg == eLngg || Arry.Indx<byte>(_lnggArry, eLngg) == -1) {
                 return;
             }
-            _eLngg = eLngg;
+            _eCrrnLngg = eLngg;
         }
 
         public void Chng(SystemLanguage systLngg) { // change to specific language by (unity) system language
-            if (_eLngg == (byte)systLngg || Arry.Indx<byte>(_lnggArry, (byte)systLngg) == -1) {
+            if (_eCrrnLngg == (byte)systLngg || Arry.Indx<byte>(_lnggArry, (byte)systLngg) == -1) {
                 return;
             }
-            _eLngg = (byte)systLngg;
+            _eCrrnLngg = (byte)systLngg;
         }
 
         public string Strn(byte eTxt, ushort eStrn) { // return specific string in specific text by enum
             if (_iTxtArry[eTxt] == null) {
                 return "disapplied";
             }
-            return _iTxtArry[eTxt].StrnArry[eStrn][LnggIndx(_eLngg)];
+            return _iTxtArry[eTxt].StrnArry[eStrn][LnggIndx(_eCrrnLngg)];
         }
 
         public string Strn(byte eTxt, ushort eStrn, byte eLngg) {
