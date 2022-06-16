@@ -27,7 +27,6 @@ namespace T {
         private GameObject[][] _gmObjcArry = null; // the array of GameObjects
         private GameObject[] _tmpSbinstArry = null; // the temp array of sub GameObject
         private Transform[][] _tmpTrnsfrmArry = null; // the temp array of Transform
-        private object[][] _qryArry = null; // the array of query
         private bool[] _isEstbArry = null; // is established or not
 
         public void Estb(Transform rtTrnsfrm, DActn dAftrEstb = null) { // establish scene by generating all objects group, dAftrEstb = after established
@@ -185,15 +184,15 @@ namespace T {
         }
 
         private void Gnrt(byte eGrp, DActn dAftrGnrt) { // generate scene by instantiate objects from addressable asset
-            _qryArry = new object[_grpArry[eGrp].Length][];
-            for (byte o = 0; o < _grpArry[eGrp].Length; o++) {
-                _qryArry[o] = new object[3] {
-                    _grpArry[eGrp][o][0],
+            SInst[] sInstArry = new SInst[_grpArry[eGrp].Length];
+            for (byte o = 0; o < sInstArry.Length; o++) {
+                sInstArry[o] = new SInst (
+                    (string)_grpArry[eGrp][o][0],
                     new Vector3(((float[])_grpArry[eGrp][o][1])[0], ((float[])_grpArry[eGrp][o][1])[1], ((float[])_grpArry[eGrp][o][1])[2]),
-                    new Quaternion(((float[])_grpArry[eGrp][o][2])[0], ((float[])_grpArry[eGrp][o][2])[1], ((float[])_grpArry[eGrp][o][2])[2], ((float[])_grpArry[eGrp][o][2])[3]),
-                };
+                    new Quaternion(((float[])_grpArry[eGrp][o][2])[0], ((float[])_grpArry[eGrp][o][2])[1], ((float[])_grpArry[eGrp][o][2])[2], ((float[])_grpArry[eGrp][o][2])[3])
+                );
             }
-            Rsrc.Inst(_qryArry, _rtTrnsfrm, (rsltArry) => {
+            Rsrc.Inst(sInstArry, _rtTrnsfrm, (rsltArry) => {
                 for (byte r = 0; r < _grpArry[eGrp].Length; r++) {
                     rsltArry[r].name = _grpArry[eGrp][r][3].ToString();
                     _addrblArry[eGrp][r] = rsltArry[r];
@@ -209,7 +208,6 @@ namespace T {
                     }
                 }
                 _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_addrblArry[eGrp], Arry.Ct<GameObject>(_tmpSbinstArry, indx));
-                _qryArry = null;
                 _tmpTrnsfrmArry = null;
                 _tmpSbinstArry = null;
                 indx = 0;

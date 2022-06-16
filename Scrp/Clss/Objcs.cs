@@ -5,28 +5,26 @@ namespace T {
 
     public abstract class Objcs { // objects
 
-        public enum ESt : byte {
-            Enbl = 0,
-            Id = 1,
-            Inst = 2,
-            Objc = 3,
-        }
-
         public ObjcsMngr Mngr { set { _mngr = value; } } // set manager
         public bool IsFound { get { return _isFound; } } // get is founded or not
         protected Transform _rtTrnsfrm = null;
         protected ObjcsMngr _mngr = null;
         protected SObjc[][] _sObjcArry = null;
         protected string[] _kyArry = null;
-
+        private DActn<SObjc>[][] _dActnQArry = null;
         private bool _isFound = false;
 
         public void Found(Transform rtTrnsfrm) { // found
-            if (_isFound) {
+            if (_isFound || rtTrnsfrm == null || _kyArry == null) {
                 return;
             }
             _isFound = true;
             _rtTrnsfrm = rtTrnsfrm;
+            _sObjcArry = new SObjc[_kyArry.Length][];
+            _dActnQArry = new DActn<SObjc>[_kyArry.Length][];
+            for (byte q = 0; q < _dActnQArry.Length; q++) {
+                _dActnQArry[q] = new DActn<SObjc>[0];
+            }
         }
 
         public void Ruin() { // cease
@@ -38,6 +36,7 @@ namespace T {
             _mngr = null;
             _sObjcArry = null;
             _kyArry = null;
+            _dActnQArry = null;
         }
 
         public GameObject[] GtGmObjcArry(byte eObjc) { // get the array of GameObjects
@@ -89,9 +88,6 @@ namespace T {
         }
 
         public void MltpCrt(byte[][] eObjcArry, DActn dCrt = null) { // multiple create
-            if (!_isFound) {
-                return;
-            }
             byte cnt = 0;
             for (byte e = 0; e < eObjcArry.Length; e++) {
                 Crt(eObjcArry[e][0], eObjcArry[e][1], () => {
@@ -104,30 +100,28 @@ namespace T {
         }
 
         public void Crt(byte eObjc, int amnt, DActn dInst = null) { // create
-            if (!_isFound) {
-                return;
-            }
             SObjc[] sObjcArry = new SObjc[amnt];
-            int cnt = 0;
-            for (int a = 0; a < amnt; a++) {
-                Rsrc.Inst(
-                    _kyArry[eObjc],
-                    _rtTrnsfrm,
-                    (gmObjc) => {
-                        gmObjc.name = gmObjc.name.Split("(")[0] + "_e" + eObjc;
-                        sObjcArry[cnt] = CrtObjc(eObjc, gmObjc);
-                        cnt += 1;
-                        if (cnt == amnt) {
-                            _sObjcArry[eObjc] = Arry.Apnd<SObjc>(_sObjcArry[eObjc], sObjcArry);
-                            sObjcArry = null;
-                            dInst?.Invoke();
-                        }
-                    }
-                );
+            string[] kyArry = new string[amnt];
+            for (int e = 0; e < amnt; e++) {
+                kyArry[e] = _kyArry[eObjc];
             }
+            Rsrc.Inst(
+                kyArry,
+                _rtTrnsfrm,
+                (gmObjcArry) => {
+                    string nm = gmObjcArry[0].name.Split("(")[0] + "_e" + eObjc;
+                    for (int g = 0; g < gmObjcArry.Length; g++) {
+                        gmObjcArry[g].name = nm;
+                        sObjcArry[g] = CrtObjc(eObjc, gmObjcArry[g]);
+                    }
+                    _sObjcArry[eObjc] = Arry.Apnd<SObjc>(_sObjcArry[eObjc], sObjcArry);
+                    sObjcArry = null;
+                    dInst?.Invoke();
+                }
+            );
         }
 
-        public void Dlt(byte eObjc, int id) { // delete
+        public void Dlt(byte eObjc, int id) { // delete 
             int indx = Indx(eObjc, id);
             if (indx < 0) {
                 return;
@@ -137,33 +131,54 @@ namespace T {
         }
 
         public void Enbl(byte eObjc, DActn<SObjc> dActn = null) { // request
-            int indx = SwtcNxt(eObjc, true);
-            if (indx >= 0) {
-                SwtcObjc(eObjc, indx, true);
-                dActn?.Invoke(_sObjcArry[eObjc][indx]);
-            } else {
-                indx = _sObjcArry[eObjc].Length;
-                Crt(eObjc, _sObjcArry[eObjc].Length, () => {
-                    SwtcObjc(eObjc, indx, true);
+            if (_dActnQArry[eObjc].Length == 0) {
+                int indx = SwtcNxt(eObjc, false);
+                if (indx >= 0) {
+                    _sObjcArry[eObjc][indx].Enbl();
                     dActn?.Invoke(_sObjcArry[eObjc][indx]);
-                });
+                } else {
+                    _dActnQArry[eObjc] = Arry.Psh<DActn<SObjc>>(_dActnQArry[eObjc], dActn);
+                    Rqst(eObjc, dActn);
+                }
+            } else {
+                _dActnQArry[eObjc] = Arry.Psh<DActn<SObjc>>(_dActnQArry[eObjc], dActn);
             }
         }
 
         public void Dsbl(byte eObjc) {
-            SwtcObjc(eObjc, SwtcNxt(eObjc, false), false);
+            _sObjcArry[eObjc][SwtcNxt(eObjc, true)].Dsbl();
         }
 
         public void Dsbl(byte eObjc, int id) {
-            SwtcObjc(eObjc, Indx(eObjc, id), false);
+            _sObjcArry[eObjc][Indx(eObjc, id)].Dsbl();
         }
 
         protected abstract object NwObjc(byte eObjc, GameObject gmObjc);
 
-        protected abstract void SwtcInst(object inst, bool bln);
+        private void Rqst(byte eObjc, DActn<SObjc> dActn = null) { // requisition
+            int indx = SwtcNxt(eObjc, false);
+            if (indx > 0) {
+                _sObjcArry[eObjc][indx].Enbl();
+                dActn?.Invoke(_sObjcArry[eObjc][indx]);
+                _dActnQArry[eObjc] = Arry.Pp<DActn<SObjc>>(_dActnQArry[eObjc]);
+                if (_dActnQArry[eObjc].Length != 0) {
+                    Rqst(eObjc, _dActnQArry[eObjc][0]);
+                }
+            } else {
+                indx = _sObjcArry[eObjc].Length;
+                Crt(eObjc, _sObjcArry[eObjc].Length, () => {
+                    _sObjcArry[eObjc][indx].Enbl();
+                    _dActnQArry[eObjc][0]?.Invoke(_sObjcArry[eObjc][indx]);
+                    _dActnQArry[eObjc] = Arry.Pp<DActn<SObjc>>(_dActnQArry[eObjc]);
+                    if (_dActnQArry[eObjc].Length != 0) {
+                        Rqst(eObjc, _dActnQArry[eObjc][0]);
+                    }
+                });
+            }
+        }
 
         private SObjc CrtObjc(byte eObjc, GameObject gmObjc) { // create object
-            return new SObjc(false, eObjc, NwObjc(eObjc, gmObjc), gmObjc);
+            return new SObjc(eObjc, NwObjc(eObjc, gmObjc), gmObjc);
         }
 
         private int Indx(byte eObjc, int id) {
@@ -190,12 +205,6 @@ namespace T {
                 }
             }
             return -1;
-        }
-
-        private void SwtcObjc(byte eObjc, int indx, bool bln) {
-            _sObjcArry[eObjc][indx].IsEnbl = bln;
-            _sObjcArry[eObjc][indx].GmObjc.SetActive(bln);
-            SwtcInst(_sObjcArry[eObjc][indx].Inst, bln);
         }
     }
 }

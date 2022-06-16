@@ -11,6 +11,7 @@ namespace T {
         public bool IsEnd { get { return _stp == _nmbrOfIntrvl; } } // get is end or not
         public bool IsTwnng { get { return !float.IsNaN(_strtTm) && float.IsNaN(_psTm); } } // get is tweening or not
         private ITrck[] _iTrckArry; // the array of track interface
+        private DActn _dEnd;
         private float _drtn; // duration
         private float _dly; // dely
         private float _mntdTm; // mounted time
@@ -23,9 +24,10 @@ namespace T {
         private int _tmpStp; // temp step
         private bool _isDpsb; // is deposable
 
-        public STwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true) {
+        public STwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             _id = id;
             _iTrckArry = iTrckArry;
+            _dEnd = dEnd;
             _nmbrOfIntrvl = nmbrOfIntrvl;
             _drtn = drtn;
             _dly = dly;
@@ -65,6 +67,7 @@ namespace T {
                     if (_isDpsb) {
                         _iTrckArry = null;
                         Mtn.RmvTwn(_id);
+                        _dEnd?.Invoke();
                     }
                 }
             }

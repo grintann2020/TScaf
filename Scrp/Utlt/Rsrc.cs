@@ -41,7 +41,7 @@ namespace T {
         }
 
         public static async void Inst(string[] kyArry,  Transform prnt = null, DActn<GameObject[]> dInst = null) { // Addressables.InstantiateAsync will clone asset directlty
-            GameObject[] instArry = new GameObject[kyArry.Length];
+            GameObject[] gmObjcArry = new GameObject[kyArry.Length];
             Task[] tskArry = new Task[kyArry.Length];
             AsyncOperationHandle<GameObject>[] hndlArry = new AsyncOperationHandle<GameObject>[kyArry.Length];
             for (byte k = 0; k < kyArry.Length; k++) {
@@ -50,24 +50,24 @@ namespace T {
             }
             await Task.WhenAll(tskArry);
             for (byte k = 0; k < kyArry.Length; k++) {
-                instArry[k] = hndlArry[k].Result;
+                gmObjcArry[k] = hndlArry[k].Result;
             }
-            dInst?.Invoke(instArry);
+            dInst?.Invoke(gmObjcArry);
         }
 
-        public static async void Inst(object[][] objcArry, Transform prnt = null, DActn<GameObject[]> dInst = null) {
-            GameObject[] instArry = new GameObject[objcArry.Length];
-            Task[] tskArry = new Task[objcArry.Length];
-            AsyncOperationHandle<GameObject>[] hndlArry = new AsyncOperationHandle<GameObject>[objcArry.Length];
-            for (byte k = 0; k < objcArry.Length; k++) {
-                hndlArry[k] = Addressables.InstantiateAsync((string)objcArry[k][0], (Vector3)objcArry[k][1], (Quaternion)objcArry[k][2], prnt);
+        public static async void Inst(SInst[] sIntArry, Transform prnt = null, DActn<GameObject[]> dInst = null) {
+            GameObject[] gmObjcArry = new GameObject[sIntArry.Length];
+            Task[] tskArry = new Task[sIntArry.Length];
+            AsyncOperationHandle<GameObject>[] hndlArry = new AsyncOperationHandle<GameObject>[sIntArry.Length];
+            for (byte k = 0; k < sIntArry.Length; k++) {
+                hndlArry[k] = Addressables.InstantiateAsync(sIntArry[k].Ky, sIntArry[k].Pstn, sIntArry[k].Rttn, prnt);
                 tskArry[k] = hndlArry[k].Task;
             }
             await Task.WhenAll(tskArry);
-            for (byte k = 0; k < objcArry.Length; k++) {
-                instArry[k] = hndlArry[k].Result;
+            for (byte k = 0; k < sIntArry.Length; k++) {
+                gmObjcArry[k] = hndlArry[k].Result;
             }
-            dInst?.Invoke(instArry);
+            dInst?.Invoke(gmObjcArry);
         }
 
         public static void Rls<T>(T t, DActn dRls = null) {

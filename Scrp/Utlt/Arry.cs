@@ -31,6 +31,14 @@ namespace T {
             return rsltArry;
         }
 
+        public static T[] Psh<T>(T[] orgnArry, T itm) {
+            return Add<T>(orgnArry, itm);
+        }
+
+        public static T[] Pp<T>(T[] orgnArry) {
+            return Rmv<T>(orgnArry, 0);
+        }
+
         public static T[] Apnd<T>(T[] orgnArryA, T[] orgnArryB) { // append
             if (orgnArryA == null && orgnArryB == null) {
                 return null;

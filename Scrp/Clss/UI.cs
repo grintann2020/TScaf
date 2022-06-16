@@ -27,9 +27,7 @@ namespace T {
         private GameObject[][] _gmObjcArry = null; // the array of GameObjects
         private GameObject[] _tmpSbinstArry = null; // the array for temp storage of sub GameObject
         private Transform[][] _tmpTrnsfrmArry = null; // the array for temp storage of Transform
-        private object[][] _tmpQryArry = null;
         private bool[] _isAttcArry = null; // the array of bool as is atached or not
-        private ushort _tmpIndx = 0; // temp index;
 
         public void Attc(Canvas cnvs, DActn dAftrAttc = null) { // attach UI by generating all objects group, dAftrAttc = after attached
             if (_grpArry == null) {
@@ -273,35 +271,33 @@ namespace T {
         }
 
         private void Gnr(byte eGrp, DActn dAftrGnrt) { // generate scene
-            _tmpQryArry = new object[_grpArry[eGrp].Length][];
+            SInst[] sInstArry = new SInst[_grpArry[eGrp].Length];
             for (byte o = 0; o < _grpArry[eGrp].Length; o++) {
-                _tmpQryArry[o] = new object[3] {
-                    _grpArry[eGrp][o][0],
+                sInstArry[o] = new SInst (
+                    (string)_grpArry[eGrp][o][0],
                     new Vector3(((short[])_grpArry[eGrp][o][1])[0], ((short[])_grpArry[eGrp][o][1])[1], 0),
                     Quaternion.identity
-                };
+                );
             }
-            Rsrc.Inst(_tmpQryArry, _mnCnvs.transform, (rsltArry) => {
+            Rsrc.Inst(sInstArry, _mnCnvs.transform, (rsltArry) => {
                 for (byte r = 0; r < _grpArry[eGrp].Length; r++) {
                     rsltArry[r].name = _grpArry[eGrp][r][2].ToString();
                     _addrblArry[eGrp][r] = rsltArry[r];
                 }
                 _tmpTrnsfrmArry = new Transform[_addrblArry[eGrp].Length][];
                 _tmpSbinstArry = new GameObject[_addrblArry[eGrp].Length * 32]; // array of subinstances
-                _tmpIndx = 0;
+                int indx = 0;
                 for (byte t1 = 0; t1 < _tmpTrnsfrmArry.Length; t1++) {
                     _tmpTrnsfrmArry[t1] = _addrblArry[eGrp][t1].GetComponentsInChildren<Transform>();
                     for (byte t2 = 1; t2 < _tmpTrnsfrmArry[t1].Length; t2++) {
-                        _tmpSbinstArry[_tmpIndx] = _tmpTrnsfrmArry[t1][t2].gameObject;
-                        _tmpIndx += 1;
+                        _tmpSbinstArry[indx] = _tmpTrnsfrmArry[t1][t2].gameObject;
+                        indx += 1;
                     }
                 }
-                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_addrblArry[eGrp], Arry.Ct<GameObject>(_tmpSbinstArry, _tmpIndx));
+                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_addrblArry[eGrp], Arry.Ct<GameObject>(_tmpSbinstArry, indx));
                 _cmpnArry[eGrp] = Ftch(_gmObjcArry[eGrp]);
-                _tmpQryArry = null;
                 _tmpTrnsfrmArry = null;
                 _tmpSbinstArry = null;
-                _tmpIndx = 0;
                 rsltArry = null;
                 Actv(eGrp);
                 dAftrGnrt(); // after generate callback
