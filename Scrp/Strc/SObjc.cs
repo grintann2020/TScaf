@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace T {
 
-    public class SObjc {
+    public struct SObjc {
 
         public GameObject GmObjc { get { return _gmObjc; } }
         public Transform Trnsfrm { get { return _gmObjc.transform; } }

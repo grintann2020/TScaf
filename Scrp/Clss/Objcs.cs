@@ -48,14 +48,10 @@ namespace T {
         }
 
         public GameObject GtGmObjc(byte eObjc, int id) { // get GameObject
-            int indx = Indx(eObjc, id);
-            if (indx < 0) {
-                return null;
-            }
-            return _sObjcArry[eObjc][indx].GmObjc;
+            return _sObjcArry[eObjc][Indx(eObjc, id)].GmObjc;
         }
 
-        public SObjc[] GtSObjcArry(byte eObjc) { // get the array of instances
+        public SObjc[] GtSObjcArry(byte eObjc) { // get the array of SObjcs
             SObjc[] objcArry = new SObjc[_sObjcArry[eObjc].Length];
             for (byte o = 0; o < _sObjcArry[eObjc].Length; o++) {
                 objcArry[o] = _sObjcArry[eObjc][o];
@@ -63,12 +59,8 @@ namespace T {
             return objcArry;
         }
 
-        public SObjc GtSObjc(byte eObjc, int id) { // get instance
-            int indx = Indx(eObjc, id);
-            if (indx < 0) {
-                return null;
-            }
-            return _sObjcArry[eObjc][indx];
+        public SObjc GtSObjc(byte eObjc, int id) { // get SObjc
+            return _sObjcArry[eObjc][Indx(eObjc, id)];
         }
 
         public T[] GtInstArry<T>(byte eObjc) { // get the array of instances
@@ -80,11 +72,7 @@ namespace T {
         }
 
         public T GtInst<T>(byte eObjc, int id) { // get instance
-            int indx = Indx(eObjc, id);
-            if (indx < 0) {
-                return default(T);
-            }
-            return (T)_sObjcArry[eObjc][indx].Inst;
+            return (T)_sObjcArry[eObjc][Indx(eObjc, id)].Inst;
         }
 
         public void MltpCrt(byte[][] eObjcArry, DActn dCrt = null) { // multiple create
