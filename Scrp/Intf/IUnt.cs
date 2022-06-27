@@ -14,6 +14,8 @@ namespace T {
         int Rw { get; } // get row
         int Clmn { get; } // get column
         int Lyr { get; } // get layer
+        bool IsIntractbl { get; set; }
+        T GtCntn<T>(byte indx);
         void StAdjc(byte indx, IUnt iUnt);
         void Admt<T>(T cntn); // move in
         void Omt(byte indx); // move out

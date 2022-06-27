@@ -29,15 +29,22 @@
 
         public void Cnst(byte eSpc) { // implement specific stage by enum
             if (_iSpcArry[_eCrrnSpc] != null) {
-                if (_eCrrnSpc == eSpc) {
-                    return;
-                }
                 _iSpcArry[_eCrrnSpc].Dcnst();
                 _spcPrm.Omt(_eCrrnSpc);
             }
             _eCrrnSpc = eSpc;
             _spcPrm.Prm(_eCrrnSpc);
             _iSpcArry[_eCrrnSpc].Cnst(0);
+        }
+
+        public void Cnst(byte eSpc, byte eExst) { // implement specific stage by enum
+            if (_iSpcArry[_eCrrnSpc] != null) {
+                _iSpcArry[_eCrrnSpc].Dcnst();
+                _spcPrm.Omt(_eCrrnSpc);
+            }
+            _eCrrnSpc = eSpc;
+            _spcPrm.Prm(_eCrrnSpc);
+            _iSpcArry[_eCrrnSpc].Cnst(eExst);
         }
 
         public void Dcnst() { // abort current stage

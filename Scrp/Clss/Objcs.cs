@@ -100,7 +100,7 @@ namespace T {
                     string nm = gmObjcArry[0].name.Split("(")[0] + "_e" + eObjc;
                     for (int g = 0; g < gmObjcArry.Length; g++) {
                         gmObjcArry[g].name = nm;
-                        sObjcArry[g] = CrtObjc(eObjc, gmObjcArry[g]);
+                        sObjcArry[g] = CrtSObjc(eObjc, gmObjcArry[g]);
                     }
                     _sObjcArry[eObjc] = Arry.Apnd<SObjc>(_sObjcArry[eObjc], sObjcArry);
                     sObjcArry = null;
@@ -119,6 +119,7 @@ namespace T {
         }
 
         public void Enbl(byte eObjc, DActn<SObjc> dActn = null) { // request
+            // Debug.Log("eObjc = " + eObjc + ", _dActnQArry[eObjc].Length =" + _dActnQArry[eObjc].Length);
             if (_dActnQArry[eObjc].Length == 0) {
                 int indx = SwtcNxt(eObjc, false);
                 if (indx >= 0) {
@@ -133,15 +134,15 @@ namespace T {
             }
         }
 
-        public void Dsbl(byte eObjc) {
-            _sObjcArry[eObjc][SwtcNxt(eObjc, true)].Dsbl();
-        }
-
         public void Dsbl(byte eObjc, int id) {
             _sObjcArry[eObjc][Indx(eObjc, id)].Dsbl();
         }
 
-        protected abstract object NwObjc(byte eObjc, GameObject gmObjc);
+        public void Dsbl(byte eObjc) {
+            _sObjcArry[eObjc][SwtcNxt(eObjc, true)].Dsbl();
+        }
+
+        protected abstract object NwInst(byte eObjc, GameObject gmObjc);
 
         private void Rqst(byte eObjc, DActn<SObjc> dActn = null) { // requisition
             int indx = SwtcNxt(eObjc, false);
@@ -165,8 +166,8 @@ namespace T {
             }
         }
 
-        private SObjc CrtObjc(byte eObjc, GameObject gmObjc) { // create object
-            return new SObjc(eObjc, NwObjc(eObjc, gmObjc), gmObjc);
+        private SObjc CrtSObjc(byte eObjc, GameObject gmObjc) { // create object
+            return new SObjc(eObjc, NwInst(eObjc, gmObjc), gmObjc);
         }
 
         private int Indx(byte eObjc, int id) {

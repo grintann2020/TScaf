@@ -93,7 +93,7 @@ namespace T {
             _iObjcsArry[_eCrrnObjcs].Dlt(eObjc, id);
         }
 
-        public void Enbl(byte eObjc, DActn<SObjc> dActn) {
+        public void Enbl(byte eObjc, DActn<SObjc> dActn = null) {
             _iObjcsArry[_eCrrnObjcs].Enbl(eObjc, dActn);
         }
 

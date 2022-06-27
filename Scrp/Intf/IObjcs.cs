@@ -16,7 +16,7 @@ namespace T {
         void MltpCrt(byte[][] eKyArry, DActn dCrt = null);
         void Crt(byte eObjc, int amnt, DActn dInst = null);
         void Dlt(byte eObjc, int id);
-        void Enbl(byte eObjc, DActn<SObjc> dActn);
+        void Enbl(byte eObjc, DActn<SObjc> dActn = null);
         void Dsbl(byte eObjc, int id);
     }
 }

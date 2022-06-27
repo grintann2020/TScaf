@@ -6,6 +6,7 @@ namespace T {
 
         public GameObject GmObjc { get { return _gmObjc; } }
         public Transform Trnsfrm { get { return _gmObjc.transform; } }
+        public Vector3 Pstn {  get { return _gmObjc.transform.position; } }
         public object Inst { get { return _inst; } }
         public int Id { get { return _gmObjc.transform.GetInstanceID(); } }
         public byte EObjc { get { return _eObjc; } }
@@ -28,15 +29,15 @@ namespace T {
             _gmObjc.SetActive(false);
         }
 
-        public void Pstn(SVctr3 sVctr) {
+        public void StPstn(SVctr3 sVctr) {
             _gmObjc.transform.position = new Vector3(sVctr.X, sVctr.Y, sVctr.Z);
         }
 
-        public void Rttn(SVctr3 sVctr) {
+        public void StRttn(SVctr3 sVctr) {
             _gmObjc.transform.rotation = Quaternion.Euler(sVctr.X, sVctr.Y, sVctr.Z);
         }
 
-        public void Scl(SVctr3 sVctr) {
+        public void StScl(SVctr3 sVctr) {
             _gmObjc.transform.localScale = new Vector3(sVctr.X, sVctr.Y, sVctr.Z);
         }
     }
