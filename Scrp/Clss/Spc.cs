@@ -40,7 +40,7 @@ namespace T {
             }
             _isCnst = true;
             _dGnrtExstArry[eExst]?.Invoke(); // generate specific exist array by enum, _sScl and _isExstArry will be mount
-            _sCntrCrd = CntrCrd(_sScl.Clmn, _sScl.Rw, _crcmrds); // find center coordinate
+            _sCntrCrd = CntrCrdn(_sScl.Clmn, _sScl.Rw, _crcmrds); // find center coordinate
             _iUntArry = new IUnt[_sScl.Lyr][][];
             for (byte l = 0; l < _sScl.Lyr; l++) {
                 _iUntArry[l] = new IUnt[_sScl.Clmn][];
@@ -50,15 +50,15 @@ namespace T {
                         if (_isExstArry[l][c][r] == false) {
                             _iUntArry[l][c][r] = null;
                         } else {
-                            float y = _sCntrCrd.Y + l * _sUntSpcn.Y;
                             float x = _sCntrCrd.X + c * _sUntSpcn.X;
+                            float y = _sCntrCrd.Y + l * _sUntSpcn.Y;
                             float z = _sCntrCrd.Z + r * _sUntSpcn.Z;
                             _iUntArry[l][c][r] = CrtIUnt(
                                 new SGrd3(l, c, r),
                                 new SVctr3(
                                     _sCntrCrd.X + c * _sUntSpcn.X + XOffst(r),
                                     _sCntrCrd.Y + l * _sUntSpcn.Y,
-                                    _sCntrCrd.Z + r * _sUntSpcn.Z
+                                    _sCntrCrd.Z + r * _sUntSpcn.Z - ZOffst(c)
                                 )
                             );
                             _iUntPrArry = Arry.Add<IUnt>(_iUntPrArry, _iUntArry[l][c][r]);
@@ -102,8 +102,9 @@ namespace T {
             }
         }
         protected abstract IUnt CrtIUnt(SGrd3 sPstn, SVctr3 sCrd); // create interface of unit
-        protected abstract SVctr3 CntrCrd(byte clmn, byte rw, float crcmrds); // center coordinate
+        protected abstract SVctr3 CntrCrdn(byte clmn, byte rw, float crcmrds); // center coordinate
         protected abstract void LnkTgth(); // link together
         protected abstract float XOffst(byte rw); // x offset
+        protected abstract float ZOffst(byte clmn); // z offset
     }
 }

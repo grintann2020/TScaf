@@ -20,8 +20,8 @@ namespace T {
 
         private static int[][][] drctFArry = new int[][][] {
             new int[][] {
-                new int[] {+1,  0}, new int[] {+1, +1}, new int[] { 0, -1},
-                new int[] {-1, +1}, new int[] {-1,  0}, new int[] { 0, +1},
+                new int[] {+1,  0}, new int[] {+1, +1}, new int[] { 0, +1},
+                new int[] {-1, +1}, new int[] {-1,  0}, new int[] { 0, -1},
             },
             new int[][] {
                 new int[] {+1, -1}, new int[] {+1,  0}, new int[] { 0, +1},
@@ -34,7 +34,7 @@ namespace T {
         }
 
         public static int[] AdjcF(int clmn, int drct) {
-            return drctPArry[clmn & 1][drct]; // parity, direction
+            return drctFArry[clmn & 1][drct]; // parity, direction
         }
 
         // public static (float hrznDist, float vrtcDist) DstrDstn(float sz) { // return distribute distance
@@ -50,11 +50,11 @@ namespace T {
         }
 
         public static float HrznDstnF(float crcmrds) { // horizontal distance
-            return SctnWdthP(HxWdthF(crcmrds)) * 3;
+            return SctnWdthF(HxWdthF(crcmrds)) * 3;
         }
 
         public static float VrtcDstnF(float crcmrds) { // vertical distance
-            return SctnHghtP(HxHghtF(crcmrds)) * 2;
+            return SctnHghtF(HxHghtF(crcmrds)) * 2;
         }
 
         public static float SctnWdthP(float hxWdth) { // return section width when point topped
@@ -89,11 +89,19 @@ namespace T {
             return crcmrds * Sqrt3;
         }
 
-        public static SVctr3 CntrCrdP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+        public static SVctr3 CntrCrdnP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
             return new SVctr3(
                 -((HrznDstnP(crcmrds) * (float)hrznUnts) / 2) + SctnWdthP(HxWdthP(crcmrds)),
                 0.0f,
                 -((VrtcDstnP(crcmrds) * (float)vrtcUnts) / 2) + SctnHghtP(HxHghtP(crcmrds)) + (SctnHghtP(HxHghtP(crcmrds)) / 2)
+            );
+        }
+
+        public static SVctr3 CntrCrdnF(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+            return new SVctr3(
+                -((HrznDstnF(crcmrds) * (float)hrznUnts) / 2) + SctnWdthF(HxWdthF(crcmrds)) + (SctnWdthF(HxWdthF(crcmrds)) / 2),
+                0.0f,
+                -((VrtcDstnF(crcmrds) * (float)vrtcUnts) / 2) + SctnHghtF(HxHghtF(crcmrds))
             );
         }
 
