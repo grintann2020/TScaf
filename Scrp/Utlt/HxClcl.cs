@@ -113,23 +113,12 @@ namespace T {
             return (byte)Math.Floor(_rdn / (Math.PI * 2) * 6);
         }
 
-        public static SVctr3 HxPFlp(byte drct) {
-            switch (drct) {
-                case 0:
-                    return new SVctr3(0.0f, 0.0f, -180.0f);
-                case 1:
-                    return new SVctr3(180.0f, 60.0f, 0.0f);
-                case 2:
-                    return new SVctr3(180.0f, -60.0f, 0.0f);
-                case 3:
-                    return new SVctr3(0.0f, 0.0f, 180.0f);
-                case 4:
-                    return new SVctr3(-180.0f, 60.0f, 0.0f);
-                case 5:
-                    return new SVctr3(-180.0f, -60.0f, 0.0f);
-                default:
-                    return new SVctr3(0.0f, 0.0f, 0.0f);
+        public static byte HxFDrct(float distY, float distX) {
+            _rdn = Math.Atan2(distY, distX) + 1.0472; // + 60 degree
+            if (_rdn <= 0) {
+                _rdn = Math.PI * 2 + _rdn;
             }
+            return (byte)Math.Floor(_rdn / (Math.PI * 2) * 6);
         }
     }
 }

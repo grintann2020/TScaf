@@ -81,11 +81,20 @@ namespace T {
             return rsltArry;
         }
 
-        public static T[] Ct<T>(T[] orgnArry, int indx, bool hlf = false) { // cut at indx and keep second half or not
-            T[] rsltArry = new T[hlf ? orgnArry.Length - indx : indx];
-            for (int i = 0; i < rsltArry.Length; i++) {
-                rsltArry[i] = orgnArry[i + (hlf ? indx : 0)];
+        public static T[] Ct<T>(T[] orgnArry, int indx, bool hlf = true) { // cut at indx and keep second half or not
+            T[] rsltArry;
+            if (hlf) {
+                rsltArry = new T[indx];
+                for (int i = 0; i < rsltArry.Length; i++) {
+                    rsltArry[i] = orgnArry[i];
+                }
+            } else {
+                rsltArry = new T[orgnArry.Length - indx];
+                for (int i = 0; i < rsltArry.Length; i++) {
+                    rsltArry[i] = orgnArry[i + indx];
+                }
             }
+            
             return rsltArry;
         }
     }
