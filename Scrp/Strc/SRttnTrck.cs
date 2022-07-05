@@ -11,11 +11,11 @@ namespace T {
         public SRttnTrck(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl) {
             _trnsfrm = trnsfrm;
             _stpArry = new SVctr3[nmbrOfIntrvl + 1];
-            _mX = (sTrgt.X - _trnsfrm.rotation.x) / nmbrOfIntrvl;
-            _mY = (sTrgt.Y - _trnsfrm.rotation.y) / nmbrOfIntrvl;
-            _mZ = (sTrgt.Z - _trnsfrm.rotation.z) / nmbrOfIntrvl;
+            _mX = (sTrgt.X - _trnsfrm.eulerAngles.x) / nmbrOfIntrvl;
+            _mY = (sTrgt.Y - _trnsfrm.eulerAngles.y) / nmbrOfIntrvl;
+            _mZ = (sTrgt.Z - _trnsfrm.eulerAngles.z) / nmbrOfIntrvl;
             for (int v = 0; v < _stpArry.Length; v++) {
-                _stpArry[v] = new SVctr3(_mX * v + _trnsfrm.rotation.x, _mY * v + _trnsfrm.rotation.y, _mZ * v + _trnsfrm.rotation.z);
+                _stpArry[v] = new SVctr3(_mX * v + _trnsfrm.eulerAngles.x, _mY * v + _trnsfrm.eulerAngles.y, _mZ * v + _trnsfrm.eulerAngles.z);
             }
         }
 

@@ -5,6 +5,7 @@ namespace T {
         IUnt[][][] IUntArry { get; } // get the array of unit
         IUnt[] IUntPrArry { get; } // get the pure array of unit interfaces
         SpcMngr Mngr { set; } // set manager
+        SGrd3 SScl { get; } // get scale struct
         float UntWdth { get; } // get unit width
         float UntLngt { get; } // get unit length
         float UntHght { get; } // get unit height

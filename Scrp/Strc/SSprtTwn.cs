@@ -1,14 +1,13 @@
 using System;
-using UnityEngine;
 
 namespace T {
 
-    public struct STwn : ITwn {
+    public struct SSprtTwn : ITwn {
 
         public int Id { get { return _id; } } // get identity
         public bool IsMntd { get { return !float.IsNaN(_mntdTm); } } // get is mounted or not
         public bool IsStrt { get { return !float.IsNaN(_strtTm) && !float.IsNaN(_mntdTm); } } // get is mounted or not
-        public bool IsEnd { get { return _stp == _nmbrOfIntrvl; } } // get is end or not
+        public bool IsEnd { get { return _stp == _nmbrOfIntrvl - 1; } } // get is end or not
         public bool IsTwnng { get { return !float.IsNaN(_strtTm) && float.IsNaN(_psTm); } } // get is tweening or not
         private ITrck[] _iTrckArry; // the array of track interface
         private DActn _dEnd;
@@ -24,7 +23,7 @@ namespace T {
         private int _tmpStp; // temp step
         private bool _isDpsb; // is deposable
 
-        public STwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public SSprtTwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             _id = id;
             _iTrckArry = iTrckArry;
             _dEnd = dEnd;
@@ -66,7 +65,7 @@ namespace T {
                     _psDrtn = 0.0f;
                     if (_isDpsb) {
                         _iTrckArry = null;
-                        Mtn.RmvTwn(_id);
+                        Anmt.RmvTwn(_id);
                         _dEnd?.Invoke();
                     }
                 }

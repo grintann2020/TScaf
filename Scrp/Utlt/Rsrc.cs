@@ -7,13 +7,13 @@ namespace T {
 
     public static class Rsrc {
 
-        public static void Ld<T>(string ky, DActn<T> dLd = null) {
+        public static void Load<T>(string ky, DActn<T> dLoad = null) {
             Addressables.LoadAssetAsync<T>(ky).Completed += (AsyncOperationHandle<T> hndl) => {
-                dLd?.Invoke(hndl.Result);
+                dLoad?.Invoke(hndl.Result);
             };
         }
 
-        public static async void Ld<T>(string[] kyArry, DActn<T[]> dLd = null) {
+        public static async void Load<T>(string[] kyArry, DActn<T[]> dLoad = null) {
             T[] tArry = new T[kyArry.Length];
             Task[] tskArry = new Task[kyArry.Length];
             AsyncOperationHandle<T>[] hndlArry = new AsyncOperationHandle<T>[kyArry.Length];
@@ -25,7 +25,7 @@ namespace T {
             for (byte k = 0; k < kyArry.Length; k++) {
                 tArry[k] = hndlArry[k].Result;
             }
-            dLd?.Invoke(tArry);
+            dLoad?.Invoke(tArry);
         }
 
         public static void Inst(string ky, Transform prnt = null, DActn<GameObject> dInst = null) { // Addressables.InstantiateAsync will clone asset directlty

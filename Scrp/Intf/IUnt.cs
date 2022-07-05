@@ -3,7 +3,7 @@ using UnityEngine;
 namespace T {
 
     public interface IUnt {
-        
+
         object[] CntnArry { get; } // get the array of GameObjects in unit
         IUnt[] AdjcArry { get; }
         SGrd3 SGrd { get; } // get grid
@@ -15,7 +15,10 @@ namespace T {
         int Clmn { get; } // get column
         int Lyr { get; } // get layer
         bool IsIntractbl { get; set; }
+        bool IsEnbl { get; }
         T GtCntn<T>(byte indx);
+        void Enbl();
+        void Dsbl();
         void StAdjc(byte indx, IUnt iUnt);
         void Admt<T>(T cntn); // move in
         void Omt(byte indx); // move out

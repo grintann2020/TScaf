@@ -62,19 +62,23 @@
             return _iSpcArry[eSpc] == null ? false : true;
         }
 
-        public IUnt[][][] IUntArry() {
+        public SGrd3 GtSScl() {
+            return _iSpcArry[_eCrrnSpc].SScl;
+        }
+
+        public IUnt[][][] GtIUntArry() {
             return _iSpcArry[_eCrrnSpc].IUntArry;
         }
 
-        public IUnt[] IUntPrArry() {
+        public IUnt[] GtIUntPrArry() {
             return _iSpcArry[_eCrrnSpc].IUntPrArry;
         }
 
-        public IUnt IUnt(int eIndx) {
+        public IUnt GtIUnt(int eIndx) {
             return _iSpcArry[_eCrrnSpc].IUntPrArry[eIndx];
         }
 
-        public IUnt IUnt(byte lyr, byte clmn, byte rw) {
+        public IUnt GtIUnt(byte lyr, byte clmn, byte rw) {
             return _iSpcArry[_eCrrnSpc].IUntArry[lyr][clmn][rw];
         }
     }

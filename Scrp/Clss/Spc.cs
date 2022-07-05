@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 namespace T {
 
     public abstract class Spc { // space
@@ -5,6 +8,7 @@ namespace T {
         public IUnt[][][] IUntArry { get { return _iUntArry; } }
         public IUnt[] IUntPrArry { get { return _iUntPrArry; } }
         public SpcMngr Mngr { set { _mngr = value; } } // set manager
+        public SGrd3 SScl { get { return _sScl; } }
         public float UntWdth { get { return _sUntSz.X; } } // get unit width
         public float UntLngt { get { return _sUntSz.Z; } } // get unit length
         public float UntHght { get { return _sUntSz.Y; } } // get unit height
@@ -20,6 +24,7 @@ namespace T {
         protected IUnt[] _iUntPrArry = null;
         protected DActn[] _dGnrtExstArry = null; // an array of action delegates
         protected SpcMngr _mngr = null; // registered scene manager
+        protected IUnt _cntrIUnt = null;
         protected SVctr3 _sUntSz; // unit size
         protected SVctr3 _sUntSpcn; // unit space
         protected SVctr3 _sCntrCrd; // center coordinate
@@ -40,7 +45,7 @@ namespace T {
             }
             _isCnst = true;
             _dGnrtExstArry[eExst]?.Invoke(); // generate specific exist array by enum, _sScl and _isExstArry will be mount
-            _sCntrCrd = CntrCrdn(_sScl.Clmn, _sScl.Rw, _crcmrds); // find center coordinate
+            _sCntrCrd = GtCntrCrdn(_sScl.Clmn, _sScl.Rw, _crcmrds); // find center coordinate
             _iUntArry = new IUnt[_sScl.Lyr][][];
             for (byte l = 0; l < _sScl.Lyr; l++) {
                 _iUntArry[l] = new IUnt[_sScl.Clmn][];
@@ -67,6 +72,7 @@ namespace T {
                 }
             }
             LnkTgth();
+            _cntrIUnt = _iUntArry[0][(int)Math.Ceiling((float)_sScl.Clmn / 2)][(int)Math.Ceiling((float)_sScl.Rw / 2)];
         }
 
         public void Dcnst() { // deconstruct
@@ -74,9 +80,9 @@ namespace T {
                 return;
             }
             _isCnst = true;
-            for (int l=0; l<_iUntArry.Length; l++) {
-                for (int c=0; c<_iUntArry[c].Length; c++) {
-                    for (int r=0; r<_iUntArry[c][r].Length; r++) {
+            for (int l = 0; l < _iUntArry.Length; l++) {
+                for (int c = 0; c < _iUntArry[c].Length; c++) {
+                    for (int r = 0; r < _iUntArry[c][r].Length; r++) {
                         _iUntArry[l][c][r].Omt();
                     }
                 }
@@ -102,7 +108,7 @@ namespace T {
             }
         }
         protected abstract IUnt CrtIUnt(SGrd3 sPstn, SVctr3 sCrd); // create interface of unit
-        protected abstract SVctr3 CntrCrdn(byte clmn, byte rw, float crcmrds); // center coordinate
+        protected abstract SVctr3 GtCntrCrdn(byte clmn, byte rw, float crcmrds); // center coordinate
         protected abstract void LnkTgth(); // link together
         protected abstract float XOffst(byte rw); // x offset
         protected abstract float ZOffst(byte clmn); // z offset

@@ -5,9 +5,17 @@ namespace T {
     public static class HxClcl {
 
         public static float Sqrt3 { get { return 1.732050807568877f; } }
-        private static double _rdn = 0.0f; // radian 
 
-        private static int[][][] drctPArry = new int[][][] {
+        public static byte[][] TwrdPArry = new byte[][] {
+            new byte[] { 3, 5, 1, 3, 5, 1 },
+            new byte[] { 2, 4, 0, 2, 4, 0 },
+            new byte[] { 1, 3, 5, 1, 3, 5 },
+            new byte[] { 0, 2, 4, 0, 2, 4 },
+            new byte[] { 5, 1, 3, 5, 1, 3 },
+            new byte[] { 4, 0, 2, 4, 0, 2 }
+        };
+
+        private static int[][][] _drctPArry = new int[][][] {
             new int[][] {
                 new int[] {+1,  0}, new int[] { 0, +1}, new int[] {-1, +1},
                 new int[] {-1,  0}, new int[] {-1, -1}, new int[] { 0, -1},
@@ -18,7 +26,7 @@ namespace T {
             }
         };
 
-        private static int[][][] drctFArry = new int[][][] {
+        private static int[][][] _drctFArry = new int[][][] {
             new int[][] {
                 new int[] {+1,  0}, new int[] {+1, +1}, new int[] { 0, +1},
                 new int[] {-1, +1}, new int[] {-1,  0}, new int[] { 0, -1},
@@ -29,17 +37,7 @@ namespace T {
             }
         };
 
-        public static int[] AdjcP(int rw, int drct) {
-            return drctPArry[rw & 1][drct]; // parity, direction
-        }
-
-        public static int[] AdjcF(int clmn, int drct) {
-            return drctFArry[clmn & 1][drct]; // parity, direction
-        }
-
-        // public static (float hrznDist, float vrtcDist) DstrDstn(float sz) { // return distribute distance
-        //     return (HrznDstn(sz), VrtcDstn(sz));
-        // }
+        private static double _rdn = 0.0f; // radian 
 
         public static float HrznDstnP(float crcmrds) { // horizontal distance
             return SctnWdthP(HxWdthP(crcmrds)) * 2;
@@ -89,7 +87,7 @@ namespace T {
             return crcmrds * Sqrt3;
         }
 
-        public static SVctr3 CntrCrdnP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+        public static SVctr3 GtCntrCrdnP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
             return new SVctr3(
                 -((HrznDstnP(crcmrds) * (float)hrznUnts) / 2) + SctnWdthP(HxWdthP(crcmrds)),
                 0.0f,
@@ -97,7 +95,7 @@ namespace T {
             );
         }
 
-        public static SVctr3 CntrCrdnF(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+        public static SVctr3 GtCntrCrdnF(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
             return new SVctr3(
                 -((HrznDstnF(crcmrds) * (float)hrznUnts) / 2) + SctnWdthF(HxWdthF(crcmrds)) + (SctnWdthF(HxWdthF(crcmrds)) / 2),
                 0.0f,
@@ -120,5 +118,17 @@ namespace T {
             }
             return (byte)Math.Floor(_rdn / (Math.PI * 2) * 6);
         }
+
+        public static int[] AdjcP(int rw, int drct) {
+            return _drctPArry[rw & 1][drct]; // parity, direction
+        }
+
+        public static int[] AdjcF(int clmn, int drct) {
+            return _drctFArry[clmn & 1][drct]; // parity, direction
+        }
+
+        // public static (float hrznDist, float vrtcDist) DstrDstn(float sz) { // return distribute distance
+        //     return (HrznDstn(sz), VrtcDstn(sz));
+        // }
     }
 }
