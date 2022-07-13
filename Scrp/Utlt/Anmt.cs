@@ -13,105 +13,105 @@ namespace T {
             }
         }
 
-        public static int PstnTwn(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, DActn dEnd = null) {
+        public static int PstnTwn(Transform trnsfrm, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SPstnTrck(trnsfrm, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, 0.0f, Time.time, true, true, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SPstnTrck(trnsfrm, sOrgn, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, 0.0f, Time.time, true, true, dEnd));
             return id;
         }
 
-        public static int PstnTwn(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int PstnTwn(Transform trnsfrm, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SPstnTrck(trnsfrm, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SPstnTrck(trnsfrm, sOrgn, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int PstnTwn(Transform[] trnsfrmArry, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int PstnTwn(Transform[] trnsfrmArry, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
             ITrck[] iTrckArry = new ITrck[trnsfrmArry.Length];
             for (int t = 0; t < iTrckArry.Length; t++) {
-                iTrckArry[t] = new SPstnTrck(trnsfrmArry[t], sTrgt, nmbrOfIntrvl);
+                iTrckArry[t] = new SPstnTrck(trnsfrmArry[t], sOrgn, sTrgt, nmbrOfIntrvl);
             }
             _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, iTrckArry, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int PstnTwn(Transform[] trnsfrmArry, SVctr3[] sTrgtArry, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int PstnTwn(Transform[] trnsfrmArry, SVctr3 sOrgn, SVctr3[] sTrgtArry, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
             ITrck[] iTrckArry = new ITrck[trnsfrmArry.Length];
             for (int t = 0; t < iTrckArry.Length; t++) {
-                iTrckArry[t] = new SPstnTrck(trnsfrmArry[t], sTrgtArry[t], nmbrOfIntrvl);
+                iTrckArry[t] = new SPstnTrck(trnsfrmArry[t], sOrgn, sTrgtArry[t], nmbrOfIntrvl);
             }
             _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, iTrckArry, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int RttnTwn(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, DActn dEnd = null) {
+        public static int RttnTwn(Transform trnsfrm, Quaternion sOrgn, Quaternion sTrgt, int nmbrOfIntrvl, float drtn, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SRttnTrck(trnsfrm, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, 0.0f, Time.time, true, true, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SRttnTrck(trnsfrm, sOrgn, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, 0.0f, Time.time, true, true, dEnd));
             return id;
         }
 
-        public static int RttnTwn(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int RttnTwn(Transform trnsfrm, Quaternion sOrgn, Quaternion sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SRttnTrck(trnsfrm, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SRttnTrck(trnsfrm, sOrgn, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int RttnTwn(Transform[] trnsfrmArry, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int RttnTwn(Transform[] trnsfrmArry, Quaternion sOrgn, Quaternion sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
             ITrck[] iTrckArry = new ITrck[trnsfrmArry.Length];
             for (int t = 0; t < iTrckArry.Length; t++) {
-                iTrckArry[t] = new SRttnTrck(trnsfrmArry[t], sTrgt, nmbrOfIntrvl);
+                iTrckArry[t] = new SRttnTrck(trnsfrmArry[t], sOrgn, sTrgt, nmbrOfIntrvl);
             }
             _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, iTrckArry, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int RttnTwn(Transform[] trnsfrmArry, SVctr3[] sTrgtArry, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int RttnTwn(Transform[] trnsfrmArry, Quaternion sOrgn, Quaternion[] sTrgtArry, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
             ITrck[] iTrckArry = new ITrck[trnsfrmArry.Length];
             for (int t = 0; t < iTrckArry.Length; t++) {
-                iTrckArry[t] = new SRttnTrck(trnsfrmArry[t], sTrgtArry[t], nmbrOfIntrvl);
+                iTrckArry[t] = new SRttnTrck(trnsfrmArry[t], sOrgn, sTrgtArry[t], nmbrOfIntrvl);
             }
             _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, iTrckArry, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int SclTwn(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, DActn dEnd = null) {
+        public static int SclTwn(Transform trnsfrm, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SSclTrck(trnsfrm, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, 0.0f, Time.time, true, true, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SSclTrck(trnsfrm, sOrgn, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, 0.0f, Time.time, true, true, dEnd));
             return id;
         }
 
-        public static int SclTwn(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int SclTwn(Transform trnsfrm, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SSclTrck(trnsfrm, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, new ITrck[] { new SSclTrck(trnsfrm, sOrgn, sTrgt, nmbrOfIntrvl) }, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int SclTwn(Transform[] trnsfrmArry, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int SclTwn(Transform[] trnsfrmArry, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
             ITrck[] iTrckArry = new ITrck[trnsfrmArry.Length];
             for (int t = 0; t < iTrckArry.Length; t++) {
-                iTrckArry[t] = new SSclTrck(trnsfrmArry[t], sTrgt, nmbrOfIntrvl);
+                iTrckArry[t] = new SSclTrck(trnsfrmArry[t], sOrgn, sTrgt, nmbrOfIntrvl);
             }
             _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, iTrckArry, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int SclTwn(Transform[] trnsfrmArry, SVctr3[] sTrgtArry, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public static int SclTwn(Transform[] trnsfrmArry, SVctr3 sOrgn, SVctr3[] sTrgtArry, int nmbrOfIntrvl, float drtn, float dly, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             int id = GtId();
             ITrck[] iTrckArry = new ITrck[trnsfrmArry.Length];
             for (int t = 0; t < iTrckArry.Length; t++) {
-                iTrckArry[t] = new SSclTrck(trnsfrmArry[t], sTrgtArry[t], nmbrOfIntrvl);
+                iTrckArry[t] = new SSclTrck(trnsfrmArry[t], sOrgn, sTrgtArry[t], nmbrOfIntrvl);
             }
             _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STrnsfrmTwn(id, iTrckArry, nmbrOfIntrvl, drtn, dly, Time.time, isExct, isDpsb, dEnd));
             return id;
         }
 
-        public static int SprtTwn(SpriteRenderer sprtRndr, Sprite[] sprtArry, float drtn, DActn dEnd = null) {
+        public static int TxtrTwn(SpriteRenderer sprtRndr, Sprite[] sprtArry, float drtn, DActn dEnd = null) {
             int id = GtId();
-            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new SSprtTwn(id, new ITrck[] { new SSprtTrck(sprtRndr, sprtArry) }, sprtArry.Length, drtn, 0.0f, Time.time, true, true, dEnd));
+            _iTwnArry = Arry.Add<ITwn>(_iTwnArry, new STxtrTwn(id, new ITrck[] { new SSprtTrck(sprtRndr, sprtArry) }, sprtArry.Length, drtn, 0.0f, Time.time, true, true, dEnd));
             return id;
         }
 

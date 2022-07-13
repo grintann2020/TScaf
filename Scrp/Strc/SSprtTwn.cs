@@ -2,7 +2,7 @@ using System;
 
 namespace T {
 
-    public struct SSprtTwn : ITwn {
+    public struct STxtrTwn : ITwn {
 
         public int Id { get { return _id; } } // get identity
         public bool IsMntd { get { return !float.IsNaN(_mntdTm); } } // get is mounted or not
@@ -23,7 +23,7 @@ namespace T {
         private int _tmpStp; // temp step
         private bool _isDpsb; // is deposable
 
-        public SSprtTwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
+        public STxtrTwn(int id, ITrck[] iTrckArry, int nmbrOfIntrvl, float drtn, float dly, float tm, bool isExct = true, bool isDpsb = true, DActn dEnd = null) {
             _id = id;
             _iTrckArry = iTrckArry;
             _dEnd = dEnd;

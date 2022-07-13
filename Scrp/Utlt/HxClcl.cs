@@ -6,15 +6,6 @@ namespace T {
 
         public static float Sqrt3 { get { return 1.732050807568877f; } }
 
-        public static byte[][] TwrdPArry = new byte[][] {
-            new byte[] { 3, 5, 1, 3, 5, 1 },
-            new byte[] { 2, 4, 0, 2, 4, 0 },
-            new byte[] { 1, 3, 5, 1, 3, 5 },
-            new byte[] { 0, 2, 4, 0, 2, 4 },
-            new byte[] { 5, 1, 3, 5, 1, 3 },
-            new byte[] { 4, 0, 2, 4, 0, 2 }
-        };
-
         private static int[][][] _drctPArry = new int[][][] {
             new int[][] {
                 new int[] {+1,  0}, new int[] { 0, +1}, new int[] {-1, +1},

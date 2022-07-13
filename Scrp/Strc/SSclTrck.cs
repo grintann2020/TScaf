@@ -8,14 +8,14 @@ namespace T {
         private SVctr3[] _stpArry;
         private float _mX, _mY, _mZ;
 
-        public SSclTrck(Transform trnsfrm, SVctr3 sTrgt, int nmbrOfIntrvl) {
+        public SSclTrck(Transform trnsfrm, SVctr3 sOrgn, SVctr3 sTrgt, int nmbrOfIntrvl) {
             _trnsfrm = trnsfrm;
             _stpArry = new SVctr3[nmbrOfIntrvl + 1];
-            _mX = (sTrgt.X - _trnsfrm.localScale.x) / nmbrOfIntrvl;
-            _mY = (sTrgt.Y - _trnsfrm.localScale.y) / nmbrOfIntrvl;
-            _mZ = (sTrgt.Z - _trnsfrm.localScale.z) / nmbrOfIntrvl;
+            _mX = (sTrgt.X - sOrgn.X) / nmbrOfIntrvl;
+            _mY = (sTrgt.Y - sOrgn.Y) / nmbrOfIntrvl;
+            _mZ = (sTrgt.Z - sOrgn.Z) / nmbrOfIntrvl;
             for (int v = 0; v < _stpArry.Length; v++) {
-                _stpArry[v] = new SVctr3(_mX * v + _trnsfrm.localScale.x, _mY * v + _trnsfrm.localScale.y, _mZ * v + _trnsfrm.localScale.z);
+                _stpArry[v] = new SVctr3(_mX * v + sOrgn.X, _mY * v + sOrgn.Y, _mZ * v + sOrgn.Z);
             }
         }
 
