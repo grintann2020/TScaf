@@ -13,8 +13,8 @@ namespace T {
             if (!_isIntl) {
                 return;
             }
-            for (byte p = 0; p < _gmPrm.IPrmArry.Length; p++) {
-                _gmPrm.IPrmArry[p] = null;
+            for (byte p = 0; p < _gmPrm.IPrms.Length; p++) {
+                _gmPrm.IPrms[p] = null;
             }
             _gmPrm = null;
             _isIntl = false;
@@ -25,10 +25,10 @@ namespace T {
                 return;
             }
             _gmPrm = (GmPrm)iPrm;
-            for (byte p = 0; p < _gmPrm.IPrmArry.Length; p++) {
+            for (byte p = 0; p < _gmPrm.IPrms.Length; p++) {
                 _gmPrm.Prm(p);
-                if (_gmPrm.IMngrArry[p] != null) {
-                    _gmPrm.IMngrArry[p].Intl(_gmPrm.IPrmArry[p]);
+                if (_gmPrm.IMngrs[p] != null) {
+                    _gmPrm.IMngrs[p].Intl(_gmPrm.IPrms[p]);
                 }
             }
             _isIntl = true;

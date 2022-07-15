@@ -207,7 +207,7 @@ namespace T {
                         indx += 1;
                     }
                 }
-                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_addrblArry[eGrp], Arry.Ct<GameObject>(_tmpSbinstArry, indx));
+                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_addrblArry[eGrp], Arry.Cut<GameObject>(_tmpSbinstArry, indx));
                 _tmpTrnsfrmArry = null;
                 _tmpSbinstArry = null;
                 indx = 0;

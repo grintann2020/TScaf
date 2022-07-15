@@ -2,7 +2,7 @@ namespace T {
 
     public interface IStg {
 
-        DActn[][] DPrgsArry { get; }
+        DActn[][] DPrgss { get; }
         StgMngr Mngr { set; } // set stage manager
         byte ECrrnPrgs { get; }
         bool IsImpl { get; } // get is implement or not
@@ -11,4 +11,4 @@ namespace T {
         void Abrt(); // abort
         void PrpUpdt(); // prop update
     }
-}
+} 

@@ -3,7 +3,7 @@ namespace T {
     public interface ITxt {
 
         TxtMngr Mngr { set; }
-        string[][] StrnArry { get; }
+        string[][] Strns { get; }
         bool IsAppl { get;}
         void Appl();
         void Cncl();

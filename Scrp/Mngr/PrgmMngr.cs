@@ -4,7 +4,7 @@
 
         public bool IsIntl { get { return _isIntl; } }
         private PrgmPrm _prgmPrm = null; // prime of program
-        private IPrgm[] _iPrgmArry = null;
+        private IPrgm[] _iPrgms = null;
         private byte _eCrrnPrgm = 0;
         private bool _isIntl = false;
 
@@ -15,7 +15,7 @@
             _isIntl = false;
             Trmn();
             _prgmPrm = null;
-            _iPrgmArry = null;
+            _iPrgms = null;
         }
 
         public void Intl(IPrm iPrm) { // initialize
@@ -24,62 +24,62 @@
             }
             _isIntl = true;
             _prgmPrm = (PrgmPrm)iPrm;
-            _iPrgmArry = _prgmPrm.IPrgmArry;
+            _iPrgms = _prgmPrm.IPrgms;
         }
 
         public void Exct(byte ePrgm) { // excute specific program by enum
-            if (_iPrgmArry[_eCrrnPrgm] != null) {
+            if (_iPrgms[_eCrrnPrgm] != null) {
                 if (_eCrrnPrgm == ePrgm) {
                     return;
                 }
-                _iPrgmArry[_eCrrnPrgm].Trmn();
+                _iPrgms[_eCrrnPrgm].Trmn();
                 _prgmPrm.Omt(_eCrrnPrgm);
             }
             _eCrrnPrgm = ePrgm;
             _prgmPrm.Prm(_eCrrnPrgm);
-            _iPrgmArry[_eCrrnPrgm].Exct();
+            _iPrgms[_eCrrnPrgm].Exct();
         }
 
         public void Exct(byte ePrgm, byte ePrcs) {
-            if (_iPrgmArry[_eCrrnPrgm] != null) {
+            if (_iPrgms[_eCrrnPrgm] != null) {
                 if (_eCrrnPrgm == ePrgm) {
-                    if (_iPrgmArry[_eCrrnPrgm].ECrrnPrcs == ePrcs) {
+                    if (_iPrgms[_eCrrnPrgm].ECrrnPrcs == ePrcs) {
                         return;
                     } else {
-                        _iPrgmArry[_eCrrnPrgm].Altr(ePrcs);
+                        _iPrgms[_eCrrnPrgm].Altr(ePrcs);
                         return;
                     }
                 } else {
-                    _iPrgmArry[_eCrrnPrgm].Trmn();
+                    _iPrgms[_eCrrnPrgm].Trmn();
                     _prgmPrm.Omt(_eCrrnPrgm);
                 }
             }
             _eCrrnPrgm = ePrgm;
             _prgmPrm.Prm(_eCrrnPrgm);
-            _iPrgmArry[_eCrrnPrgm].Exct(ePrcs);
+            _iPrgms[_eCrrnPrgm].Exct(ePrcs);
         }
 
         public void Trmn() { // terminate
-            if (_iPrgmArry[_eCrrnPrgm] != null) {
-                _iPrgmArry[_eCrrnPrgm].Trmn();
+            if (_iPrgms[_eCrrnPrgm] != null) {
+                _iPrgms[_eCrrnPrgm].Trmn();
                 _prgmPrm.Omt(_eCrrnPrgm);
             }
         }
 
         public void PrpUpdt() { // prop update
-            _iPrgmArry[_eCrrnPrgm]?.PrpUpdt();
+            _iPrgms[_eCrrnPrgm]?.PrpUpdt();
         }
 
         public IPrgm GtIPrgm() { // return current program
-            return _iPrgmArry[_eCrrnPrgm];
+            return _iPrgms[_eCrrnPrgm];
         }
 
         public bool IsExct(byte ePrgm) { // return specific stage is implemented or not
-            return _iPrgmArry[ePrgm] == null ? false : true;
+            return _iPrgms[ePrgm] == null ? false : true;
         }
 
         public void Altr(byte ePrcs) {
-            _iPrgmArry[_eCrrnPrgm].Altr(ePrcs);
+            _iPrgms[_eCrrnPrgm].Altr(ePrcs);
         }
     }
 }

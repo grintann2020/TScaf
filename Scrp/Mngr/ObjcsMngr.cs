@@ -5,7 +5,7 @@ namespace T {
     public class ObjcsMngr : Sngltn<ObjcsMngr>, IMngr { // data manager
 
         public bool IsIntl { get { return _isIntl; } }
-        private IObjcs[] _iObjcsArry = null;
+        private IObjcs[] _iObjcss = null;
         private ObjcsPrm _objcsPrm = null;
         private byte _eCrrnObjcs = 0;
         private bool _isIntl = false;
@@ -17,7 +17,7 @@ namespace T {
             _isIntl = false;
             Ruin();
             _objcsPrm = null;
-            _iObjcsArry = null;
+            _iObjcss = null;
         }
 
         public void Intl(IPrm iPrm) { // initialize
@@ -26,79 +26,79 @@ namespace T {
             }
             _isIntl = true;
             _objcsPrm = (ObjcsPrm)iPrm;
-            _iObjcsArry = _objcsPrm.IObjcsArry;
+            _iObjcss = _objcsPrm.IObjcss;
         }
 
         public void Found(byte eObjcs, Transform rtTrnsfrm) { // found
-            if (_iObjcsArry[_eCrrnObjcs] != null) {
+            if (_iObjcss[_eCrrnObjcs] != null) {
                 if (_eCrrnObjcs == eObjcs) {
                     return;
                 }
-                _iObjcsArry[_eCrrnObjcs].Ruin();
+                _iObjcss[_eCrrnObjcs].Ruin();
                 _objcsPrm.Omt(_eCrrnObjcs);
             }
             _eCrrnObjcs = eObjcs;
             _objcsPrm.Prm(_eCrrnObjcs);
-            _iObjcsArry[_eCrrnObjcs].Found(rtTrnsfrm);
+            _iObjcss[_eCrrnObjcs].Found(rtTrnsfrm);
         }
  
         public void Ruin() { // ruin
-            if (_iObjcsArry[_eCrrnObjcs] != null) {
-                _iObjcsArry[_eCrrnObjcs].Ruin();
+            if (_iObjcss[_eCrrnObjcs] != null) {
+                _iObjcss[_eCrrnObjcs].Ruin();
                 _objcsPrm.Omt(_eCrrnObjcs);
             }
         }
 
         public IObjcs GtIObjcs() {
-            return _iObjcsArry[_eCrrnObjcs];
+            return _iObjcss[_eCrrnObjcs];
         }
 
         public bool IsFound(byte eObjcs) { // return is specific hub connected or not
-            return _iObjcsArry[eObjcs] == null ? false : true;
+            return _iObjcss[eObjcs] == null ? false : true;
         }
 
         public SObjc GtSObjc(byte eObjc, int id) {
-            return _iObjcsArry[_eCrrnObjcs].GtSObjc(eObjc, id);
+            return _iObjcss[_eCrrnObjcs].GtSObjc(eObjc, id);
         }
 
-        public SObjc[] GtSObjcArry(byte eObjc) {
-            return _iObjcsArry[_eCrrnObjcs].GtSObjcArry(eObjc);
+        public SObjc[] GtSObjcs(byte eObjc) {
+            return _iObjcss[_eCrrnObjcs].GtSObjcs(eObjc);
         }
 
         public GameObject GtGmObjc(byte eObjc, int id) {
-            return _iObjcsArry[_eCrrnObjcs].GtGmObjc(eObjc, id);
+            return _iObjcss[_eCrrnObjcs].GtGmObjc(eObjc, id);
         }
 
-        public GameObject[] GtGmObjcArry(byte eObjc) {
-            return _iObjcsArry[_eCrrnObjcs].GtGmObjcArry(eObjc);
+        public GameObject[] GtGmObjcs(byte eObjc) {
+            return _iObjcss[_eCrrnObjcs].GtGmObjcs(eObjc);
         }
 
         public T GtInst<T>(byte eObjc, int id) {
-            return _iObjcsArry[_eCrrnObjcs].GtInst<T>(eObjc, id);
+            return _iObjcss[_eCrrnObjcs].GtInst<T>(eObjc, id);
         }
 
-        public T[] GtInstArry<T>(byte eObjc) {
-            return _iObjcsArry[_eCrrnObjcs].GtInstArry<T>(eObjc);
+        public T[] GtInsts<T>(byte eObjc) {
+            return _iObjcss[_eCrrnObjcs].GtInsts<T>(eObjc);
         }
 
-        public void MltpCrt(byte[][] eObjcArry, DActn dCrt = null) {
-            _iObjcsArry[_eCrrnObjcs].MltpCrt(eObjcArry, dCrt);
+        public void MltpCrt(byte[][] eObjcs, DActn dCrt = null) {
+            _iObjcss[_eCrrnObjcs].MltpCrt(eObjcs, dCrt);
         }
 
         public void Crt(byte eObjc, byte amnt, DActn dCrt = null) {
-            _iObjcsArry[_eCrrnObjcs].Crt(eObjc, amnt, dCrt);
+            _iObjcss[_eCrrnObjcs].Crt(eObjc, amnt, dCrt);
         }
 
         public void Dlt(byte eObjc, int id) {
-            _iObjcsArry[_eCrrnObjcs].Dlt(eObjc, id);
+            _iObjcss[_eCrrnObjcs].Dlt(eObjc, id);
         }
 
         public void Enbl(byte eObjc, DActn<SObjc> dActn = null) {
-            _iObjcsArry[_eCrrnObjcs].Enbl(eObjc, dActn);
+            _iObjcss[_eCrrnObjcs].Enbl(eObjc, dActn);
         }
 
         public void Dsbl(byte eObjc, int id) {
-            _iObjcsArry[_eCrrnObjcs].Dsbl(eObjc, id);
+            _iObjcss[_eCrrnObjcs].Dsbl(eObjc, id);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace T {
 
@@ -78,7 +79,7 @@ namespace T {
             return crcmrds * Sqrt3;
         }
 
-        public static SVctr3 GtCntrCrdnP(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+        public static SVctr3 GtCntrCrdnP(int hrznUnts, int vrtcUnts, float crcmrds) { // return center coordinate
             return new SVctr3(
                 -((HrznDstnP(crcmrds) * (float)hrznUnts) / 2) + SctnWdthP(HxWdthP(crcmrds)),
                 0.0f,
@@ -86,7 +87,7 @@ namespace T {
             );
         }
 
-        public static SVctr3 GtCntrCrdnF(ushort hrznUnts, ushort vrtcUnts, float crcmrds) { // return center coordinate
+        public static SVctr3 GtCntrCrdnF(int hrznUnts, int vrtcUnts, float crcmrds) { // return center coordinate
             return new SVctr3(
                 -((HrznDstnF(crcmrds) * (float)hrznUnts) / 2) + SctnWdthF(HxWdthF(crcmrds)) + (SctnWdthF(HxWdthF(crcmrds)) / 2),
                 0.0f,
@@ -110,12 +111,28 @@ namespace T {
             return (byte)Math.Floor(_rdn / (Math.PI * 2) * 6);
         }
 
-        public static int[] AdjcP(int rw, int drct) {
-            return _drctPArry[rw & 1][drct]; // parity, direction
+        public static int[] AdjcP(int row, int drct) {
+            return _drctPArry[row & 1][drct]; // parity, direction
         }
 
         public static int[] AdjcF(int clmn, int drct) {
             return _drctFArry[clmn & 1][drct]; // parity, direction
+        }
+
+        public static SHxGrd ToHxFGrd(SGrd3 sGrd, int hlf) {
+            int clmn = sGrd.Clmn - hlf;
+            int row = sGrd.Row - hlf;
+            int hxClmn = clmn;
+            int hxRow = row - (clmn - (clmn & 1)) / 2;
+            return new SHxGrd(sGrd.Lyr, hxClmn, hxRow, -hxClmn - hxRow);
+        }
+
+        public static SGrd3 ToOffstGrd(SGrd3 sHxGrd, int hlf) {
+            int hxClmn = sHxGrd.Clmn;
+            int hxRow = sHxGrd.Row + (sHxGrd.Clmn - (sHxGrd.Clmn & 1)) / 2;
+            int clmn = hxClmn + hlf;
+            int row = hxRow + hlf;
+            return new SGrd3(sHxGrd.Lyr, clmn, row);
         }
 
         // public static (float hrznDist, float vrtcDist) DstrDstn(float sz) { // return distribute distance

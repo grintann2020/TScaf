@@ -4,8 +4,8 @@ namespace T {
 
     public interface IUnt {
 
-        object[] CntnArry { get; } // get the array of GameObjects in unit
-        IUnt[] AdjcArry { get; }
+        object[] Cntns { get; } // get the array of GameObjects in unit
+        IUnt[] Adjcs { get; }
         SGrd3 SGrd { get; } // get grid
         SVctr3 SPstn { get; } // get position
         float X { get; } // get x axis

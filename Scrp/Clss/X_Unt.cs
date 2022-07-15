@@ -10,7 +10,7 @@ namespace T {
         public float X { get { return _sPstn.X; } } // get x axis
         public float Z { get { return _sPstn.Z; } } // get z axis
         public float Y { get { return _sPstn.Y; } } // get y axis
-        public int Rw { get { return _sGrd.Rw; } } // get row
+        public int Rw { get { return _sGrd.Row; } } // get row
         public int Clmn { get { return _sGrd.Clmn; } } //get column
         public int Lyr { get { return _sGrd.Lyr; } } // get layer
         private SGrd3 _sGrd; // grid3 struct for position 

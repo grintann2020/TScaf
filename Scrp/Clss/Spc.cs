@@ -5,32 +5,35 @@ namespace T {
 
     public abstract class Spc { // space
 
-        public IUnt[][][] IUntArry { get { return _iUntArry; } }
-        public IUnt[] IUntPrArry { get { return _iUntPrArry; } }
+        public IUnt[][][] IUnts { get { return _iUnts; } } // get the array of unit interface
+        public IUnt[] IUntPrs { get { return _iUntPrs; } } // get the pure array of unit interfaces
+        public IUnt ICntrUnt { get { return _iCntrUnt; } } // get center unit interface
         public SpcMngr Mngr { set { _mngr = value; } } // set manager
-        public SGrd3 SScl { get { return _sScl; } }
+        public SGrd3 SCntrGrd { get { return _sCntrGrd; } } // get center grid struct
+        public SGrd3 SScl { get { return _sScl; } } // get scale struct
         public float UntWdth { get { return _sUntSz.X; } } // get unit width
         public float UntLngt { get { return _sUntSz.Z; } } // get unit length
         public float UntHght { get { return _sUntSz.Y; } } // get unit height
         public float UntXSpcn { get { return _sUntSpcn.X; } } // get unit x axis spacing
         public float UntZSpcn { get { return _sUntSpcn.Z; } } // get unit z axis spacing
         public float UntYSpcn { get { return _sUntSpcn.Y; } } // get unit y axis spacing
-        public byte Clmns { get { return _sScl.Clmn; } } // get amount of columns
-        public byte Rws { get { return _sScl.Rw; } } // get amount of rows
-        public byte Lyrs { get { return _sScl.Lyr; } } // get amount of layers
-        public bool[][][] IsExstArry { get { return _isExstArry; } }
+        public int Clmns { get { return _sScl.Clmn; } } // get amount of columns
+        public int Rows { get { return _sScl.Row; } } // get amount of rows
+        public int Lyrs { get { return _sScl.Lyr; } } // get amount of layers
+        public bool[][][] IsExsts { get { return _isExsts; } }
         public bool IsCnst { get { return _isCnst; } } // get is construct or not
-        protected IUnt[][][] _iUntArry = null; // an array of units
-        protected IUnt[] _iUntPrArry = null;
-        protected DActn[] _dGnrtExstArry = null; // an array of action delegates
+        protected DActn[] _dGnrtExsts = null; // an array of action delegates
+        protected IUnt[][][] _iUnts = null; // an array of units
+        protected IUnt[] _iUntPrs = null;
         protected SpcMngr _mngr = null; // registered scene manager
-        protected IUnt _cntrIUnt = null;
+        protected IUnt _iCntrUnt = null;
         protected SVctr3 _sUntSz; // unit size
         protected SVctr3 _sUntSpcn; // unit space
-        protected SVctr3 _sCntrCrd; // center coordinate
+        protected SVctr3 _sCntrCrdn; // center coordinate
+        protected SGrd3 _sCntrGrd;
         protected SGrd3 _sScl; // space scale
         protected float _crcmrds = 0.0f; // circumradius
-        protected bool[][][] _isExstArry = null; // an array of is unit exist or not
+        protected bool[][][] _isExsts = null; // an array of is unit exist or not
         private bool _isCnst = false; // is construct or not
 
         public Spc(float crcmrds, SVctr3 sUntSz, SVctr3 sUntSpcn) { // space
@@ -40,39 +43,41 @@ namespace T {
         }
 
         public void Cnst(byte eExst) { // construct
-            if (_isCnst || _dGnrtExstArry == null || _dGnrtExstArry[eExst] == null) {
+            if (_isCnst || _dGnrtExsts == null || _dGnrtExsts[eExst] == null) {
                 return;
             }
             _isCnst = true;
-            _dGnrtExstArry[eExst]?.Invoke(); // generate specific exist array by enum, _sScl and _isExstArry will be mount
-            _sCntrCrd = GtCntrCrdn(_sScl.Clmn, _sScl.Rw, _crcmrds); // find center coordinate
-            _iUntArry = new IUnt[_sScl.Lyr][][];
+            _dGnrtExsts[eExst]?.Invoke(); // generate specific exist array by enum, _sScl and _isExsts will be mount
+            _sCntrCrdn = GtCntrCrdn(_sScl.Clmn, _sScl.Row, _crcmrds); // find center coordinate
+            _sCntrGrd = new SGrd3(0, (int)Math.Floor((float)_sScl.Clmn / 2), (int)Math.Floor((float)_sScl.Row / 2));
+            _iUnts = new IUnt[_sScl.Lyr][][];
+            _iUntPrs = new IUnt[_sScl.Lyr * _sScl.Clmn * _sScl.Row];
+            int cnt = 0;
             for (byte l = 0; l < _sScl.Lyr; l++) {
-                _iUntArry[l] = new IUnt[_sScl.Clmn][];
+                _iUnts[l] = new IUnt[_sScl.Clmn][];
                 for (byte c = 0; c < _sScl.Clmn; c++) {
-                    _iUntArry[l][c] = new IUnt[_sScl.Rw];
-                    for (byte r = 0; r < _sScl.Rw; r++) {
-                        if (_isExstArry[l][c][r] == false) {
-                            _iUntArry[l][c][r] = null;
+                    _iUnts[l][c] = new IUnt[_sScl.Row];
+                    for (byte r = 0; r < _sScl.Row; r++) {
+                        if (_isExsts[l][c][r] == false) {
+                            _iUnts[l][c][r] = null;
                         } else {
-                            float x = _sCntrCrd.X + c * _sUntSpcn.X;
-                            float y = _sCntrCrd.Y + l * _sUntSpcn.Y;
-                            float z = _sCntrCrd.Z + r * _sUntSpcn.Z;
-                            _iUntArry[l][c][r] = CrtIUnt(
+                            _iUnts[l][c][r] = CrtIUnt(
                                 new SGrd3(l, c, r),
                                 new SVctr3(
-                                    _sCntrCrd.X + c * _sUntSpcn.X + XOffst(r),
-                                    _sCntrCrd.Y + l * _sUntSpcn.Y,
-                                    _sCntrCrd.Z + r * _sUntSpcn.Z - ZOffst(c)
+                                    _sCntrCrdn.X + c * _sUntSpcn.X + XOffst(r),
+                                    _sCntrCrdn.Y + l * _sUntSpcn.Y,
+                                    _sCntrCrdn.Z + r * _sUntSpcn.Z - ZOffst(c)
                                 )
                             );
-                            _iUntPrArry = Arry.Add<IUnt>(_iUntPrArry, _iUntArry[l][c][r]);
+                            _iUntPrs[cnt] = _iUnts[l][c][r];
+                            cnt += 1;
                         }
                     }
                 }
             }
-            LnkTgth();
-            _cntrIUnt = _iUntArry[0][(int)Math.Ceiling((float)_sScl.Clmn / 2)][(int)Math.Ceiling((float)_sScl.Rw / 2)];
+            _iUntPrs = Arry.Cut<IUnt>(_iUntPrs, cnt);
+            _iCntrUnt = _iUnts[0][_sCntrGrd.Clmn][_sCntrGrd.Row];
+            Strc();
         }
 
         public void Dcnst() { // deconstruct
@@ -80,37 +85,37 @@ namespace T {
                 return;
             }
             _isCnst = true;
-            for (int l = 0; l < _iUntArry.Length; l++) {
-                for (int c = 0; c < _iUntArry[c].Length; c++) {
-                    for (int r = 0; r < _iUntArry[c][r].Length; r++) {
-                        _iUntArry[l][c][r].Omt();
+            for (int l = 0; l < _iUnts.Length; l++) {
+                for (int c = 0; c < _iUnts[c].Length; c++) {
+                    for (int r = 0; r < _iUnts[c][r].Length; r++) {
+                        _iUnts[l][c][r].Omt();
                     }
                 }
             }
-            _iUntArry = null;
-            _iUntPrArry = null;
-            _dGnrtExstArry = null;
+            _iUnts = null;
+            _iUntPrs = null;
+            _dGnrtExsts = null;
             _crcmrds = 0.0f;
-            _isExstArry = null;
+            _isExsts = null;
         }
 
-        protected void GnrtExst(SGrd3 sScl) { // generate exist
-            _sScl = sScl;
-            _isExstArry = new bool[_sScl.Lyr][][];
-            for (byte l = 0; l < _sScl.Lyr; l++) {
-                _isExstArry[l] = new bool[_sScl.Clmn][];
-                for (byte c = 0; c < _sScl.Clmn; c++) {
-                    _isExstArry[l][c] = new bool[_sScl.Rw];
-                    for (byte r = 0; r < _sScl.Rw; r++) {
-                        _isExstArry[l][c][r] = true;
+        protected void CrtExsts(SGrd3 sScl) { // generate exist
+            _isExsts = new bool[sScl.Lyr][][];
+            for (byte l = 0; l < sScl.Lyr; l++) {
+                _isExsts[l] = new bool[sScl.Clmn][];
+                for (byte c = 0; c < sScl.Clmn; c++) {
+                    _isExsts[l][c] = new bool[sScl.Row];
+                    for (byte r = 0; r < sScl.Row; r++) {
+                        _isExsts[l][c][r] = true;
                     }
                 }
             }
         }
-        protected abstract IUnt CrtIUnt(SGrd3 sPstn, SVctr3 sCrd); // create interface of unit
-        protected abstract SVctr3 GtCntrCrdn(byte clmn, byte rw, float crcmrds); // center coordinate
-        protected abstract void LnkTgth(); // link together
-        protected abstract float XOffst(byte rw); // x offset
-        protected abstract float ZOffst(byte clmn); // z offset
+
+        public abstract SVctr3 GtCntrCrdn(int clmn, int rw, float crcmrds); // center coordinate
+        protected abstract IUnt CrtIUnt(SGrd3 sCrd, SVctr3 sPstn); // create interface of unit
+        protected abstract void Strc(); // link together
+        protected abstract float XOffst(int rw); // x offset
+        protected abstract float ZOffst(int clmn); // z offset
     }
 }

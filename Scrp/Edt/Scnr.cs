@@ -17,7 +17,7 @@ namespace T {
         protected string _enmStrn;
         protected string _objcStrn;
         protected string _strn;
-        protected Transform[] _trnsfrmArry;
+        protected Transform[] _trnsfrms;
         
         protected const string DFLTPTH = @"Assets\"; //default path
         protected const string EXTN = ".cs"; // extends

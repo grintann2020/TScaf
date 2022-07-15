@@ -3,14 +3,14 @@ namespace T {
     public class Txt {
 
         public TxtMngr Mngr { set { _mngr = value; } }
-        public string[][] StrnArry { get { return _strnArry; } }
+        public string[][] Strns { get { return _strns; } }
         public bool IsAppl { get { return _isAppl; } }
         protected TxtMngr _mngr = null;
-        protected string[][] _strnArry = null;
+        protected string[][] _strns = null;
         private bool _isAppl = false;
 
         public void Appl() { // apply
-            if (_isAppl || _strnArry == null) {
+            if (_isAppl || _strns == null) {
                 return;
             }
             _isAppl = false;

@@ -2,22 +2,22 @@ namespace T {
 
     public struct SGrd2 {
 
-        public byte Clmn, Rw;
+        public int Clmn, Row;
 
-        public SGrd2(byte clmn, byte rw) {
+        public SGrd2(int clmn, int row) {
             Clmn = clmn;
-            Rw = rw;
+            Row = row;
         }
     }
 
     public struct SGrd3 {
 
-        public byte Clmn, Rw, Lyr;
+        public int Clmn, Row, Lyr;
 
-        public SGrd3(byte lyr, byte clmn, byte rw) {
+        public SGrd3(int lyr, int clmn, int row) {
             Lyr = lyr;
             Clmn = clmn;
-            Rw = rw;
+            Row = row;
         }
     }
 }

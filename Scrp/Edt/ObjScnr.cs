@@ -34,7 +34,7 @@ namespace T {
         }
 
         private string CodeObjEnum(Transform trnf) {
-            _trnsfrmArry = Arry.Add<Transform>(_trnsfrmArry, trnf);
+            _trnsfrms = Arry.Add<Transform>(_trnsfrms, trnf);
             return trnf.name + ",\n";
         }
 
@@ -42,7 +42,7 @@ namespace T {
             string str = "";
             Transform[] childArr = trnf.GetComponentsInChildren<Transform>();
             for (byte t = 1; t < childArr.Length; t++) {
-                _trnsfrmArry = Arry.Add<Transform>(_trnsfrmArry, childArr[t]);
+                _trnsfrms = Arry.Add<Transform>(_trnsfrms, childArr[t]);
                 str += PrntStrn(childArr[t], "");
                 str += childArr[t].name;
                 str += ",\n";

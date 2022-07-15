@@ -41,7 +41,7 @@ namespace T {
         }
 
         private string CodeObjEnum(Transform trnsfrm) {
-            _trnsfrmArry = Arry.Add<Transform>(_trnsfrmArry, trnsfrm);
+            _trnsfrms = Arry.Add<Transform>(_trnsfrms, trnsfrm);
             return trnsfrm.name + ",\n";
         }
 
@@ -49,7 +49,7 @@ namespace T {
             string strn = "";
             Transform[] childArry = trnsfrm.GetComponentsInChildren<Transform>();
             for (byte t = 1; t < childArry.Length; t++) {
-                _trnsfrmArry = Arry.Add<Transform>(_trnsfrmArry, childArry[t]);
+                _trnsfrms = Arry.Add<Transform>(_trnsfrms, childArry[t]);
                 strn += PrntStrn(childArry[t], "");
                 strn += childArry[t].name;
                 strn += ",\n";
@@ -59,11 +59,11 @@ namespace T {
 
         private string CodeCompEnum() {
             string strn = "";
-            for (byte t = 0; t < _trnsfrmArry.Length; t++) {
-                for (int e = 0; e < UIMngr.Inst.TypArry.Length; e++) {
-                    if (_trnsfrmArry[t].GetComponent(UIMngr.Inst.TypArry[e])) {
-                        strn += PrntStrn(_trnsfrmArry[t], "");
-                        strn += _trnsfrmArry[t].name + "_" + CompNm(UIMngr.Inst.TypArry[e]) + ",\n";
+            for (byte t = 0; t < _trnsfrms.Length; t++) {
+                for (int e = 0; e < UIMngr.Inst.Typs.Length; e++) {
+                    if (_trnsfrms[t].GetComponent(UIMngr.Inst.Typs[e])) {
+                        strn += PrntStrn(_trnsfrms[t], "");
+                        strn += _trnsfrms[t].name + "_" + CompNm(UIMngr.Inst.Typs[e]) + ",\n";
                     }
                 }
             }

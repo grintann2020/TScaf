@@ -2,22 +2,22 @@ namespace T {
 
     public class ArchPrm { // archive prime
         
-        public IArch[] IArchArry { get { return _iArchArry; } }
-        public DActn[] DPrmArry { get { return _dPrmArry; } }
+        public IArch[] IArchs { get { return _iArchs; } }
+        public DActn[] DPrms { get { return _dPrms; } }
         public IMngr IMngr { set { _mngr = (ArchMngr)value; } }
-        protected IArch[] _iArchArry;
-        protected DActn[] _dPrmArry;
+        protected IArch[] _iArchs;
+        protected DActn[] _dPrms;
         protected ArchMngr _mngr;
 
         public void Prm(byte ePrm) { // prime
-            if (_dPrmArry[ePrm] != null) {
-                _dPrmArry[ePrm].Invoke();
-                _iArchArry[ePrm].Mngr = _mngr;
+            if (_dPrms[ePrm] != null) {
+                _dPrms[ePrm].Invoke();
+                _iArchs[ePrm].Mngr = _mngr;
             }
         }
 
         public void Omt(byte ePrm) { // omit
-            _iArchArry[ePrm] = null;
+            _iArchs[ePrm] = null;
         }
     }
 }

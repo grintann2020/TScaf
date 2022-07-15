@@ -35,7 +35,7 @@ namespace T {
             return Add<T>(orgnArry, itm);
         }
 
-        public static T[] Pp<T>(T[] orgnArry) {
+        public static T[] Pop<T>(T[] orgnArry) {
             return Rmv<T>(orgnArry, 0);
         }
 
@@ -81,7 +81,7 @@ namespace T {
             return rsltArry;
         }
 
-        public static T[] Ct<T>(T[] orgnArry, int indx, bool hlf = true) { // cut at indx and keep second half or not
+        public static T[] Cut<T>(T[] orgnArry, int indx, bool hlf = true) { // cut at indx and keep second half or not
             T[] rsltArry;
             if (hlf) {
                 rsltArry = new T[indx];
