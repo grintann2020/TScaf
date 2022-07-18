@@ -2,10 +2,10 @@ namespace T {
 
     public interface ITwn {
 
-        int Id { get; }
-        void PrpUpdt(float tm);
-        void Strt(float tm, bool isDly = true);
-        void Ps(float tm);
-        void Rsm(float tm);
+        int Id { get; } // identity
+        void PrpUpd(float tm); // prop update
+        void Str(float tm, bool isDly = true); // start
+        void Ps(float tm); // pause
+        void Rsm(float tm); // resume
     }
 }

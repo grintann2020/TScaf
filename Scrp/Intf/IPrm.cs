@@ -2,8 +2,8 @@ namespace T {
 
     public interface IPrm {
 
-        IMngr IMngr { set; }
-        DActn[] DPrms { get; }
+        IMng IMng { set; }
+        DAct[] DPrmArr { get; }
         void Prm(byte ePrm);
         void Omt(byte ePrm);
     }

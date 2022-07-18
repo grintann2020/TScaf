@@ -2,13 +2,13 @@ namespace T {
 
     public interface IStg {
 
-        DActn[][] DPrgss { get; }
-        StgMngr Mngr { set; } // set stage manager
-        byte ECrrnPrgs { get; }
-        bool IsImpl { get; } // get is implement or not
-        void Impl(); // implement
-        void Impl(byte ePrgs); // implement specific process by enum
-        void Abrt(); // abort
-        void PrpUpdt(); // prop update
+        DAct[][] DPrgArr2 { get; }
+        StgMng Mng { set; } // set stage manager
+        byte ECrrPrg { get; }
+        bool IsImp { get; } // get is implement or not
+        void Imp(); // implement
+        void Imp(byte ePrgs); // implement specific process by enum
+        void Abr(); // abort
+        void PrpUpd(); // prop update
     }
 } 

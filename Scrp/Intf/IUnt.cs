@@ -4,24 +4,24 @@ namespace T {
 
     public interface IUnt {
 
-        object[] Cntns { get; } // get the array of GameObjects in unit
-        IUnt[] Adjcs { get; }
+        object[] CntArr { get; } // get the array of GameObjects in unit
+        IUnt[] AdjArr { get; } // get the array of adjacent
         SGrd3 SGrd { get; } // get grid
-        SVctr3 SPstn { get; } // get position
+        SVct3 SPst { get; } // get position
         float X { get; } // get x axis
         float Z { get; } // get z axis
         float Y { get; } // get y axis
         int Rw { get; } // get row
-        int Clmn { get; } // get column
+        int Clm { get; } // get column
         int Lyr { get; } // get layer
-        bool IsIntractbl { get; set; }
-        bool IsEnbl { get; }
-        T GtCntn<T>(byte indx);
-        void Enbl();
-        void Dsbl();
-        void StAdjc(byte indx, IUnt iUnt);
-        void Admt<T>(T cntn); // move in
-        void Omt(byte indx); // move out
+        bool IsIaa { get; set; } // get is interactable or not
+        bool IsEnb { get; }
+        T GtCnt<T>(byte indx);
+        void Enb();
+        void Dsb();
+        void StAdj(byte idx, IUnt iUnt);
+        void Adm<T>(T cnt); // move in
+        void Omt(byte idx); // move out
         void Omt(); // move out
     }
 }

@@ -4,12 +4,12 @@ namespace T {
 
     public class UI {
 
-        public UIMngr Mngr { set { _mngr = value; } }
-        public bool IsAttc {
+        public UIMng Mng { set { _mng = value; } }
+        public bool IsAtt {
             get {
-                if (_isAttcs != null) {
-                    for (byte i = 0; i < _isAttcs.Length; i++) {
-                        if (_isAttcs[i]) {
+                if (_isAttArr != null) {
+                    for (byte i = 0; i < _isAttArr.Length; i++) {
+                        if (_isAttArr[i]) {
                             return true;
                         }
                     }
@@ -17,56 +17,56 @@ namespace T {
                 return false;
             }
         }
-        protected DActn<byte>[][][] _dBhvrs = null; //delegate of behavior method
-        protected DActn[] _dAftrGnrts = null; // array of after generating delegate
-        protected UIMngr _mngr = null; // registered UI manager
-        protected Canvas _mnCnvs = null; // the main canvas
-        protected object[][][] _grps = null; // the array of groups
-        protected object[][] _cmpns = null; // the array of components
-        private GameObject[][] _addrbls = null; // the array of instances
-        private GameObject[][] _gmObjcs = null; // the array of GameObjects
-        private GameObject[] _tmpSbinsts = null; // the array for temp storage of sub GameObject
-        private Transform[][] _tmpTrnsfrms = null; // the array for temp storage of Transform
-        private bool[] _isAttcs = null; // the array of bool as is atached or not
+        protected DRct<byte>[][][] _dBhvArr3 = null; //delegate of behavior method
+        protected DAct[] _dGnrArr = null; // array of after generating delegate
+        protected UIMng _mng = null; // registered UI manager
+        protected Canvas _mnCnv = null; // the main canvas
+        protected object[][][] _grpArr3 = null; // the array of groups
+        protected object[][] _cmpArr2 = null; // the array of components
+        private GameObject[][] _aGOArr2 = null; // the array of instances
+        private GameObject[][] _gOArr2 = null; // the array of GameObjects
+        private GameObject[] _tmpSbGOArr = null; // the array for temp storage of sub GameObject
+        private Transform[][] _tmpTfArr2 = null; // the array for temp storage of Transform
+        private bool[] _isAttArr = null; // the array of bool as is atached or not
 
-        public void Attc(Canvas cnvs, DActn dAftrAttc = null) { // attach UI by generating all objects group, dAftrAttc = after attached
-            if (_grps == null) {
+        public void Att(Canvas cnv, DAct dAtt = null) { // attach UI by generating all objects group, dAtt = after attached
+            if (_grpArr3 == null) {
                 return;
             } else {
-                for (byte g = 0; g < _grps.Length; g++) {
-                    if (_grps[g] == null) {
+                for (byte g = 0; g < _grpArr3.Length; g++) {
+                    if (_grpArr3[g] == null) {
                         return;
                     }
                 }
             }
-            if (_isAttcs == null) {
-                _isAttcs = new bool[_grps.Length];
+            if (_isAttArr == null) {
+                _isAttArr = new bool[_grpArr3.Length];
             }
-            if (_addrbls == null) {
-                _addrbls = new GameObject[_grps.Length][];
-                _gmObjcs = new GameObject[_grps.Length][];
-                _cmpns = new object[_grps.Length][];
+            if (_aGOArr2 == null) {
+                _aGOArr2 = new GameObject[_grpArr3.Length][];
+                _gOArr2 = new GameObject[_grpArr3.Length][];
+                _cmpArr2 = new object[_grpArr3.Length][];
             }
-            _mnCnvs = cnvs;
+            _mnCnv = cnv;
             byte tg = 0;
-            for (byte g = 0; g < _grps.Length; g++) {
-                if (_grps[g] == null) {
+            for (byte g = 0; g < _grpArr3.Length; g++) {
+                if (_grpArr3[g] == null) {
                     continue;
                 }
-                if (_addrbls[g] == null) {
-                    _addrbls[g] = new GameObject[_grps[g].Length];
-                    _gmObjcs[g] = new GameObject[_grps[g].Length];
-                    _cmpns[g] = new object[_grps[g].Length];
+                if (_aGOArr2[g] == null) {
+                    _aGOArr2[g] = new GameObject[_grpArr3[g].Length];
+                    _gOArr2[g] = new GameObject[_grpArr3[g].Length];
+                    _cmpArr2[g] = new object[_grpArr3[g].Length];
                 }
                 Gnr(
                     g,
                     () => {
-                        if (_dAftrGnrts != null) {
-                            _dAftrGnrts[tg]?.Invoke();
+                        if (_dGnrArr != null) {
+                            _dGnrArr[tg]?.Invoke();
                         }
-                        _isAttcs[tg] = true;
-                        if (tg == _grps.Length - 1) {
-                            dAftrAttc?.Invoke();
+                        _isAttArr[tg] = true;
+                        if (tg == _grpArr3.Length - 1) {
+                            dAtt?.Invoke();
                         }
                         tg += 1;
                     }
@@ -74,246 +74,246 @@ namespace T {
             }
         }
 
-        public void Attc(Canvas cnvs, byte eGrp, DActn dAftrAttc = null) { // attach UI by generating specific objects group by enum, dAftrAttc = after attached
-            if (_grps == null || _grps[eGrp] == null) {
+        public void Att(Canvas cnv, byte eGrp, DAct dAtt = null) { // attach UI by generating specific objects group by enum, dAtt = after attached
+            if (_grpArr3 == null || _grpArr3[eGrp] == null) {
                 return;
             }
-            if (_isAttcs == null) {
-                _isAttcs = new bool[_grps.Length];
-            } else if (_isAttcs[eGrp]) {
+            if (_isAttArr == null) {
+                _isAttArr = new bool[_grpArr3.Length];
+            } else if (_isAttArr[eGrp]) {
                 return;
             }
-            if (_addrbls == null) {
-                _addrbls = new GameObject[_grps.Length][];
-                _gmObjcs = new GameObject[_grps.Length][];
-                _cmpns = new object[_grps.Length][];
+            if (_aGOArr2 == null) {
+                _aGOArr2 = new GameObject[_grpArr3.Length][];
+                _gOArr2 = new GameObject[_grpArr3.Length][];
+                _cmpArr2 = new object[_grpArr3.Length][];
             }
-            if (_addrbls[eGrp] == null) {
-                _addrbls[eGrp] = new GameObject[_grps[eGrp].Length];
-                _gmObjcs[eGrp] = new GameObject[_grps[eGrp].Length];
-                _cmpns[eGrp] = new object[_grps[eGrp].Length];
+            if (_aGOArr2[eGrp] == null) {
+                _aGOArr2[eGrp] = new GameObject[_grpArr3[eGrp].Length];
+                _gOArr2[eGrp] = new GameObject[_grpArr3[eGrp].Length];
+                _cmpArr2[eGrp] = new object[_grpArr3[eGrp].Length];
             }
-            _mnCnvs = cnvs;
+            _mnCnv = cnv;
             Gnr(
                 eGrp,
                 () => {
-                    _dAftrGnrts[eGrp]?.Invoke();
-                    _isAttcs[eGrp] = true;
-                    dAftrAttc?.Invoke();
+                    _dGnrArr[eGrp]?.Invoke();
+                    _isAttArr[eGrp] = true;
+                    dAtt?.Invoke();
                 }
             );
         }
 
-        public void Dtch() { // detach UI by release all object groups, dBD = before detached, dAD = after detached
-            if (!IsAttc) {
+        public void Dtc() { // detach UI by release all object groups, dBD = before detached, dAD = after detached
+            if (!IsAtt) {
                 return;
             }
-            for (byte g = 0; g < _addrbls.Length; g++) {
-                if (_addrbls[g] != null) {
-                    Rsrc.Rls(_addrbls[g]);
+            for (byte g = 0; g < _aGOArr2.Length; g++) {
+                if (_aGOArr2[g] != null) {
+                    Rs.Rls(_aGOArr2[g]);
                 }
             }
-            _dBhvrs = null;
-            _dAftrGnrts = null;
-            _mngr = null;
-            _mnCnvs = null;
-            _grps = null;
-            _cmpns = null;
-            _addrbls = null;
-            _gmObjcs = null;
-            _isAttcs = null;
+            _dBhvArr3 = null;
+            _dGnrArr = null;
+            _mng = null;
+            _mnCnv = null;
+            _grpArr3 = null;
+            _cmpArr2 = null;
+            _aGOArr2 = null;
+            _gOArr2 = null;
+            _isAttArr = null;
         }
 
-        public void Dtch(byte eGrp) { // detach UI by release specific object group by enum, dBD = before detached, dAD = after detached
-            if (!IsAttc) {
+        public void Dtc(byte eGrp) { // detach UI by release specific object group by enum, dBD = before detached, dAD = after detached
+            if (!IsAtt) {
                 return;
             }
-            if (!_isAttcs[eGrp]) {
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            Rsrc.Rls(_addrbls[eGrp]);
-            _addrbls[eGrp] = null;
-            _gmObjcs[eGrp] = null;
-            _isAttcs[eGrp] = false;
-            if (!IsAttc) { // if any group is not attached
-                _dBhvrs = null;
-                _dAftrGnrts = null;
-                _mngr = null;
-                _mnCnvs = null;
-                _grps = null;
-                _cmpns = null;
-                _addrbls = null;
-                _gmObjcs = null;
-                _isAttcs = null;
+            Rs.Rls(_aGOArr2[eGrp]);
+            _aGOArr2[eGrp] = null;
+            _gOArr2[eGrp] = null;
+            _isAttArr[eGrp] = false;
+            if (!IsAtt) { // if any group is not attached
+                _dBhvArr3 = null;
+                _dGnrArr = null;
+                _mng = null;
+                _mnCnv = null;
+                _grpArr3 = null;
+                _cmpArr2 = null;
+                _aGOArr2 = null;
+                _gOArr2 = null;
+                _isAttArr = null;
             }
         }
 
-        public void Actv(byte eGrp) { // activate specific behavior group by enum
-            if (_dBhvrs[eGrp] == null) {
+        public void Act(byte eGrp) { // activate specific behavior group by enum
+            if (_dBhvArr3[eGrp] == null) {
                 return;
             }
-            for (byte b = 0; b < _dBhvrs[eGrp].Length; b++) {
-                if (_dBhvrs[eGrp][b] != null) {
-                    _dBhvrs[eGrp][b][0].Invoke(eGrp);
+            for (byte b = 0; b < _dBhvArr3[eGrp].Length; b++) {
+                if (_dBhvArr3[eGrp][b] != null) {
+                    _dBhvArr3[eGrp][b][0].Invoke(eGrp);
                 }
             }
         }
 
         public void Hlt(byte eGrp) { // halt specific behavior group by enum
-            if (_dBhvrs[eGrp] == null) {
+            if (_dBhvArr3[eGrp] == null) {
                 return;
             }
-            for (byte b = 0; b < _dBhvrs[eGrp].Length; b++) {
-                if (_dBhvrs[eGrp][b] != null) {
-                    _dBhvrs[eGrp][b][1].Invoke(eGrp);
+            for (byte b = 0; b < _dBhvArr3[eGrp].Length; b++) {
+                if (_dBhvArr3[eGrp][b] != null) {
+                    _dBhvArr3[eGrp][b][1].Invoke(eGrp);
                 }
             }
         }
 
-        public void Actv(byte eGrp, byte eBhvr) { // activate specific behavior in specific group by enum
-            if (_dBhvrs[eGrp] == null) {
+        public void Act(byte eGrp, byte eBhvr) { // activate specific behavior in specific group by enum
+            if (_dBhvArr3[eGrp] == null) {
                 return;
             }
-            if (_dBhvrs[eGrp][eBhvr] != null) {
-                _dBhvrs[eGrp][eBhvr][0].Invoke(eGrp);
+            if (_dBhvArr3[eGrp][eBhvr] != null) {
+                _dBhvArr3[eGrp][eBhvr][0].Invoke(eGrp);
             }
         }
 
         public void Hlt(byte eGrp, byte eBhvr) { // halt specific behavior in specific group by enum
-            if (_dBhvrs[eGrp] == null) {
+            if (_dBhvArr3[eGrp] == null) {
                 return;
             }
-            if (_dBhvrs[eGrp][eBhvr] != null) {
-                _dBhvrs[eGrp][eBhvr][1].Invoke(eGrp);
+            if (_dBhvArr3[eGrp][eBhvr] != null) {
+                _dBhvArr3[eGrp][eBhvr][1].Invoke(eGrp);
             }
         }
 
-        public bool IsGrpAttc(byte eGrp) { // return specific group by enum was attached or not 
-            return _isAttcs[eGrp];
+        public bool IsGrpAtt(byte eGrp) { // return specific group by enum was attached or not 
+            return _isAttArr[eGrp];
         }
 
-        public GameObject GtGmObjc(byte eGrp, byte eObjc) { // return specific gameObjcect in specific group by enum
-            if (!_isAttcs[eGrp]) {
+        public GameObject GtGO(byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
+            if (!_isAttArr[eGrp]) {
                 return null;
             }
-            return _gmObjcs[eGrp][eObjc];
+            return _gOArr2[eGrp][eObj];
         }
 
-        public T GtCmpn<T>(byte eGrp, byte eCmpn) { // return specific component by enum
-            if (!_isAttcs[eGrp]) {
+        public T GtCmp<T>(byte eGrp, byte eCmpn) { // return specific component by enum
+            if (!_isAttArr[eGrp]) {
                 return default(T);
             }
-            return (T)_cmpns[eGrp][eCmpn];
+            return (T)_cmpArr2[eGrp][eCmpn];
         }
 
-        public void Enbl(byte eGrp) { // enable specific object group by enum
-            if (!_isAttcs[eGrp]) {
+        public void Enb(byte eGrp) { // enable specific object group by enum
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            for (byte o = 0; o < _gmObjcs[eGrp].Length; o++) {
-                _gmObjcs[eGrp][o].SetActive(true);
-            }
-        }
-
-        public void Dsbl(byte eGrp) { // disable specific object group by enum
-            if (!_isAttcs[eGrp]) {
-                return;
-            }
-            for (byte o = 0; o < _gmObjcs[eGrp].Length; o++) {
-                _gmObjcs[eGrp][o].SetActive(false);
+            for (byte o = 0; o < _gOArr2[eGrp].Length; o++) {
+                _gOArr2[eGrp][o].SetActive(true);
             }
         }
 
-        public void Enbl(byte eGrp, byte eObjc) { // enable specific object in specific group by enum
-            if (!_isAttcs[eGrp]) {
+        public void Dsb(byte eGrp) { // disable specific object group by enum
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            _gmObjcs[eGrp][eObjc].SetActive(true);
+            for (byte o = 0; o < _gOArr2[eGrp].Length; o++) {
+                _gOArr2[eGrp][o].SetActive(false);
+            }
         }
 
-        public void Dsbl(byte eGrp, byte eObjc) { // disable specific object in specific group by enum
-            if (!_isAttcs[eGrp]) {
+        public void Enb(byte eGrp, byte eObj) { // enable specific object in specific group by enum
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            _gmObjcs[eGrp][eObjc].SetActive(false);
+            _gOArr2[eGrp][eObj].SetActive(true);
         }
 
-        public void Frnt(byte eGrp) {
-            if (!_isAttcs[eGrp]) {
+        public void Dsb(byte eGrp, byte eObj) { // disable specific object in specific group by enum
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            for (byte o = 0; o < _gmObjcs[(byte)eGrp].Length; o++) {
-                _gmObjcs[(byte)eGrp][o].transform.SetAsLastSibling();
+            _gOArr2[eGrp][eObj].SetActive(false);
+        }
+
+        public void Frn(byte eGrp) {
+            if (!_isAttArr[eGrp]) {
+                return;
+            }
+            for (byte o = 0; o < _gOArr2[(byte)eGrp].Length; o++) {
+                _gOArr2[(byte)eGrp][o].transform.SetAsLastSibling();
             }
         }
 
         public void Bck(byte eGrp) {
-            if (!_isAttcs[eGrp]) {
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            for (byte o = 0; o < _gmObjcs[(byte)eGrp].Length; o++) {
-                _gmObjcs[(byte)eGrp][o].transform.SetAsFirstSibling();
+            for (byte o = 0; o < _gOArr2[(byte)eGrp].Length; o++) {
+                _gOArr2[(byte)eGrp][o].transform.SetAsFirstSibling();
             }
         }
 
-        public void Frnt(byte eGrp, byte eObjc) {
-            if (!_isAttcs[eGrp]) {
+        public void Frn(byte eGrp, byte eObj) {
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            _gmObjcs[(byte)eGrp][(byte)eObjc].transform.SetAsLastSibling();
+            _gOArr2[(byte)eGrp][(byte)eObj].transform.SetAsLastSibling();
         }
 
-        public void Bck(byte eGrp, byte eObjc) {
-            if (!_isAttcs[eGrp]) {
+        public void Bck(byte eGrp, byte eObj) {
+            if (!_isAttArr[eGrp]) {
                 return;
             }
-            _gmObjcs[(byte)eGrp][(byte)eObjc].transform.SetAsFirstSibling();
+            _gOArr2[(byte)eGrp][(byte)eObj].transform.SetAsFirstSibling();
         }
 
-        private void Gnr(byte eGrp, DActn dAftrGnrt) { // generate scene
-            SInst[] sInsts = new SInst[_grps[eGrp].Length];
-            for (byte o = 0; o < _grps[eGrp].Length; o++) {
-                sInsts[o] = new SInst (
-                    (string)_grps[eGrp][o][0],
-                    new Vector3(((short[])_grps[eGrp][o][1])[0], ((short[])_grps[eGrp][o][1])[1], 0),
+        private void Gnr(byte eGrp, DAct dGnr) { // generate scene
+            SIns[] sInsArr = new SIns[_grpArr3[eGrp].Length];
+            for (byte o = 0; o < _grpArr3[eGrp].Length; o++) {
+                sInsArr[o] = new SIns (
+                    (string)_grpArr3[eGrp][o][0],
+                    new Vector3(((short[])_grpArr3[eGrp][o][1])[0], ((short[])_grpArr3[eGrp][o][1])[1], 0),
                     Quaternion.identity
                 );
             }
-            Rsrc.Inst(sInsts, _mnCnvs.transform, (rslts) => {
-                for (byte r = 0; r < _grps[eGrp].Length; r++) {
-                    rslts[r].name = _grps[eGrp][r][2].ToString();
-                    _addrbls[eGrp][r] = rslts[r];
+            Rs.Ins(sInsArr, _mnCnv.transform, (rslts) => {
+                for (byte r = 0; r < _grpArr3[eGrp].Length; r++) {
+                    rslts[r].name = _grpArr3[eGrp][r][2].ToString();
+                    _aGOArr2[eGrp][r] = rslts[r];
                 }
-                _tmpTrnsfrms = new Transform[_addrbls[eGrp].Length][];
-                _tmpSbinsts = new GameObject[_addrbls[eGrp].Length * 32]; // array of subinstances
+                _tmpTfArr2 = new Transform[_aGOArr2[eGrp].Length][];
+                _tmpSbGOArr = new GameObject[_aGOArr2[eGrp].Length * 32]; // array of subinstances
                 int indx = 0;
-                for (byte t1 = 0; t1 < _tmpTrnsfrms.Length; t1++) {
-                    _tmpTrnsfrms[t1] = _addrbls[eGrp][t1].GetComponentsInChildren<Transform>();
-                    for (byte t2 = 1; t2 < _tmpTrnsfrms[t1].Length; t2++) {
-                        _tmpSbinsts[indx] = _tmpTrnsfrms[t1][t2].gameObject;
+                for (byte t1 = 0; t1 < _tmpTfArr2.Length; t1++) {
+                    _tmpTfArr2[t1] = _aGOArr2[eGrp][t1].GetComponentsInChildren<Transform>();
+                    for (byte t2 = 1; t2 < _tmpTfArr2[t1].Length; t2++) {
+                        _tmpSbGOArr[indx] = _tmpTfArr2[t1][t2].gameObject;
                         indx += 1;
                     }
                 }
-                _gmObjcs[eGrp] = Arry.Apnd<GameObject>(_addrbls[eGrp], Arry.Cut<GameObject>(_tmpSbinsts, indx));
-                _cmpns[eGrp] = Ftch(_gmObjcs[eGrp]);
-                _tmpTrnsfrms = null;
-                _tmpSbinsts = null;
+                _gOArr2[eGrp] = Arr.Apn<GameObject>(_aGOArr2[eGrp], Arr.Ct<GameObject>(_tmpSbGOArr, indx));
+                _cmpArr2[eGrp] = Ftc(_gOArr2[eGrp]);
+                _tmpTfArr2 = null;
+                _tmpSbGOArr = null;
                 rslts = null;
-                Actv(eGrp);
-                dAftrGnrt(); // after generate callback
+                Act(eGrp);
+                dGnr(); // after generate callback
             });
         }
 
-        private object[] Ftch(GameObject[] gmObjcs) { // fetch UI component from array of sub GameObjcects
-            object[] cmpns = new object[0];
-            for (byte o = 0; o < gmObjcs.Length; o++) {
-                for (byte t = 0; t < _mngr.Typs.Length; t++) {
-                    if (gmObjcs[o].GetComponent(_mngr.Typs[t])) {
-                        cmpns = Arry.Add<object>(cmpns, gmObjcs[o].GetComponent(_mngr.Typs[t]));
+        private object[] Ftc(GameObject[] gOs) { // fetch UI component from array of sub GameObjects
+            object[] cmp = new object[0];
+            for (byte o = 0; o < gOs.Length; o++) {
+                for (byte t = 0; t < _mng.Typs.Length; t++) {
+                    if (gOs[o].GetComponent(_mng.Typs[t])) {
+                        cmp = Arr.Add<object>(cmp, gOs[o].GetComponent(_mng.Typs[t]));
                     }
                 }
             }
-            return cmpns;
+            return cmp;
         }
     }
 }

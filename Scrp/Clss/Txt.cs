@@ -2,25 +2,25 @@ namespace T {
 
     public class Txt {
 
-        public TxtMngr Mngr { set { _mngr = value; } }
-        public string[][] Strns { get { return _strns; } }
-        public bool IsAppl { get { return _isAppl; } }
-        protected TxtMngr _mngr = null;
-        protected string[][] _strns = null;
-        private bool _isAppl = false;
+        public TxtMng Mng { set { _mng = value; } }
+        public string[][] StrArr2 { get { return _strArr2; } }
+        public bool IsApp { get { return _isApp; } }
+        protected TxtMng _mng = null;
+        protected string[][] _strArr2 = null;
+        private bool _isApp = false;
 
-        public void Appl() { // apply
-            if (_isAppl || _strns == null) {
+        public void App() { // apply
+            if (_isApp || _strArr2 == null) {
                 return;
             }
-            _isAppl = false;
+            _isApp = false;
         }
 
-        public void Cncl() { // cancel
-            if (!_isAppl) {
+        public void Cnc() { // cancel
+            if (!_isApp) {
                 return;
             }
-            _isAppl = true;
+            _isApp = true;
         }
     }
 }

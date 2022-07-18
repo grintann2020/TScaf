@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace T {
     
-    public class Mn : SngltnMB<Mn> {
+    public class Mn : SngMB<Mn> {
 
         public string GmPrmNm;
-        [SerializeField] private SttngsSO _sttngs;
+        [SerializeField] private SttSO _sttngs;
 
         private void Awake() {
-            GmMngr.Inst.Intl((IPrm)Activator.CreateInstance(Type.GetType(GmPrmNm)));
-            GmMngr.Inst.Sttngs(_sttngs);
+            GmMng.Ins.Int((IPrm)Activator.CreateInstance(Type.GetType(GmPrmNm)));
+            GmMng.Ins.Stt(_sttngs);
         }
 
         private void Start() {
-            GmMngr.Inst.Strt();
+            GmMng.Ins.Str();
         }
 
         private void Update() {
-            GmMngr.Inst.PrpUpdt();
+            GmMng.Ins.PrpUpd();
         }
     }
 }

@@ -2,24 +2,24 @@ namespace T {
 
     public class GmPrm { // game prime
 
-        public IMngr[] IMngrs { get { return _iMngrs; } }
-        public IPrm[] IPrms { get { return _iPrms; } }
-        public DActn[] DPrms { get { return _dPrms; } }
-        public IMngr IMngr { get; set; }
-        protected IMngr[] _iMngrs;
-        protected IPrm[] _iPrms;
-        protected DActn[] _dPrms;
-        protected IMngr _iMngr;
+        public IMng[] IMngArr { get { return _iMngArr; } }
+        public IPrm[] IPrmArr { get { return _iPrmArr; } }
+        public DAct[] DPrmArr { get { return _dPrmArr; } }
+        public IMng IMng { get; set; }
+        protected IMng[] _iMngArr;
+        protected IPrm[] _iPrmArr;
+        protected DAct[] _dPrmArr;
+        protected IMng _iMngr;
 
         public void Prm(byte ePrm) { // prime
-            if (_dPrms[ePrm] != null) {
-                _dPrms[ePrm].Invoke();
-                _iPrms[ePrm].IMngr = _iMngrs[ePrm];
+            if (_dPrmArr[ePrm] != null) {
+                _dPrmArr[ePrm].Invoke();
+                _iPrmArr[ePrm].IMng = _iMngArr[ePrm];
             }
         }
 
         public void Omt(byte ePrm) { // omit
-            _iPrms[ePrm] = null;
+            _iPrmArr[ePrm] = null;
         }
     }
 }

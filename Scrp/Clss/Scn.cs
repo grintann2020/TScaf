@@ -4,13 +4,13 @@ namespace T {
 
     public abstract class Scn { // scene
 
-        public ScnMngr Mngr { set { _mngr = value; } } // set manager
+        public ScnMng Mng { set { _mng = value; } } // set manager
 
-        public bool IsEstb { // get is established or not
+        public bool IsEst { // get is established or not
             get {
-                if (_isEstbArry != null) {
-                    for (byte i = 0; i < _isEstbArry.Length; i++) {
-                        if (_isEstbArry[i]) {
+                if (_isEstArr != null) {
+                    for (byte i = 0; i < _isEstArr.Length; i++) {
+                        if (_isEstArr[i]) {
                             return true;
                         }
                     }
@@ -19,49 +19,49 @@ namespace T {
             }
         }
 
-        protected DActn[] _dAftrGnrtArry = null; // the array of after generating delegate
-        protected ScnMngr _mngr = null; // registered scene manager
-        protected Transform _rtTrnsfrm = null; // the root transform
-        protected object[][][] _grpArry = null; // the array of object groups
-        private GameObject[][] _addrblArry = null; // the array of instances
-        private GameObject[][] _gmObjcArry = null; // the array of GameObjects
-        private GameObject[] _tmpSbinstArry = null; // the temp array of sub GameObject
-        private Transform[][] _tmpTrnsfrmArry = null; // the temp array of Transform
-        private bool[] _isEstbArry = null; // is established or not
+        protected DAct[] _dGnrArr = null; // the array of after generating delegate
+        protected ScnMng _mng = null; // registered scene manager
+        protected Transform _rT = null; // the root transform
+        protected object[][][] _grpArr3 = null; // the array of object groups
+        private GameObject[][] _aGOArr2 = null; // the array of addressable GameObjects
+        private GameObject[][] _gOArr2 = null; // the array of GameObjects
+        private GameObject[] _tmpSbGOArr = null; // the temp array of sub GameObject
+        private Transform[][] _tmpTfArr2 = null; // the temp array of Transform
+        private bool[] _isEstArr = null; // is established or not
 
-        public void Estb(Transform rtTrnsfrm, DActn dAftrEstb = null) { // establish scene by generating all objects group, dAftrEstb = after established
-            if (_grpArry == null) {
+        public void Est(Transform rT, DAct dEst = null) { // establish scene by generating all objects group, dEst = after established
+            if (_grpArr3 == null) {
                 return;
             } else {
-                for (byte g = 0; g < _grpArry.Length; g++) {
-                    if (_grpArry[g] == null) {
+                for (byte g = 0; g < _grpArr3.Length; g++) {
+                    if (_grpArr3[g] == null) {
                         return;
                     }
                 }
             }
-            if (_isEstbArry == null) {
-                _isEstbArry = new bool[_grpArry.Length];
+            if (_isEstArr == null) {
+                _isEstArr = new bool[_grpArr3.Length];
             }
-            if (_addrblArry == null) {
-                _addrblArry = new GameObject[_grpArry.Length][];
-                _gmObjcArry = new GameObject[_grpArry.Length][];
+            if (_aGOArr2 == null) {
+                _aGOArr2 = new GameObject[_grpArr3.Length][];
+                _gOArr2 = new GameObject[_grpArr3.Length][];
             }
-            _rtTrnsfrm = rtTrnsfrm;
+            _rT = rT;
             byte tg = 0;
-            for (byte g = 0; g < _grpArry.Length; g++) {
-                if (_addrblArry[g] == null) {
-                    _addrblArry[g] = new GameObject[_grpArry[g].Length];
-                    _gmObjcArry[g] = new GameObject[_grpArry[g].Length];
+            for (byte g = 0; g < _grpArr3.Length; g++) {
+                if (_aGOArr2[g] == null) {
+                    _aGOArr2[g] = new GameObject[_grpArr3[g].Length];
+                    _gOArr2[g] = new GameObject[_grpArr3[g].Length];
                 }
-                Gnrt(
+                Gnr(
                     g,
                     () => {
-                        if (_dAftrGnrtArry != null) {
-                            _dAftrGnrtArry[tg]?.Invoke();
+                        if (_dGnrArr != null) {
+                            _dGnrArr[tg]?.Invoke();
                         }
-                        _isEstbArry[tg] = true;
-                        if (tg == _grpArry.Length - 1) {
-                            dAftrEstb?.Invoke();
+                        _isEstArr[tg] = true;
+                        if (tg == _grpArr3.Length - 1) {
+                            dEst?.Invoke();
                         }
                         tg += 1;
                     }
@@ -69,150 +69,150 @@ namespace T {
             }
         }
 
-        public void Estb(Transform trnsfrm, byte eGrp, DActn dAftrEstb = null) { // establish scene by generating specific objects group by enum, dAftrEstb = after established
-            if (_grpArry == null || _grpArry[eGrp] == null) {
+        public void Est(Transform tf, byte eGrp, DAct dEst = null) { // establish scene by generating specific objects group by enum, dEst = after established
+            if (_grpArr3 == null || _grpArr3[eGrp] == null) {
                 return;
             }
-            if (_isEstbArry == null) {
-                _isEstbArry = new bool[_grpArry.Length];
-            } else if (_isEstbArry[eGrp]) {
+            if (_isEstArr == null) {
+                _isEstArr = new bool[_grpArr3.Length];
+            } else if (_isEstArr[eGrp]) {
                 return;
             }
-            if (_addrblArry == null) {
-                _addrblArry = new GameObject[_grpArry.Length][];
-                _gmObjcArry = new GameObject[_grpArry.Length][];
+            if (_aGOArr2 == null) {
+                _aGOArr2 = new GameObject[_grpArr3.Length][];
+                _gOArr2 = new GameObject[_grpArr3.Length][];
             }
-            if (_addrblArry[eGrp] == null) {
-                _addrblArry[eGrp] = new GameObject[_grpArry[eGrp].Length];
-                _gmObjcArry[eGrp] = new GameObject[_grpArry[eGrp].Length];
+            if (_aGOArr2[eGrp] == null) {
+                _aGOArr2[eGrp] = new GameObject[_grpArr3[eGrp].Length];
+                _gOArr2[eGrp] = new GameObject[_grpArr3[eGrp].Length];
             }
-            _rtTrnsfrm = trnsfrm;
-            Gnrt(
+            _rT = tf;
+            Gnr(
                 eGrp,
                 () => {
-                    if (_dAftrGnrtArry != null) {
-                        _dAftrGnrtArry[eGrp]?.Invoke();
+                    if (_dGnrArr != null) {
+                        _dGnrArr[eGrp]?.Invoke();
                     }
-                    _isEstbArry[eGrp] = true;
-                    dAftrEstb?.Invoke();
+                    _isEstArr[eGrp] = true;
+                    dEst?.Invoke();
                 }
             );
         }
 
-        public void Elmn() { // eliminate scene by release all object groups
-            if (!IsEstb) {
+        public void Elm() { // eliminate scene by release all object groups
+            if (!IsEst) {
                 return;
             }
-            for (byte g = 0; g < _addrblArry.Length; g++) {
-                if (_addrblArry[g] != null) {
-                    Rsrc.Rls(_addrblArry[g]);
+            for (byte g = 0; g < _aGOArr2.Length; g++) {
+                if (_aGOArr2[g] != null) {
+                    Rs.Rls(_aGOArr2[g]);
                 }
             }
-            _dAftrGnrtArry = null;
-            _mngr = null;
-            _grpArry = null;
-            _addrblArry = null;
-            _gmObjcArry = null;
-            _rtTrnsfrm = null;
-            _isEstbArry = null;
+            _dGnrArr = null;
+            _mng = null;
+            _grpArr3 = null;
+            _aGOArr2 = null;
+            _gOArr2 = null;
+            _rT = null;
+            _isEstArr = null;
         }
 
-        public void Elmn(byte eGrp) { // eliminate scene by release specific object group by enum
-            if (!IsEstb) {
+        public void Elm(byte eGrp) { // eliminate scene by release specific object group by enum
+            if (!IsEst) {
                 return;
             }
-            if (!_isEstbArry[eGrp]) {
+            if (!_isEstArr[eGrp]) {
                 return;
             }
-            Rsrc.Rls(_addrblArry[eGrp]);
-            _addrblArry[eGrp] = null;
-            _gmObjcArry[eGrp] = null;
-            _isEstbArry[eGrp] = false;
-            if (!IsEstb) {
-                _dAftrGnrtArry = null;
-                _mngr = null;
-                _grpArry = null;
-                _addrblArry = null;
+            Rs.Rls(_aGOArr2[eGrp]);
+            _aGOArr2[eGrp] = null;
+            _gOArr2[eGrp] = null;
+            _isEstArr[eGrp] = false;
+            if (!IsEst) {
+                _dGnrArr = null;
+                _mng = null;
+                _grpArr3 = null;
+                _aGOArr2 = null;
                 
-                _gmObjcArry = null;
-                _rtTrnsfrm = null;
-                _isEstbArry = null;
+                _gOArr2 = null;
+                _rT = null;
+                _isEstArr = null;
             }
         }
 
-        public bool IsGrpEstb(byte eGrp) { // return is group established or not
-            return _isEstbArry[eGrp];
+        public bool IsGrpEst(byte eGrp) { // return is group established or not
+            return _isEstArr[eGrp];
         }
 
-        public GameObject GtGmObjc(byte eGrp, byte eObjc) { // return specific gameObjcect in specific group by enum
-            if (!_isEstbArry[eGrp]) {
+        public GameObject GtGO(byte eGrp, byte eObj) { // return specific gameObject in specific group by enum
+            if (!_isEstArr[eGrp]) {
                 return null;
             }
-            return _gmObjcArry[eGrp][eObjc];
+            return _gOArr2[eGrp][eObj];
         }
 
-        public void Enbl(byte eGrp) { // enable specific object group by enum
-            if (!_isEstbArry[eGrp]) {
+        public void Enb(byte eGrp) { // enable specific object group by enum
+            if (!_isEstArr[eGrp]) {
                 return;
             }
-            for (byte o = 0; o < _gmObjcArry[eGrp].Length; o++) {
-                _gmObjcArry[eGrp][o].SetActive(true);
+            for (byte o = 0; o < _gOArr2[eGrp].Length; o++) {
+                _gOArr2[eGrp][o].SetActive(true);
             }
         }
 
-        public void Dsbl(byte eGrp) { // disable specific object group by enum
-            if (!_isEstbArry[eGrp]) {
+        public void Dsb(byte eGrp) { // disable specific object group by enum
+            if (!_isEstArr[eGrp]) {
                 return;
             }
-            for (byte o = 0; o < _gmObjcArry[eGrp].Length; o++) {
-                _gmObjcArry[eGrp][o].SetActive(false);
+            for (byte o = 0; o < _gOArr2[eGrp].Length; o++) {
+                _gOArr2[eGrp][o].SetActive(false);
             }
         }
 
-        public void Enbl(byte eGrp, byte eObjc) { // enable specific object in specific group by enum
-            if (!_isEstbArry[eGrp]) {
+        public void Enb(byte eGrp, byte eObj) { // enable specific object in specific group by enum
+            if (!_isEstArr[eGrp]) {
                 return;
             }
-            _gmObjcArry[eGrp][eObjc].SetActive(true);
+            _gOArr2[eGrp][eObj].SetActive(true);
         }
 
-        public void Dsbl(byte eGrp, byte eObjc) { // disable specific object in specific group by enum
-            if (!_isEstbArry[eGrp]) {
+        public void Dsb(byte eGrp, byte eObj) { // disable specific object in specific group by enum
+            if (!_isEstArr[eGrp]) {
                 return;
             }
-            _gmObjcArry[eGrp][eObjc].SetActive(false);
+            _gOArr2[eGrp][eObj].SetActive(false);
         }
 
-        private void Gnrt(byte eGrp, DActn dAftrGnrt) { // generate scene by instantiate objects from addressable asset
-            SInst[] sInstArry = new SInst[_grpArry[eGrp].Length];
-            for (byte o = 0; o < sInstArry.Length; o++) {
-                sInstArry[o] = new SInst (
-                    (string)_grpArry[eGrp][o][0],
-                    new Vector3(((float[])_grpArry[eGrp][o][1])[0], ((float[])_grpArry[eGrp][o][1])[1], ((float[])_grpArry[eGrp][o][1])[2]),
-                    new Quaternion(((float[])_grpArry[eGrp][o][2])[0], ((float[])_grpArry[eGrp][o][2])[1], ((float[])_grpArry[eGrp][o][2])[2], ((float[])_grpArry[eGrp][o][2])[3])
+        private void Gnr(byte eGrp, DAct dGnr) { // generate scene by instantiate objects from addressable asset
+            SIns[] sInsArr = new SIns[_grpArr3[eGrp].Length];
+            for (byte o = 0; o < sInsArr.Length; o++) {
+                sInsArr[o] = new SIns (
+                    (string)_grpArr3[eGrp][o][0],
+                    new Vector3(((float[])_grpArr3[eGrp][o][1])[0], ((float[])_grpArr3[eGrp][o][1])[1], ((float[])_grpArr3[eGrp][o][1])[2]),
+                    new Quaternion(((float[])_grpArr3[eGrp][o][2])[0], ((float[])_grpArr3[eGrp][o][2])[1], ((float[])_grpArr3[eGrp][o][2])[2], ((float[])_grpArr3[eGrp][o][2])[3])
                 );
             }
-            Rsrc.Inst(sInstArry, _rtTrnsfrm, (rsltArry) => {
-                for (byte r = 0; r < _grpArry[eGrp].Length; r++) {
-                    rsltArry[r].name = _grpArry[eGrp][r][3].ToString();
-                    _addrblArry[eGrp][r] = rsltArry[r];
+            Rs.Ins(sInsArr, _rT, (rsltArr) => {
+                for (byte r = 0; r < _grpArr3[eGrp].Length; r++) {
+                    rsltArr[r].name = _grpArr3[eGrp][r][3].ToString();
+                    _aGOArr2[eGrp][r] = rsltArr[r];
                 }
-                _tmpTrnsfrmArry = new Transform[_addrblArry[eGrp].Length][];
-                _tmpSbinstArry = new GameObject[_addrblArry[eGrp].Length * 32]; // array of subinstances
+                _tmpTfArr2 = new Transform[_aGOArr2[eGrp].Length][];
+                _tmpSbGOArr = new GameObject[_aGOArr2[eGrp].Length * 32]; // the array of subinstances
                 int indx = 0;
-                for (byte t1 = 0; t1 < _tmpTrnsfrmArry.Length; t1++) {
-                    _tmpTrnsfrmArry[t1] = _addrblArry[eGrp][t1].GetComponentsInChildren<Transform>();
-                    for (byte t2 = 1; t2 < _tmpTrnsfrmArry[t1].Length; t2++) {
-                        _tmpSbinstArry[indx] = _tmpTrnsfrmArry[t1][t2].gameObject;
+                for (byte t1 = 0; t1 < _tmpTfArr2.Length; t1++) {
+                    _tmpTfArr2[t1] = _aGOArr2[eGrp][t1].GetComponentsInChildren<Transform>();
+                    for (byte t2 = 1; t2 < _tmpTfArr2[t1].Length; t2++) {
+                        _tmpSbGOArr[indx] = _tmpTfArr2[t1][t2].gameObject;
                         indx += 1;
                     }
                 }
-                _gmObjcArry[eGrp] = Arry.Apnd<GameObject>(_addrblArry[eGrp], Arry.Cut<GameObject>(_tmpSbinstArry, indx));
-                _tmpTrnsfrmArry = null;
-                _tmpSbinstArry = null;
+                _gOArr2[eGrp] = Arr.Apn<GameObject>(_aGOArr2[eGrp], Arr.Ct<GameObject>(_tmpSbGOArr, indx));
+                _tmpTfArr2 = null;
+                _tmpSbGOArr = null;
                 indx = 0;
-                rsltArry = null;
-                dAftrGnrt(); // after generate callback
+                rsltArr = null;
+                dGnr(); // after generate callback
             });
         }
     }

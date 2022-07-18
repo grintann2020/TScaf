@@ -4,133 +4,107 @@ namespace T {
 
     public class Vw {
 
-        public VwMngr Mngr { set { _mngr = value; } } // set manager
-        public bool IsStup { get { return _isStup; } } // get is setuped or not
+        public VwMng Mng { set { _mng = value; } } // set manager
+        public bool IsStUp { get { return _isStUp; } } // get is setuped or not
         public bool IsMv { get { return _isMv; } }
-        protected Camera[] _cmrArry = null; // the array of cameras
-        protected SCmrPrjc[] _prjcArry = null; // the array of projections
-        protected SOrnt3[] _orntArry = null; // the array of orients
-        protected VwMngr _mngr = null; // view manager
-        protected byte[][] _stArry = null; // the array of sets
-        private bool _isStup = false; // is setuped or not
-
-        // protected SCoord3[][][] _trkArry;
-        // protected byte[][] _movArry;
-        // private byte _eMov = 0;
+        protected Camera[] _cmrArr = null; // the array of cameras
+        protected SCmrPrj[] _prjArr = null; // the array of projections
+        protected SOrn3[] _ornArr = null; // the array of orients
+        protected VwMng _mng = null; // view manager
+        protected byte[][] _stArr = null; // the array of sets
+        private bool _isStUp = false; // is setuped or not
         private bool _isMv = false;
 
-        public void Stup(Camera[] cmrArry) {
-            if (_isStup || _isMv || cmrArry == null || _stArry == null) {
+        public void StUp(Camera[] cmrArr) {
+            if (_isStUp || _isMv || cmrArr == null || _stArr == null) {
                 return;
             }
-            _isStup = true;
+            _isStUp = true;
             _isMv = false;
-            // _eMov = 0;
-            _cmrArry = cmrArry;
-            Dflt();
+            _cmrArr = cmrArr;
+            Dfl();
         }
 
-        public void Stdwn() {
-            if (!_isStup || _isMv) {
+        public void StDwn() {
+            if (!_isStUp || _isMv) {
                 return;
             }
-            _isStup = false;
+            _isStUp = false;
             _isMv = false;
-            // _eMov = 0;
-            _cmrArry = null;
-            _prjcArry = null;
-            _orntArry = null;
-            _mngr = null;
-            _stArry = null;
-            
-            // for (byte s = 0; s < _stpArry.Length; s++) {
-            //     _stpArry[s] = 0;
-            // }
+            _cmrArr = null;
+            _prjArr = null;
+            _ornArr = null;
+            _mng = null;
+            _stArr = null;
         }
 
-        public void PrpUpdt() { // prop update
-            if (!_isStup || !_isMv) {
+        public void PrpUpd() { // prop update
+            if (!_isStUp || !_isMv) {
                 return;
             }
-
-            // Ornt(_trkArry[_eMov][_stpArry[_eMov]][0], _trkArry[_eMov][_stpArry[_eMov]][1]);
-            // _stpArry[_eMov] += 1;
-            // if (_stpArry[_eMov] == _trkArry[_eMov].Length) {
-            //     _stpArry[_eMov] = 0;
-            //     _isMov = false;
-            // }
         }
 
-        public void Dflt() {
-            for (byte c = 0; c < _cmrArry.Length; c++) {
-                for (byte s = 0; s < _stArry.Length; s++) {
-                    if (c == _stArry[s][0]) {
-                        Prjc(c, _stArry[s][1]);
-                        Ornt(c, _stArry[s][2]);
+        public void Dfl() {
+            for (byte c = 0; c < _cmrArr.Length; c++) {
+                for (byte s = 0; s < _stArr.Length; s++) {
+                    if (c == _stArr[s][0]) {
+                        Prj(c, _stArr[s][1]);
+                        Orn(c, _stArr[s][2]);
                         break;
                     }
                 }
             }
         }
 
-        public void Prjc(byte ePrjc) {
-            CmrPrjc(_cmrArry[0], _prjcArry[ePrjc]);
+        public void Prj(byte ePrj) {
+            CmrPrj(_cmrArr[0], _prjArr[ePrj]);
         }
 
-        public void Prjc(byte eCmr, byte ePrjc) {
-            CmrPrjc(_cmrArry[eCmr], _prjcArry[ePrjc]);
+        public void Prj(byte eCmr, byte ePrj) {
+            CmrPrj(_cmrArr[eCmr], _prjArr[ePrj]);
         }
 
-        public void Prjc(SCmrPrjc prjc) {
-            CmrPrjc(_cmrArry[0], prjc);
+        public void Prj(SCmrPrj prj) {
+            CmrPrj(_cmrArr[0], prj);
         }
 
-        public void Prjc(byte eCmr, SCmrPrjc prjc) {
-            CmrPrjc(_cmrArry[eCmr], prjc);
+        public void Prj(byte eCmr, SCmrPrj prj) {
+            CmrPrj(_cmrArr[eCmr], prj);
         }
 
-        public void Ornt(byte eOrnt) {
-            CmrOrnt(_cmrArry[0], _orntArry[eOrnt]);
+        public void Orn(byte eOrn) {
+            CmrOrn(_cmrArr[0], _ornArr[eOrn]);
         }
 
-        public void Ornt(SOrnt3 ornt) {
-            CmrOrnt(_cmrArry[0], ornt);
+        public void Orn(SOrn3 orn) {
+            CmrOrn(_cmrArr[0], orn);
         }
 
-        public void Ornt(byte eCmr, byte eOrnt) {
-            CmrOrnt(_cmrArry[eCmr], _orntArry[eOrnt]);
+        public void Orn(byte eCmr, byte eOrn) {
+            CmrOrn(_cmrArr[eCmr], _ornArr[eOrn]);
         }
 
-        public void Ornt(byte eCmr, SOrnt3 ornt) {
-            CmrOrnt(_cmrArry[eCmr], ornt);
+        public void Orn(byte eCmr, SOrn3 orn) {
+            CmrOrn(_cmrArr[eCmr], orn);
         }
 
         public void St(byte eSt) {
-            Prjc(_stArry[eSt][0], _stArry[eSt][1]);
-            Ornt(_stArry[eSt][0], _stArry[eSt][2]);
+            Prj(_stArr[eSt][0], _stArr[eSt][1]);
+            Orn(_stArr[eSt][0], _stArr[eSt][2]);
         }
 
-        // public void Mov(byte eMov) {
-        //     if (_isMov == true) {
-        //         return;
-        //     }
-        //     _isMov = true;
-        //     _eMov = eMov;
-        //     _stpArry[_eMov] = 0;
-        // }
-
-        private void CmrPrjc(Camera cmr, SCmrPrjc prjc) {
-            cmr.orthographic = prjc.Orthgrph;
-            cmr.orthographicSize = prjc.OrthgrphSz;
-            cmr.fieldOfView = prjc.FOV;
-            cmr.nearClipPlane = prjc.Nr;
-            cmr.farClipPlane = prjc.Fr;
-            cmr.usePhysicalProperties = prjc.PhyCmr;
+        private void CmrPrj(Camera cmr, SCmrPrj prj) {
+            cmr.orthographic = prj.Og;
+            cmr.orthographicSize = prj.OgSz;
+            cmr.fieldOfView = prj.FOV;
+            cmr.nearClipPlane = prj.NCP;
+            cmr.farClipPlane = prj.FCP;
+            cmr.usePhysicalProperties = prj.PhyCmr;
         }
 
-        private void CmrOrnt(Camera cmr, SOrnt3 ornt) {
-            cmr.transform.position = new Vector3(ornt.P0.X, ornt.P0.Y, ornt.P0.Z);
-            cmr.transform.LookAt(new Vector3(ornt.P1.X, ornt.P1.Y, ornt.P1.Z));
+        private void CmrOrn(Camera cmr, SOrn3 orn) {
+            cmr.transform.position = new Vector3(orn.P0.X, orn.P0.Y, orn.P0.Z);
+            cmr.transform.LookAt(new Vector3(orn.P1.X, orn.P1.Y, orn.P1.Z));
         }
     }
 }

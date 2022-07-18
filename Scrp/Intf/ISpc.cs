@@ -2,24 +2,24 @@ namespace T {
 
     public interface ISpc {
 
-        IUnt[][][] IUnts { get; } // get the array of unit
-        IUnt[] IUntPrs { get; } // get the pure array of unit interfaces
-        IUnt ICntrUnt { get; } // get center unit interface
-        SpcMngr Mngr { set; } // set manager
+        IUnt[][][] IUntArr3 { get; } // get the array of unit
+        IUnt[] IUntPrArr { get; } // get the pure array of unit interfaces
+        IUnt ICntUnt { get; } // get center unit interface
+        SpcMng Mng { set; } // set manager
         SGrd3 SScl { get; } // get scale struct
-        SGrd3 SCntrGrd { get; } // get center grid struct
-        float UntWdth { get; } // get unit width
-        float UntLngt { get; } // get unit length
-        float UntHght { get; } // get unit height
-        float UntXSpcn { get; } // get unit x axis spacing
-        float UntZSpcn { get; } // get unit z axis spacing
-        float UntYSpcn { get; } // get unit y axis spacing
-        int Clmns { get; } // get amount of columns
-        int Rows { get; } // get amount of rows
-        int Lyrs { get; } // get amount of layers
-        bool[][][] IsExsts { get; }
+        SGrd3 SCntGrd { get; } // get center grid struct
+        float UntWdt { get; } // get unit width
+        float UntLng { get; } // get unit length
+        float UntHgh { get; } // get unit height
+        float UntXSpc { get; } // get unit x axis spacing
+        float UntZSpc { get; } // get unit z axis spacing
+        float UntYSpc { get; } // get unit y axis spacing
+        int Clm { get; } // get amount of columns
+        int Rw { get; } // get amount of rows
+        int Lyr { get; } // get amount of layers
+        bool[][][] IsExsArr3 { get; }
         bool IsCnst { get; } // get is construct or not
-        void Cnst(byte eExst); // construct
-        void Dcnst(); // deconstruct
+        void Cnst(byte eExs); // construct
+        void Dcns(); // deconstruct
     }
 }

@@ -2,22 +2,22 @@ namespace T {
 
     public class VwPrm { // view prime
 
-        public IVw[] IVws { get { return _iVws; } }
-        public DActn[] DPrms { get { return _dPrms; } }
-        public IMngr IMngr { set { _mngr = (VwMngr)value; } }
-        protected IVw[] _iVws;
-        protected DActn[] _dPrms;
-        protected VwMngr _mngr;
+        public IVw[] IVws { get { return _iVwArr; } }
+        public DAct[] DPrmArr { get { return _dPrmArr; } }
+        public IMng IMng { set { _mng = (VwMng)value; } }
+        protected IVw[] _iVwArr;
+        protected DAct[] _dPrmArr;
+        protected VwMng _mng;
         
         public void Prm(byte ePrm) { // prime
-            if (_dPrms[ePrm] != null) {
-                _dPrms[ePrm].Invoke();
-                _iVws[ePrm].Mngr = _mngr;
+            if (_dPrmArr[ePrm] != null) {
+                _dPrmArr[ePrm].Invoke();
+                _iVwArr[ePrm].Mng = _mng;
             }
         }
 
         public void Omt(byte ePrm) { // omit
-            _iVws[ePrm] = null;
+            _iVwArr[ePrm] = null;
         }
     }
 }

@@ -4,22 +4,22 @@ namespace T {
 
     public class SpcPrm { // stage prime
         
-        public ISpc[] ISpcs { get { return _iSpcs; } }
-        public DActn[] DPrms { get { return _dPrms; } }
-        public IMngr IMngr { set { _mngr = (SpcMngr)value; } }
-        protected ISpc[] _iSpcs;
-        protected DActn[] _dPrms;
-        protected SpcMngr _mngr;
+        public ISpc[] ISpcArr { get { return _iSpcArr; } }
+        public DAct[] DPrmArr { get { return _dPrmArr; } }
+        public IMng IMng { set { _mng = (SpcMng)value; } }
+        protected ISpc[] _iSpcArr;
+        protected DAct[] _dPrmArr;
+        protected SpcMng _mng;
         
         public void Prm(byte ePrm) { // prime
-            if (_dPrms[ePrm] != null) {
-                _dPrms[ePrm].Invoke();
-                _iSpcs[ePrm].Mngr = _mngr;
+            if (_dPrmArr[ePrm] != null) {
+                _dPrmArr[ePrm].Invoke();
+                _iSpcArr[ePrm].Mng = _mng;
             }
         }
 
         public void Omt(byte ePrm) { // omit
-            _iSpcs[ePrm] = null;
+            _iSpcArr[ePrm] = null;
         }
     }
 }

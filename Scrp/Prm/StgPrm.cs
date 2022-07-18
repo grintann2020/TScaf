@@ -2,22 +2,22 @@ namespace T {
 
     public class StgPrm { // stage prime
         
-        public IStg[] IStgs { get { return _iStgs; } }
-        public DActn[] DPrms { get { return _dPrms; } }
-        public IMngr IMngr { set { _mngr = (StgMngr)value; } }
-        protected IStg[] _iStgs;
-        protected DActn[] _dPrms;
-        protected StgMngr _mngr;
+        public IStg[] IStgArr { get { return _iStgArr; } }
+        public DAct[] DPrmArr { get { return _dPrmArr; } }
+        public IMng IMng { set { _mng = (StgMng)value; } }
+        protected IStg[] _iStgArr;
+        protected DAct[] _dPrmArr;
+        protected StgMng _mng;
         
         public void Prm(byte ePrm) { // prime
-            if (_dPrms[ePrm] != null) {
-                _dPrms[ePrm].Invoke();
-                _iStgs[ePrm].Mngr = _mngr;
+            if (_dPrmArr[ePrm] != null) {
+                _dPrmArr[ePrm].Invoke();
+                _iStgArr[ePrm].Mng = _mng;
             }
         }
 
         public void Omt(byte ePrm) { // omit
-            _iStgs[ePrm] = null;
+            _iStgArr[ePrm] = null;
         }
     }
 }

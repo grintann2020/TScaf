@@ -4,21 +4,21 @@ namespace T {
 
     public interface IVw {
 
-        VwMngr Mngr { set; }
-        bool IsStup { get; }
+        VwMng Mng { set; }
+        bool IsStUp { get; }
         bool IsMv { get; }
-        void Stup(Camera[] cmrArry); // setup
-        void Stdwn(); // setdown
-        void PrpUpdt();
-        void Dflt(); // default
-        void Prjc(byte ePrj); // set projection
-        void Prjc(SCmrPrjc sCmrPrjc); // set projection directly
-        void Prjc(byte eCmr, byte ePrjc); // set projection
-        void Prjc(byte eCmr, SCmrPrjc sCmrPrjc);// set projection directly
-        void Ornt(byte eOrnt); // set orient
-        void Ornt(SOrnt3 sOrnt); // set orient directly
-        void Ornt(byte eCmr, byte eOrnt); // set orient
-        void Ornt(byte eCmr, SOrnt3 sOrnt); // set orient directly
+        void StUp(Camera[] cmrArr); // setup
+        void StDwn(); // setdown
+        void PrpUpd();
+        void Dfl(); // default
+        void Prj(byte ePrj); // set projection
+        void Prj(SCmrPrj sCmrPrj); // set projection directly
+        void Prj(byte eCmr, byte ePrj); // set projection
+        void Prj(byte eCmr, SCmrPrj sCmrPrj);// set projection directly
+        void Orn(byte eOrn); // set orient
+        void Orn(SOrn3 sOrn); // set orient directly
+        void Orn(byte eCmr, byte eOrn); // set orient
+        void Orn(byte eCmr, SOrn3 sOrn); // set orient directly
         // void Mov(byte eMov); // movement
     }
 }
