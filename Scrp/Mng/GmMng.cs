@@ -47,20 +47,20 @@ namespace T {
 
         public void Str() {
             PrgMng.Ins.Exc(_stt.FrsPrg);
-            SttRslt(2);
+            SttRsl(2);
         }
 
-        public void SttRslt() { // setting resolution
-            Screen.SetResolution(_stt.ScrRslt.Wdt, _stt.ScrRslt.Hgh, true);
+        public void SttRsl() { // setting resolution
+            Screen.SetResolution(_stt.ScrRsl.Wdt, _stt.ScrRsl.Hgh, true);
             // Debug.Log("Screen Resolution --> Width: " + _scrRez.Wd + ", Height: " + _scrRez.Ht + ", aspect ratio: " + _scrRez.AR);
         }
 
-        public void SttRslt(byte lvl) { // setting resolution
-            if (lvl > _stt.ScrRslt.NOL) {
-                lvl = _stt.ScrRslt.NOL;
+        public void SttRsl(byte lvl) { // setting resolution
+            if (lvl > _stt.ScrRsl.NOL) {
+                lvl = _stt.ScrRsl.NOL;
             }
-            _stt.ScrRslt.Lvl = lvl;
-            Screen.SetResolution(_stt.ScrRslt.Wdt, _stt.ScrRslt.Hgh, true);
+            _stt.ScrRsl.Lvl = lvl;
+            Screen.SetResolution(_stt.ScrRsl.Wdt, _stt.ScrRsl.Hgh, true);
             // Debug.Log("Screen Resolution --> Width: " + _scrRez.Wd + ", Height: " + _scrRez.Ht + ", aspect ratio: " + _scrRez.AR);
         }
     }

@@ -63,16 +63,16 @@ namespace T {
             _iIaArr[_eCrrIa]?.Prmp(eEvt);
         }
 
-        public void Dss(byte eEvt) { // dissuade  specific event by enum
-            _iIaArr[_eCrrIa].Dss(eEvt);
+        public void Dssd(byte eEvt) { // dissuade  specific event by enum
+            _iIaArr[_eCrrIa].Dssd(eEvt);
         }
 
         public void Prmp(byte eIa, byte eEvt) { // prompt specific event in specific interaction by enum
             _iIaArr[eIa]?.Prmp(eEvt);
         }
 
-        public void Dss(byte eIa,byte eEvt) { // dissuade specific event in specific interaction by enum
-            _iIaArr[eIa]?.Dss(eEvt);
+        public void Dssd(byte eIa,byte eEvt) { // dissuade specific event in specific interaction by enum
+            _iIaArr[eIa]?.Dssd(eEvt);
         }
     }
 }

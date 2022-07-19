@@ -13,7 +13,7 @@
                 return;
             }
             _isInt = false;
-            Trmn();
+            Trm();
             _prgPrm = null;
             _iPrgArr = null;
         }
@@ -59,7 +59,7 @@
             _iPrgArr[_eCrrPrg].Exc(ePrc);
         }
 
-        public void Trmn() { // terminate
+        public void Trm() { // terminate
             if (_iPrgArr[_eCrrPrg] != null) {
                 _iPrgArr[_eCrrPrg].Trm();
                 _prgPrm.Omt(_eCrrPrg);
@@ -78,7 +78,7 @@
             return _iPrgArr[ePrg] == null ? false : true;
         }
 
-        public void Altr(byte ePrc) {
+        public void Alt(byte ePrc) {
             _iPrgArr[_eCrrPrg].Alt(ePrc);
         }
     }

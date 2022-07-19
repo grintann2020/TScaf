@@ -8,6 +8,6 @@ namespace T {
         void Unnst(); // uninstall;
         void PrpUpd(); // prop update
         void Prmp(byte eEvn); // prompt
-        void Dss(byte eEvn); // dissuade
+        void Dssd(byte eEvn); // dissuade
     }
 }

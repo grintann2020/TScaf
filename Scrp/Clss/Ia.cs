@@ -73,7 +73,7 @@ namespace T {
             }
         }
 
-        public void Dss(byte eEvn) { // dissuade
+        public void Dssd(byte eEvn) { // dissuade
             if (_bhvArr[eEvn][(byte)EPrp.CrrStt] == (byte)EStt.Opn) {
                 _bhvArr[eEvn][(byte)EPrp.CrrStt] = (byte)EStt.Cls;
             }

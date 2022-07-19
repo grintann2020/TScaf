@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace T {
 
-    [CreateAssetMenu(fileName = "ScrnRslt", menuName = "ScriptableObject/ScrnRslt", order = 0)]
-    public class ScrRsltSO : ScriptableObject {
+    [CreateAssetMenu(fileName = "ScrRsl", menuName = "ScriptableObject/ScrRsl", order = 0)]
+    public class ScrRslSO : ScriptableObject {
 
         public float Mx = 0.0f;
         public float Mn = 0.0f;
-        public byte NOL = 0;
+        public byte NOL = 0; // number of level
         public byte Lvl = 0;
 
         public bool IsPrt { // is portrait or landscape
