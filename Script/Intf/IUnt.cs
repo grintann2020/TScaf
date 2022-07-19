@@ -16,7 +16,7 @@ namespace T {
         int Lyr { get; } // get layer
         bool IsIaa { get; set; } // get is interactable or not
         bool IsEnb { get; }
-        T GtCnt<T>(byte indx);
+        T GtCnt<T>(byte idx);
         void Enb();
         void Dsb();
         void StAdj(byte idx, IUnt iUnt);

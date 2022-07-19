@@ -93,7 +93,7 @@ namespace T {
             for (int e = 0; e < amn; e++) {
                 kyArr[e] = _kyArr[eObj];
             }
-            Rs.Ins(
+            Rsr.Ins(
                 kyArr,
                 _rT,
                 (gOs) => {

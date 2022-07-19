@@ -105,7 +105,7 @@ namespace T {
             }
             for (byte g = 0; g < _aGOArr2.Length; g++) {
                 if (_aGOArr2[g] != null) {
-                    Rs.Rls(_aGOArr2[g]);
+                    Rsr.Rls(_aGOArr2[g]);
                 }
             }
             _dGnrArr = null;
@@ -124,7 +124,7 @@ namespace T {
             if (!_isEstArr[eGrp]) {
                 return;
             }
-            Rs.Rls(_aGOArr2[eGrp]);
+            Rsr.Rls(_aGOArr2[eGrp]);
             _aGOArr2[eGrp] = null;
             _gOArr2[eGrp] = null;
             _isEstArr[eGrp] = false;
@@ -192,7 +192,7 @@ namespace T {
                     new Quaternion(((float[])_grpArr3[eGrp][o][2])[0], ((float[])_grpArr3[eGrp][o][2])[1], ((float[])_grpArr3[eGrp][o][2])[2], ((float[])_grpArr3[eGrp][o][2])[3])
                 );
             }
-            Rs.Ins(sInsArr, _rT, (rsltArr) => {
+            Rsr.Ins(sInsArr, _rT, (rsltArr) => {
                 for (byte r = 0; r < _grpArr3[eGrp].Length; r++) {
                     rsltArr[r].name = _grpArr3[eGrp][r][3].ToString();
                     _aGOArr2[eGrp][r] = rsltArr[r];

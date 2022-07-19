@@ -116,38 +116,38 @@ namespace T {
         }
 
         public static void RmvTwn(int id) {
-            int indx = GtIdx(id);
-            if (indx < 0) {
+            int idx = GtIdx(id);
+            if (idx < 0) {
                 return;
             }
-            _iTwnArr = Arr.Rmv<ITwn>(_iTwnArr, indx);
+            _iTwnArr = Arr.Rmv<ITwn>(_iTwnArr, idx);
             if (_iTwnArr.Length == 0) {
                 _id = 0;
             }
         }
 
         public static void StrTwn(int id, bool isDly = true) { // start counter
-            int indx = GtIdx(id);
-            if (indx < 0) {
+            int idx = GtIdx(id);
+            if (idx < 0) {
                 return;
             }
-            _iTwnArr[indx].Str(Time.time, isDly);
+            _iTwnArr[idx].Str(Time.time, isDly);
         }
 
         public static void PSTwn(int id) { // pause counter
-            int indx = GtIdx(id);
-            if (indx < 0) {
+            int idx = GtIdx(id);
+            if (idx < 0) {
                 return;
             }
-            _iTwnArr[indx].Ps(Time.time);
+            _iTwnArr[idx].Ps(Time.time);
         }
 
         public static void RsmTwn(int id) { // resume counter
-            int indx = GtIdx(id);
-            if (indx < 0) {
+            int idx = GtIdx(id);
+            if (idx < 0) {
                 return;
             }
-            _iTwnArr[indx].Rsm(Time.time);
+            _iTwnArr[idx].Rsm(Time.time);
         }
 
         private static int GtIdx(int id) { // find an index of the counter in the array by identity

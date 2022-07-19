@@ -110,7 +110,7 @@ namespace T {
             }
             for (byte g = 0; g < _aGOArr2.Length; g++) {
                 if (_aGOArr2[g] != null) {
-                    Rs.Rls(_aGOArr2[g]);
+                    Rsr.Rls(_aGOArr2[g]);
                 }
             }
             _dBhvArr3 = null;
@@ -131,7 +131,7 @@ namespace T {
             if (!_isAttArr[eGrp]) {
                 return;
             }
-            Rs.Rls(_aGOArr2[eGrp]);
+            Rsr.Rls(_aGOArr2[eGrp]);
             _aGOArr2[eGrp] = null;
             _gOArr2[eGrp] = null;
             _isAttArr[eGrp] = false;
@@ -279,22 +279,22 @@ namespace T {
                     Quaternion.identity
                 );
             }
-            Rs.Ins(sInsArr, _mnCnv.transform, (rslts) => {
+            Rsr.Ins(sInsArr, _mnCnv.transform, (rslts) => {
                 for (byte r = 0; r < _grpArr3[eGrp].Length; r++) {
                     rslts[r].name = _grpArr3[eGrp][r][2].ToString();
                     _aGOArr2[eGrp][r] = rslts[r];
                 }
                 _tmpTfArr2 = new Transform[_aGOArr2[eGrp].Length][];
                 _tmpSbGOArr = new GameObject[_aGOArr2[eGrp].Length * 32]; // array of subinstances
-                int indx = 0;
+                int idx = 0;
                 for (byte t1 = 0; t1 < _tmpTfArr2.Length; t1++) {
                     _tmpTfArr2[t1] = _aGOArr2[eGrp][t1].GetComponentsInChildren<Transform>();
                     for (byte t2 = 1; t2 < _tmpTfArr2[t1].Length; t2++) {
-                        _tmpSbGOArr[indx] = _tmpTfArr2[t1][t2].gameObject;
-                        indx += 1;
+                        _tmpSbGOArr[idx] = _tmpTfArr2[t1][t2].gameObject;
+                        idx += 1;
                     }
                 }
-                _gOArr2[eGrp] = Arr.Apn<GameObject>(_aGOArr2[eGrp], Arr.Ct<GameObject>(_tmpSbGOArr, indx));
+                _gOArr2[eGrp] = Arr.Apn<GameObject>(_aGOArr2[eGrp], Arr.Ct<GameObject>(_tmpSbGOArr, idx));
                 _cmpArr2[eGrp] = Ftc(_gOArr2[eGrp]);
                 _tmpTfArr2 = null;
                 _tmpSbGOArr = null;

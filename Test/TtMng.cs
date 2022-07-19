@@ -50,14 +50,14 @@ namespace T {
         };
 
         public void LdTt(byte eGrp, DRct<Texture[]> dLd = null) {
-            Rs.Ld<Texture>(GrpKy(_eKyGrpArr[eGrp]), (ttArr) => {
+            Rsr.Ld<Texture>(GrpKy(_eKyGrpArr[eGrp]), (ttArr) => {
                 _ttGrpArr[eGrp] = ttArr;
                 dLd?.Invoke(_ttGrpArr[eGrp]);
             });
         }
 
         public void LdSpr(byte eGrp, DRct<Sprite[][]> dLd = null) {
-            Rs.Ld<Sprite[]>(GrpKy(_eKyGrpArr[eGrp]), (sprArr) => {
+            Rsr.Ld<Sprite[]>(GrpKy(_eKyGrpArr[eGrp]), (sprArr) => {
                 _sprGrpArr[eGrp] = sprArr;
                 dLd?.Invoke(_sprGrpArr[eGrp]);
             });

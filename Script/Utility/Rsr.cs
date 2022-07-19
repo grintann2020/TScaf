@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace T {
 
-    public static class Rs {
+    public static class Rsr {
 
         public static void Ld<T>(string ky, DRct<T> dLd = null) {
             Addressables.LoadAssetAsync<T>(ky).Completed += (AsyncOperationHandle<T> hnd) => {
